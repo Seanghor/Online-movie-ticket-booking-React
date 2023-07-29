@@ -1,0 +1,84 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+@layer utilities {
+  /* Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+
+@keyframes running-color {
+  0% {
+    color: rgb(255, 0, 0); /* Red */
+  }
+  50% {
+    color: rgb(231, 118, 11); /* RGB(231, 118, 11) */
+  }
+  100% {
+    color: rgb(0, 255, 0); /* Green */
+  }
+}
+
+
+
+/* 
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+} */
+
+.active {
+  background-color: rgba(216, 230, 222, 0.1);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.container::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+
+.movie,
+.cinema,
+.homepage,
+.promotion,
+.signup{
+  width: 100%;
+  height: 100%;
+  background: var(--red-gradian, linear-gradient(180deg, #2B0B0B 8.33%, #161127 99.96%, #2B0B0B 99.97%, #2B0B0B 99.98%, #171226 99.99%, #130B2B 100%));
+}
+nav{
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.20) 12.01%, rgba(45, 0, 140, 0.20) 12.02%, rgba(195, 0, 164, 0.11) 69.75%, rgba(3, 0, 9, 0.20) 91.15%);
+}
