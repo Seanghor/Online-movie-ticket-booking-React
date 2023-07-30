@@ -143,7 +143,7 @@ const HomePage = () => {
         </div> */}
         {/* Top Movie */}
         <div>
-          <h4 className=" ml-3 uppercase my-10 text-4xl font-bold bg-gradient-to-r from-blue-200 via-green-500 to-yellow-200  text-transparent bg-clip-text animate-gradient">Top Movie</h4>
+          <h4 className=" ml-3 uppercase my-10 text-4xl font-bold bg-gradient-to-r from-yellow-100 via-green-500 to-yellow-200  text-transparent bg-clip-text animate-gradient">Top Movie</h4>
           <div
             onMouseOver={() => { handleMouseEnter(setShowCursorTopMov) }}
             onMouseLeave={() => {
@@ -183,7 +183,7 @@ const HomePage = () => {
 
         {/* Now Playing */}
         <Element name='nowPlaying_section'>
-          <h4 className=" ml-3 uppercase my-10 text-4xl font-bold bg-gradient-to-r from-blue-200 via-green-500 to-yellow-200  text-transparent bg-clip-text animate-gradient">Now Showing</h4>
+          <h4 className=" ml-3 uppercase my-10 text-4xl font-bold bg-gradient-to-r from-blue-300 via-green-500 to-yellow-200  text-transparent bg-clip-text animate-gradient">Now Showing</h4>
           <div
             onMouseOver={() => { handleMouseEnter(setShowCursorNowPlayingMov) }}
             onMouseLeave={() => {
