@@ -24,8 +24,8 @@ const CheckoutBank: React.FunctionComponent<CheckoutBankProps> = (props: Checkou
         alert(error)
     }
     return (
-        <div className={`bg-[] transition-shadow hover:shadow-xl hover:shadow-black/30 border-slate-500 shadow-xl p-5 flex h-12 w-40 rounded-3xl hover:bg-[${bg_hover}] bg-[${bg_normal}] items-center justify-center`}>
-                <img src={icon_pay} style={{ height: "" }} alt="" className="scale-75 object-cover rounded-lg items-center justify-center " />
+        <div onClick={() => onClickPay()} className={`bg-[] transition-shadow hover:shadow-xl hover:shadow-black/30 border-slate-500 shadow-xl p-5 flex h-12 w-40 rounded-3xl hover:bg-[${bg_hover}] bg-[${bg_normal}] items-center justify-center`}>
+            <img src={icon_pay} style={{ height: "" }} alt="" className="scale-75 object-cover rounded-lg items-center justify-center " />
         </div>
 
     );

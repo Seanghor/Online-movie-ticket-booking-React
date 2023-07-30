@@ -2,8 +2,10 @@ import { log } from 'console';
 import { CreateBookingDto } from "../types/booking.dto";
 import { checkAccessTokenExpiration, getAccessToken, refreshAccessToken } from "./auth";
 
-export async function booking(createBookingDto: CreateBookingDto) {
+export const booking = async (createBookingDto: CreateBookingDto) => {
     let URL = import.meta.env.VITE_BASE_URL
+    console.log("URL:", URL);
+
     // let URL = import.meta.env.VITE_BASE_URL_LOCAL
 
     // check if accressToken is expire then --> refresh it

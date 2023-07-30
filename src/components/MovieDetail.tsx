@@ -12,12 +12,10 @@ import { ScreeningProps, ShowTimeSchedule } from "./Schedule_model";
 import { getAllScreeningByMovieIdAndDate, getAllScreeningByMovieIdAndGroupByCinema, getAllScreeningByMovieIdAndGroupByDate, getOneScreeningById } from "../services/screening";
 import { DifferentCinemaScreeningResponse, DifferentDateScreeningResponse, EachScreeningResponse } from "../types/screening.dto";
 import { Seat } from "./Seat";
-import { getSeatOfAuditorum, getSeatOfScreening, updateStatusOfSeat } from "../services/seat";
-import { SeatList, SingleRowOfSeat, SingleSeatRespone, UpdateStatusOfSeat } from "../types/seat.dto";
+import { getSeatOfScreening } from "../services/seat";
+import { SeatList, SingleRowOfSeat, SingleSeatRespone } from "../types/seat.dto";
 import { SelectMovieModel } from "./Select_movie_model";
-import { booking } from "../services/booking";
-import { CreateBookingDto } from "../types/booking.dto";
-import { formatDateDayAndMonth, getRowLetter } from "../utils/utils";
+import {  formatDateToShortCurt, getRowLetter } from "../utils/utils";
 import SeatNote from "./SeatNote";
 import { Link, Element, scroller } from 'react-scroll';
 import image_seat from '../assets/seat_available.svg'
@@ -52,8 +50,8 @@ const MovieDetail = () => {
   const [screening, setScreening] = useState<DifferentCinemaScreeningResponse[]>([])
   const [showSchedule, setShowSchedule] = useState<boolean>(booleanValue)
   const [screeningDataGroupByDate, setScreeningDataGroupByDate] = useState<DifferentDateScreeningResponse[]>([])
-  const [datesArray, setDatesArray] = useState<string[]>([])
-  const [showDate, setShowDate] = useState(booleanValue ? datesArray[0] : currentDate)
+  const [datesArray, setDatesArray] = useState<string[] | []>([])
+  const [showDate, setShowDate] = useState(currentDate)
   const [isAvailable, setIsAvailable] = useState(false)
   const [cinemaName, setCinemaName] = useState<string>('')
   const [cinemaId, setCinemaId] = useState('')
@@ -104,10 +102,18 @@ const MovieDetail = () => {
       setScreeningDataGroupByDate(fectDataResponse)
 
       // get all dateShow of movie:
-      const array = fectDataResponse
-        .filter((item: DifferentDateScreeningResponse) => item.date >= currentDate)
+      const array: string[] | [] | "" = fectDataResponse
+        .filter((item: DifferentDateScreeningResponse) => item.date > currentDate)
         .map((item: DifferentDateScreeningResponse) => item.date);
-      setDatesArray(array)
+
+      // Use Set to store unique values of dates(set not contain duplicate)
+      const uniqueDatesSet = new Set(array);
+
+      // console.log("uniqueDatesSet:", uniqueDatesSet);
+
+      // Convert Set back to an array
+      const uniqueDatesArray: string[] | Date[] = Array.from(uniqueDatesSet);
+      setDatesArray(uniqueDatesArray.slice(0, 3))
 
     }
     fectAllScreeningGroupByDate()
@@ -185,7 +191,7 @@ const MovieDetail = () => {
     };
     scrollToSection()
 
-  }, [id, movieId, screenId, reducerValue, showDate, showSection, screenId])
+  }, [id, movieId, screenId, reducerValue, showDate, showSection])
 
 
   const handleClickSeat = (id: number) => {
@@ -296,7 +302,8 @@ const MovieDetail = () => {
   const handleShowTime = () => {
     setShowSection('schedule_section')
     setShowSchedule(true)
-    setShowDate(datesArray[0])
+    // setShowDate(datesArray[0])
+    setShowDate(currentDate)
   }
 
 
@@ -316,7 +323,7 @@ const MovieDetail = () => {
 
 
   // console.log("selecting date:", showDate);
-  // console.log("datesArray:", datesArray);
+  console.log("datesArray:", datesArray);
   // console.log("screening:", screening);
   // console.log(currentDate);
   // console.log("Cinema:", cinemaName);
@@ -391,23 +398,40 @@ const MovieDetail = () => {
               showSchedule ? (
                 <Element name='schedule_section'>
                   <div>
-                    <div className="flex flex-row py-4 gap-4 mt-10">
+                    <div className="flex flex-row items-center py-4 gap-4 mt-10">
+                      {/* ----------------- select date */}
+                      {/* for today button */}
+                      <button
+                        onClick={() => {
+                          setShowDate(currentDate)
+                          setShowSeat(false)  // this when we select change date --> showUpSeat dissapear
+                          setScreenId('')
+                          // console.log("Date selected on:", date);
+                        }}
+                        className={`bg-[#130B2B] hover:bg-white font-light text-sm hover:text-black py-2 px-8 border border-white-500 hover:border-transparent rounded ${showDate === currentDate ? 'bg-yellow-500 text-black' : 'text-white'} `}
+                      > {"Today"}
+                      </button>
+                      <ArrowBackIosIcon  className='mx-2 text-white ' />
+                      {/* for the reamin days button */}
                       {
                         datesArray?.map((date: any, index: number) => (
                           <button
                             key={index}
+                           
                             onClick={() => {
                               setShowDate(date)
                               setShowSeat(false)  // this when we select change date --> showUpSeat dissapear
+                              setScreenId('')
                               // console.log("Date selected on:", date);
                             }}
-                            className={`bg-[#130B2B] hover:bg-white font-semibold hover:text-black py-2 px-4 border border-white-500 hover:border-transparent rounded ${showDate === date ? 'bg-yellow-500 text-black' : 'text-white'} `}
+                            className={`bg-[#130B2B] hover:bg-white font-light text-sm hover:text-black py-2 px-8 border border-white-500 hover:border-transparent rounded ${showDate === date ? 'bg-yellow-500 text-black' : 'text-white'} `}
                           > {currentDate === date
                             ? 'Today'
-                            : formatDateDayAndMonth(date)}</button>
+                            : formatDateToShortCurt(date)}
+                          </button>
                         ))
                       }
-                      <ArrowBackIosIcon className='mt-3 mx-4 text-white ' />
+
                     </div>
 
                     {/* Seach Bar */}

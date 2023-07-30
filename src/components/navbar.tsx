@@ -104,20 +104,21 @@ const Navbar = () => {
         </a>
         {/* Hamburger and Cross Sign */}
         <div className="flex flex-row items-center md:order-2 ">
-          {
-            noti === 0 || currentPath === "/bill_detail"
-              ? (null)
-              : (
-                <div className='px-10'>
+          <div className='px-10 w-10'>
+            {
+              noti === 0 || currentPath === "/bill_detail"
+                ? (null)
+                : (
+
                   <Link to={"/bill_detail"}>
                     <Badge content={noti}>
                       <TicketIcon className="h-6 w-6 text-white" />
                     </Badge>
                   </Link>
-                </div>
-              )
-          }
 
+                )
+            }
+          </div>
           {/* <div className='px-10'>
             <Link to={"/bill_detail"}>
               <Badge content={noti}>

@@ -79,9 +79,10 @@ export const refreshAccessToken = async () => {
         body: JSON.stringify({ refreshToken }),
     })
     const response = await res.json()
+    console.log("Refresh Token:", response);
     setAccessToken(response.accessToken)
     setRefreshToken(response.refreshToken)
-    // console.log("Refresh Token:", response);
+
     return response
 }
 
@@ -104,6 +105,7 @@ export const checkAccessTokenExpiration = async () => {
     if (!tokenExpiration) {
         return;
     }
+    console.log("Start checking token .....");
     const decode = JSON.parse(atob(tokenExpiration.split('.')[1]));
     console.log("decode:", decode);
     const expTime = decode.exp * 1000

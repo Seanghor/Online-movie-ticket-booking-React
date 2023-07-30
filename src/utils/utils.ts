@@ -15,6 +15,20 @@ export function convertMinutesToHHMM(minutes: number) {
     return output.trim();
 }
 
+
+// -- Output: "30 Jul"
+export function formatDateToShortCurt(dateString: string) {
+    const months = [
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+
+    const [year, month, day] = dateString.split('-');
+    const monthText = months[parseInt(month) - 1];
+
+    return `${day} ${monthText}`;
+}
+
 export function formatTimeTo12Hour(timeString: string) {
     const date = new Date(timeString);
     const hours = date.getUTCHours();
@@ -99,7 +113,7 @@ export function getDayNumber(dateString: string) {
 
 
 // get row latter:
-export const getRowLetter = (index:number) => {
+export const getRowLetter = (index: number) => {
     const startingLetterCode = 'A'.charCodeAt(0);
     return String.fromCharCode(startingLetterCode + Math.floor(index / 1));
 };

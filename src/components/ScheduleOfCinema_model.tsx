@@ -89,12 +89,12 @@ export const ScheduleOfCinema: React.FunctionComponent<ScreeningProps> = (props:
             <button
               key={index}
               onClick={() => onClick(screen.id, screen.movieId)}
-              className={`text-white rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 
+              className={`text-white w-24 rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 
               ${screen.isAvailable
                   ? "bg-transparent hover:bg-white hover:border-transparent  hover:text-black text-white-700 font-semibold py-2 px-4 border border-white-500  rounded"
                   : "rounded-md bg-gradient-to-r from-indigo-900 to-gray-900"} 
                       ${screen.id.toString() == showUpScreenId
-                  ? 'bg-slate-50 text-slate-950'
+                  ? 'bg-white text-zinc-950'
                   : ''}`}
             >
               {formatTimeTo12Hour(screen?.startTime)}

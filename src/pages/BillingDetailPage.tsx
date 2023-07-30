@@ -250,7 +250,7 @@ const BillingDetailPage = () => {
 
       <div className="container w-full h-full pt-48 sm:py-16 mx-auto mt-10 items-center">
 
-        <div className="flex w-full h-full flex-col md:flex-row">
+        <div className="flex w-full h-full flex-col md:flex-row ">
           {/* Left Side Bill form */}
           <div className=" bg-[#faf5ff] md:w-1/2 h-1/2 py-10 px-10 rounded-lg "> {/* bg-[#faf5ff]*/}
             <div className="md:w-full py-5 rounded-lg shadow-md border-slate-200  bg-white px-4">
@@ -341,8 +341,8 @@ const BillingDetailPage = () => {
 
 
           {/* Total Summary */}
-          <div className="px-20 md:w-1/2 max-h-screen mt-8 md:mt-0 font-sans flex flex-col justify-between">
-            <div className=" w-full h-full mx-auto border border-gray-400  p-4 rounded-md bg-[#faf5ff]"> {/** bg-[#faf5ff] */}
+          <div className="px-20 md:w-1/2 max-h-screen items-start  md:mt-0 font-sans pb-10">
+            <div className=" w-full h-full mx-auto border border-gray-400  p-10 rounded-md bg-[#faf5ff] "> {/** bg-[#faf5ff] */}
               <div className=" flex flex-row justify-between">
                 <div className='flex flex-row items-center'>
                   <div className='bg-slate-400 flex justify-center items-center w-7 h-7 rounded-full mr-2'>
@@ -352,9 +352,9 @@ const BillingDetailPage = () => {
                 </div>
                 <p className="uppercase text-lg font-normal text-[#3b0764] font-sans">Subtotal</p>
               </div>
-              <div className='h-4/5 overflow-y-auto mt-5 '>
+              <div className='h-3/5 overflow-y-auto mt-5 '>
                 {bookReserveData?.map((movie: any, index: number) => (
-                  <div key={index} className="mb-4 max-h-80 overflow-y-auto bg-gray-200 rounded-lg px-4 py-2">
+                  <div key={index} className="mb-4 max-h-80 bg-stone-200 rounded-lg px-4 py-2">
                     <div className="flex items-center mb-2 justify-between">
                       <div className="flex items-center">
                         <img src={movie?.image} alt={movie.title} className="w-20 h-24 rounded-md mr-4" />
@@ -399,45 +399,45 @@ const BillingDetailPage = () => {
                   </div>
                 ))}
               </div>
-              <div>
-                <hr className="my-4" />
+              <div className='mt-10'>
                 <div className="flex justify-between">
                   <span className="font-bold text-[#3b0764] text-lg uppercase">Total :</span>
                   <span className="font-bold text-[#db2777] text-2xl">${totalPrice.toFixed(2)}</span>
                 </div>
+                <hr className="my-4" />
               </div>
-              {
-                showButton ? (
-                  <div className='flex flex-col justify-center items-center'>
-                    {
-                      payId === 1
-                        ? (<PayPalCheckout
-                          amount={totalPrice}
-                          onClickPay={() => handlePay()}
-                          paidFor={paidFor}
-                        />) : (
-                          <CheckoutBank
-                            amount={500}
-                            icon_pay={chooseMethod?.icon_pay || ""}
+
+              {/* --------------------------- */}
+              <div className='flex flex-col rounded-md h-40 py-5'>
+                <div className=''>
+                  <p className='font-poppins px-4 text-sm text-gray-500'>
+                    Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purpose described in our privacy policy.
+                  </p>
+                </div>
+                {
+                  showButton ? (
+                    <div className='flex flex-col justify-center items-center mt-10'>
+                      {
+                        payId === 1
+                          ? (<PayPalCheckout
+                            amount={totalPrice}
                             onClickPay={() => handlePay()}
                             paidFor={paidFor}
-                            bg_normal={chooseMethod?.bg_normal || ""}
-                            bg_hover={chooseMethod?.bg_hover || ""}
-                          />)
-                    }
-                  </div>) : (null)
-              }
-            </div>
-            {/* <div className='bg-[#faf5ff] flex flex-col rounded-md h-40 py-5'>
-              <div className=''>
-                <p className='font-poppins px-4 text-sm text-gray-500'>
-                  Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purpose described in our privacy policy.
-                </p>
+                          />) : (
+                            <CheckoutBank
+                              amount={500}
+                              icon_pay={chooseMethod?.icon_pay || ""}
+                              onClickPay={() => { handlePay() }}
+                              paidFor={paidFor}
+                              bg_normal={chooseMethod?.bg_normal || ""}
+                              bg_hover={chooseMethod?.bg_hover || ""}
+                            />)
+                      }
+                    </div>) : (null)
+                }
+
               </div>
-
-            </div> */}
-
-
+            </div>
           </div>
           {/* Total Summary End */}
 

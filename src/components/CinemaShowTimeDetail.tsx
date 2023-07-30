@@ -10,7 +10,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { MovieResponse, ScreeningDataPerDay } from '../types/movie.dto';
 import { getAllMovie, getAllMovieByCampusIdFilterDate, getAllMovieFilterByTitle, getMovieById } from '../services/movie';
 import movieDefault from '../assets/default_movie_image.png'
-import { formatDateDayAndMonth, getRowLetter } from '../utils/utils';
+import { formatDateDayAndMonth, formatDateToShortCurt, getRowLetter } from '../utils/utils';
 import { SeatList, SingleRowOfSeat, SingleSeatRespone } from '../types/seat.dto';
 import { getSeatOfScreening } from '../services/seat';
 import { getOneScreeningById } from '../services/screening';
@@ -37,27 +37,26 @@ const CinemaShowTimeDetail = () => {
   const id = urlParams.get('id')
   // const [data, setData] = useState<CinemaResponse_includeScreening | null>(null)
   const [showDate, setShowDate] = useState(currentDate)
-  const [dateArray, setDateArray] = useState<string[]>([])
+  const [dateArray, setDateArray] = useState<string[] | []>([])
   const [screeningDataPerDay, setScreeningDataPerDay] = useState<ScreeningDataPerDay[]>([])
   // const [movieId, setMovieId] = useState('')
 
   //cinema
   const [cinema, setCinema] = useState<CinemaResponse | null>(null);
   // seat:
-  const [seatData, setSeatData] = useState<SeatList | [][]>([])
   const [showSeat, setShowSeat] = useState(false)
   const [selectSeat, setSelectSeat] = useState<any>([])
   const [movieId, setMovieId] = useState('')
   const [movie, setMovie] = useState<MovieResponse | null>(null);
   const [reserveData, setReserveData] = useState<any | []>([])
   const [seatIdOfScreen, setSeatIdOfScreen] = useState<any>([])
-  const [reserveDataToStorage, setReserveDataToStorage] = useState<any | []>([])
+  // const [reserveDataToStorage, setReserveDataToStorage] = useState<any | []>([])
 
 
   // screen:
   const [screenId, setScreenId] = useState<null | string>(null)
   const [oneScreening, setOnceScreening] = useState<EachScreeningResponse | null>(null)
-  const [showSchedule, setShowSchedule] = useState<boolean>(false)
+  // const [showSchedule, setShowSchedule] = useState<boolean>(false)
   // section:
   const [showSection, setShowSection] = useState('')
 
@@ -123,23 +122,18 @@ const CinemaShowTimeDetail = () => {
       setOnceScreening(seatData)
     }
     fechOneScreenData()
-    // const fectDateCinema = async () => {
-    //   const res = await getAllMovieScreeningOfCampusId(id?.toString() || "")
-    //   let responseData = await res.json()
-    //   setData(responseData)
-    // }
 
     const fectAllScreeningOfCinema = async () => {
       const res = await getAllScreeningOfCampusId(id || "")
       let responseData = await res.json()
-      const distinctDates = responseData.reduce((dates: any[], item: { date_show: string; }) => {
-        const date = item.date_show.substring(0, 10);
-        if (!dates.includes(date)) {
-          dates.push(date);
-        }
-        return dates;
-      }, []);
-      setDateArray(distinctDates);
+      const arrayDates: string[] | [] | "" = responseData.map((screen: any) => screen.date_show.split('T')[0]);
+      const toSet = new Set(arrayDates);
+      const uniqueDatesArray: string[] = Array.from(toSet);
+      console.log("distinctDates:", uniqueDatesArray);
+
+
+      // we want to show only 3days after today:
+      setDateArray(uniqueDatesArray.slice(0, 3));
     }
 
     const fectScreeningOfCinemaFilterDate = async () => {
@@ -254,7 +248,6 @@ const CinemaShowTimeDetail = () => {
     // Save the updatedBookingData to localStorage
     console.log("ReserveData LocalStorage:", reserveData);
     console.log("updatedBookingData:", updatedBookingData[0]);
-    setReserveDataToStorage(filteredBookingData)
     localStorage.setItem("reserve", JSON.stringify(filteredBookingData));
   };
 
@@ -285,11 +278,7 @@ const CinemaShowTimeDetail = () => {
   };
 
 
-  const handleShowTime = () => {
-    setShowSection('schedule_section')
-    setShowSchedule(true)
-    setShowDate(dateArray[0])
-  }
+
 
   // console.log(`Data of CinemaId ${id}:`, data);
   // console.log("dateArray:", dateArray);
@@ -303,31 +292,27 @@ const CinemaShowTimeDetail = () => {
           <h1 className="text-4xl font-bold bg-gradient-to-r from-white via-blue-400 to-green-600 text-transparent bg-clip-text animate-gradient">{cinema?.name}</h1>
         </div>
 
-        <div className="flex flex-row jus py-4 gap-4 mt-10">
-          <button
-            onClick={() => {
-              setShowDate(currentDate)
-              console.log("Select date today:", currentDate);
-            }}
-            className={`text-white hover:bg-white font-semibold hover:text-black py-2 px-4 border border-white-500 hover:border-transparent rounded
-            ${currentDate === showDate ? "bg-[#130B2B] " : ""}
-            `}
-          >
-            Today
-          </button>
-          <ArrowBackIosIcon className='mt-3 mx-4 text-white ' />
+        <div className="flex flex-row jus py-4 mt-10">
+
           {
-            dateArray?.map((date: string) => (
-              <div
-                onClick={() => {
-                  setShowDate(date)
-                  setShowSeat(false)
-                  console.log("Selecting on date:", date);
-                }}
-                className={date && date.toString() === showDate ? "text-orange-500" : "text-white"}  >
-                <p className={`py-2 text-2xl uppercase`}>
-                  {formatDateDayAndMonth(date)}
-                </p>
+            dateArray?.map((date: string, index: number) => (
+              <div className='flex flex-row items-center'>
+                <button
+                  key={index}
+                  onClick={() => {
+                    setShowDate(date)
+                    setShowSeat(false)  // this when we select change date --> showUpSeat dissapear
+                    setScreenId('')
+                    // console.log("Date selected on:", date);
+                  }}
+                  className={`bg-[#130B2B] mx-2 w-28 hover:bg-white font-normal text-sm hover:text-black py-2 px-8 border border-white-500 hover:border-transparent rounded ${showDate === date ? 'bg-yellow-500 text-black' : 'text-white'} `}
+                > {currentDate === date
+                  ? 'Today'
+                  : formatDateToShortCurt(date)}
+                </button>
+                {
+                  date === currentDate ? (<ArrowBackIosIcon className=' mx-4 text-white ' />) : (null)
+                }
               </div>
             ))
           }
