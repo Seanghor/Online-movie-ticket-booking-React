@@ -22,7 +22,6 @@ const CoverSlider = () => {
 
   useEffect(() => {
     const interval = setInterval(goToNext, 4000);
-
     return () => {
       clearInterval(interval);
     };

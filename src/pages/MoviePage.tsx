@@ -41,6 +41,8 @@ const Movie = () => {
       document.body.style.overflow = "auto";
     }
   }, []);
+
+  
   const color = `rgb(${red}, ${green}, ${blue})`;
   const totalPages = Math.ceil(movies.length / moviesPerPage);
 
