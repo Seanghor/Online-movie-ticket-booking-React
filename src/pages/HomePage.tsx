@@ -15,7 +15,7 @@ const HomePage = () => {
       duration: 800,
       delay: 0,
       smooth: 'easeInOutQuart',
-      // offset: -500 //
+      offset: -500 //
     });
   };
   const [comingSoon, setComingSoon] = useState<MovieResponse[]>([])
@@ -61,9 +61,9 @@ const HomePage = () => {
     <div className='movie bg-gradient-to-r from-red-900 to-purple-900 min-h-screen '>
       <CoverSlider />
       <div className="container flex-grow w-full py-4 sm:py-16 mx-auto ">
-        {/* Now Plaing */}
-        <h4 className="ml-3 uppercase my-10 text-4xl font-bold bg-gradient-to-r from-yellow-200 via-blue-200 to-green-500 text-transparent bg-clip-text animate-gradient">Top Movie</h4>
-        <div className="no-scrollbar flex flex-no-wrap overflow-x-scroll scrolling-touch scrollbar-none items-start mb-20">
+        {/* Top Movie */}
+        <h4 className="ml-3 uppercase my-10 text-4xl font-bold bg-gradient-to-r from-yellow-200 via-blue-200 to-green-500 translate-x-0 text-transparent bg-clip-text animate-gradient">Top Movie</h4>
+        <div className="w-full overflow-hidden relative transform transition-transform duration-500 translate-x-0 h-64 no-scrollbar flex flex-no-wrap overflow-x-scroll scrolling-touch scrollbar-none items-start mb-20">
           {
             topMovie?.map((item: MovieResponse, index: number) => (
               <HomeCard
@@ -81,10 +81,10 @@ const HomePage = () => {
           }
         </div>
 
-        {/* Coming Soon */}
+        {/* Now Playing */}
         <Element name='nowPlaying_section'>
           <h4 className="ml-3 uppercase my-10 text-4xl font-bold bg-gradient-to-r from-blue-200 via-green-500 to-yellow-200  text-transparent bg-clip-text animate-gradient">Now Playing</h4>
-          <div className="no-scrollbar flex flex-no-wrap overflow-scroll items-start mb-20">
+          <div className="h-64 no-scrollbar flex flex-no-wrap overflow-scroll items-start mb-20">
             {
               nowPlaying?.map((item: MovieResponse, index: number) => (
                 <Link key={index} className="" to={`/movie/${item.id}`} onClick={() => { console.log("selected now playing") }}>
@@ -103,10 +103,10 @@ const HomePage = () => {
           </div>
         </Element>
 
-        {/* Top Movie */}
+        {/* Comming Movie */}
         <Element name='coming_section'>
           <h4 className="ml-3 uppercase my-10 text-4xl font-bold bg-gradient-to-r from-green-500  via-yellow-200  to-blue-200 text-transparent bg-clip-text animate-gradient">Coming Soon</h4>
-          <div className="no-scrollbar flex flex-no-wrap overflow-scroll items-start mb-8">
+          <div className="h-64 no-scrollbar flex flex-no-wrap overflow-scroll items-start mb-8">
             {
               comingSoon?.map((item: MovieResponse, index: number) => (
                 <Link key={index} className="" to={`/movie/${item.id}`} onClick={() => { console.log("selected tcoming soon") }}>

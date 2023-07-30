@@ -35,9 +35,8 @@ const CoverSlider = () => {
         {images.map((image, index) => (
           <div
             key={index}
-            className={`absolute top-0 left-0 w-full h-full transform transition-transform duration-500 ${
-              index === activeIndex ? "translate-x-0" : "translate-x-full"
-            }`}
+            className={`absolute top-0 left-0 w-full h-full transform transition-transform duration-500 ${index === activeIndex ? "translate-x-0" : "translate-x-full"
+              }`}
           >
             <img src={image} alt={`image ${index + 1}`} className="w-full h-full object-cover" />
             <div className="absolute inset-x-0 bottom-0 p-4 text-center text-white bg-black bg-opacity-50">

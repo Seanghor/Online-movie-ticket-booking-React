@@ -12,7 +12,7 @@ const formatName=(title:string) => {
 export const Card: React.FunctionComponent<MovieCardProps> = (props: MovieCardProps) => {
     const { image,title} = props;
     return (
-        <div className="hover:border-2 border-cyan-100 flex-shrink-0 m-4 w-48  relative overflow-hidden bg-slate-950 rounded-lg max-w-xs shadow-2xl  ">
+        <div className="shadow-cyan-500/50 h-[330px] hover:border-2 border-cyan-100 flex-shrink-0 m-4 w-48  relative overflow-hidden bg-slate-950 rounded-lg max-w-xs shadow-2xl  ">
             <div className="relative flex items-center justify-center">
                 <img src={image} alt="" className="w-48 h-60 object-cover object-center" />
             </div>

@@ -2,8 +2,8 @@ import React from "react";
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
-import { convertFirstLetterToUpperCase, convertMinutesToHHMM, formatName } from "../utils/utils";
-import { MovieStatusEnum } from "../types/enum.type";
+import { convertFirstLetterToUpperCase, convertMinutesToHHMM, formatName } from "../../utils/utils";
+import { MovieStatusEnum } from "../../types/enum.type";
 
 interface CardShadowProps {
     trailer: string

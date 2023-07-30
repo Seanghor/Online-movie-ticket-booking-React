@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CardShadow } from "./Card_Shadow";
+import { CardShadow } from "./Cards/Card_Shadow";
 import { MovieTypeEnum } from "../types/enum.type";
 import { idText } from "typescript";
 import { useLocation } from "react-router-dom";
@@ -30,7 +30,7 @@ export const HomeCard: React.FunctionComponent<HomeCardProps> = (props: HomeCard
     }
 
     return (
-        <div className=" flex-shrink-0 mx-4 w-48  relative overflow-hidden bg-slate-950 rounded-lg max-w-xs shadow-2xl border-cyan-100 
+        <div className=" flex-shrink-0 mx-4 w-[160px]  relative overflow-hidden bg-slate-950 rounded-lg max-w-xs shadow-2xl border-cyan-100 
             hover:border-2
             group cursor-pointer items-start justify-start  transition-shadow hover:shadow-xl hover:shadow-black/30
             ">

@@ -8,24 +8,24 @@ import GradeIcon from '@mui/icons-material/Grade';
 import TimerIcon from '@mui/icons-material/Timer';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import CategoryIcon from '@mui/icons-material/Category';
-import { ScreeningProps, ShowTimeSchedule } from "./Schedule_model";
-import { getAllScreeningByMovieIdAndDate, getAllScreeningByMovieIdAndGroupByCinema, getAllScreeningByMovieIdAndGroupByDate, getOneScreeningById } from "../services/screening";
-import { DifferentCinemaScreeningResponse, DifferentDateScreeningResponse, EachScreeningResponse } from "../types/screening.dto";
+import { ShowTimeSchedule } from "./Schedule_model";
+import { getAllScreeningByMovieIdAndDate, getAllScreeningByMovieIdAndGroupByDate, getOneScreeningById } from "../services/screening";
+import { DifferentCinemaScreeningResponse, DifferentDateScreeningResponse } from "../types/screening.dto";
 import { Seat } from "./Seat";
 import { getSeatOfScreening } from "../services/seat";
 import { SeatList, SingleRowOfSeat, SingleSeatRespone } from "../types/seat.dto";
 import { SelectMovieModel } from "./Select_movie_model";
-import {  formatDateToShortCurt, getRowLetter } from "../utils/utils";
+import { convertMinutesToHHMM, formatDateToShortCurt, formatDateTo_dd_mm_yy, getRowLetter } from "../utils/utils";
 import SeatNote from "./SeatNote";
-import { Link, Element, scroller } from 'react-scroll';
+import { Element, scroller } from 'react-scroll';
 import image_seat from '../assets/seat_available.svg'
 import image_sealectedSeat from '../assets/seat_selected.svg'
 import bookIcon from '../assets/booked.svg'
 import image_notAvialable from '../assets/not_avialable.svg'
 import SearchBar from './SearchBar';
-import { checkAccessTokenExpiration, isAuth } from '../services/auth';
 import { useNavigate } from 'react-router-dom';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { getOneCinema } from '../services/campus';
 
 
@@ -349,20 +349,18 @@ const MovieDetail = () => {
             <div className="flex flex-col justify-between pl-10 leading-normal">
               <h5 className=" flex flex-row mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{movie?.title ? movie?.title.toLocaleUpperCase() : movie?.title}</h5>
               <div className="flex flex-row">
+                <CalendarMonthIcon className="text-white text-5xl" />
+                <h4 className="font-[poppins] font-normal text-slate-200 text-lg ml-3">{formatDateTo_dd_mm_yy(movie?.opening_date.toString() || "")}</h4>
+              </div>
+              <div className="flex flex-row">
                 <TimerIcon className="text-white" />
-                <h4 className="font-[poppins] font-normal text-slate-200 text-lg ml-3">{movie?.duration_min}mn</h4>
+                <h4 className="font-[poppins] font-normal text-slate-200 text-lg ml-3">{convertMinutesToHHMM(movie?.duration_min || 0)}</h4>
               </div>
 
               <div className="flex flex-row">
                 <GradeIcon className="text-white text-5xl" />
                 <h4 className="font-[poppins] font-normal text-slate-200 text-lg ml-3">{movie?.rating}</h4>
               </div>
-
-              <div className="flex flex-row">
-                <MonetizationOnIcon className="text-white text-5xl" />
-                <h4 className="font-[poppins] font-normal text-slate-200 text-lg ml-3">{movie?.price}.00</h4>
-              </div>
-
               <div className="flex flex-row">
                 <CategoryIcon className="text-white text-5xl" />
                 <h4 className="font-[poppins] font-normal text-slate-200 text-lg ml-3">{movie?.movieType}</h4>
@@ -411,13 +409,13 @@ const MovieDetail = () => {
                         className={`bg-[#130B2B] hover:bg-white font-light text-sm hover:text-black py-2 px-8 border border-white-500 hover:border-transparent rounded ${showDate === currentDate ? 'bg-yellow-500 text-black' : 'text-white'} `}
                       > {"Today"}
                       </button>
-                      <ArrowBackIosIcon  className='mx-2 text-white ' />
+                      <ArrowBackIosIcon className='mx-2 text-white ' />
                       {/* for the reamin days button */}
                       {
                         datesArray?.map((date: any, index: number) => (
                           <button
                             key={index}
-                           
+
                             onClick={() => {
                               setShowDate(date)
                               setShowSeat(false)  // this when we select change date --> showUpSeat dissapear
