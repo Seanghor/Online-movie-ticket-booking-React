@@ -24,8 +24,6 @@ export const getAllScreeningByMovieIdAndGroupByDate = async (movieId: string) =>
 }
 
 export const getAllScreeningByMovieIdAndDate = async (movieId: string,date:string) => {
-    console.log("movie:", movieId);
-    console.log("Date:", date);
     const res = await fetch(`${URL}/screening?movie=${movieId}&&groupBy=cinema&&date=${date}`, {
         method: "GET",
         headers: {

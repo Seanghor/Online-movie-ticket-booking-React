@@ -3,7 +3,7 @@ import { ScheduleOfCinema } from './ScheduleOfCinema_model'
 import CinemaIcon from '../assets/cinema_icon.svg';
 import CinemaImg from '../assets/cinema.jpg';
 import { MovieResponse } from '../types/movie.dto';
-import { HomeCard } from './HomeCard';
+import { HomeCard } from './Cards/HomeCard';
 import { getAllMovieFilterByStatus, getAllMovieFilterIsTop } from '../services/movie';
 import {
   Tabs,

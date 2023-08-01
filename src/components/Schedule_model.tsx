@@ -4,48 +4,35 @@ import CinemaIcon from '../assets/cinema_icon.svg';
 import { formatTimeTo12Hour } from "../utils/utils";
 import full from '../assets/booking/movieFull.png'
 
-// export interface ScreeningProps3 {
-//     date: Date | string,
-//     show_times: {
-//         auditorum: string
-//         time: string,
-//         isAvailable: boolean
-//         screeningId: string
-//     }[],
-//     onClick: Function
-// }
+
 export interface ScreeningProps {
-    id: string,
     name: string,
-    address: string,
-    phone: string | null,
-    map: string | null,
     Screening: {
         date: string | Date
         auditoriumId: string
         group: {
             id: string
-            movieId: string
-            auditoriumId: string
-            date_show: string | Date
-            duration_min: number
+            // movieId: string
+            // auditoriumId: string
+            // date_show: string | Date
+            // duration_min: number
             startTime: string | Date
-            endTime: string | Date
-            status: string | ScreeningStatusEnum
+            // endTime: string | Date
+            // status: string | ScreeningStatusEnum
             isAvailable: boolean
-            createdAt: string | Date
-            updatedAt: string | Date
+            // createdAt: string | Date
+            // updatedAt: string | Date
         }[]
     }[],
     onClick: Function
-    showUpScreenId: string // for click show up 
+    showUpScreenId: string | null // for click show up 
 }
 
 
 
 export const ShowTimeSchedule: React.FunctionComponent<ScreeningProps> = (props: ScreeningProps) => {
     // eslint-disable-next-line @typescript-eslint/no-redeclare
-    const { id, name, address, onClick, phone, map, Screening, showUpScreenId } = props
+    const { name, onClick, Screening, showUpScreenId } = props
 
 
     // const [isCloseMov, setIsCloseMov] = useState(false)
@@ -110,7 +97,7 @@ export const ShowTimeSchedule: React.FunctionComponent<ScreeningProps> = (props:
                         </div>) : (null)
                     })
                 }
-            </div>
+            </div >
 
         </>
     );

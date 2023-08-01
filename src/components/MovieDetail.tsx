@@ -8,14 +8,14 @@ import GradeIcon from '@mui/icons-material/Grade';
 import TimerIcon from '@mui/icons-material/Timer';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import CategoryIcon from '@mui/icons-material/Category';
-import { ShowTimeSchedule } from "./Schedule_model";
+import { ScreeningProps, ShowTimeSchedule } from "./Schedule_model";
 import { getAllScreeningByMovieIdAndDate, getAllScreeningByMovieIdAndGroupByDate, getOneScreeningById } from "../services/screening";
 import { DifferentCinemaScreeningResponse, DifferentDateScreeningResponse } from "../types/screening.dto";
 import { Seat } from "./Seat";
 import { getSeatOfScreening } from "../services/seat";
 import { SeatList, SingleRowOfSeat, SingleSeatRespone } from "../types/seat.dto";
 import { SelectMovieModel } from "./Select_movie_model";
-import { convertMinutesToHHMM, formatDateToShortCurt, formatDateTo_dd_mm_yy, getRowLetter } from "../utils/utils";
+import { convertMinutesToHHMM, formatDateToShortCurt, formatDateTo_dd_mm_yy, formatTimeTo12Hour, getRowLetter } from "../utils/utils";
 import SeatNote from "./SeatNote";
 import { Element, scroller } from 'react-scroll';
 import image_seat from '../assets/seat_available.svg'
@@ -28,6 +28,17 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { getOneCinema } from '../services/campus';
 
+// for scroll section(whenever value of showSecton change --> this function is called)
+const scrollToSection = (showSection: string) => {
+  console.log("-------- > On Section:", showSection);
+
+  scroller.scrollTo(showSection, {
+    duration: 800,
+    delay: 0,
+    smooth: 'easeInOutQuart',
+    offset: -100 //
+  });
+};
 
 
 
@@ -46,7 +57,7 @@ const MovieDetail = () => {
   const booleanValue = showParam === "true" ? true : false;
   // screen
   const [screenId, setScreenId] = useState<null | string>(null)
-  const [oneScreening, setOnceScreening] = useState<any | null>(null)
+  const [oneScreening, setOncScreening] = useState<any | null>(null)
   const [screening, setScreening] = useState<DifferentCinemaScreeningResponse[]>([])
   const [showSchedule, setShowSchedule] = useState<boolean>(booleanValue)
   const [screeningDataGroupByDate, setScreeningDataGroupByDate] = useState<DifferentDateScreeningResponse[]>([])
@@ -55,6 +66,7 @@ const MovieDetail = () => {
   const [isAvailable, setIsAvailable] = useState(false)
   const [cinemaName, setCinemaName] = useState<string>('')
   const [cinemaId, setCinemaId] = useState('')
+
 
   // seat:
   const [seatData, setSeatData] = useState<SeatList | [][]>([])
@@ -69,17 +81,27 @@ const MovieDetail = () => {
   // const [cinema, setCinema] = useState("")
 
   // section:
-  const [showSection, setShowSection] = useState('')
+  // const [showSection, setShowSection] = useState('')
+  const [showSection, setShowSection] = useState(showSchedule === true ? "schedule_section" : "")
 
   // search:
   const [search, setSearch] = useState('')
-
-
 
   // refresh:
   const [reducerValue, forceUpdate] = useReducer(x => x + 1, 0)
 
 
+  const [screeningProps, setScreeningProps] = useState<ScreeningProps>({
+    name: "",
+    Screening: [], // Update this array with your actual data
+    onClick: () => {
+      console.log("action");
+    },
+    showUpScreenId: "", // Assuming showUpScreenId is a string, change to the appropriate type if needed
+  });
+  useEffect(() => {
+    scrollToSection(showSection)
+  }, [showSection])
   // ------------------------ useEffect
   useEffect(() => {
     // fect singleMovie data:
@@ -108,18 +130,20 @@ const MovieDetail = () => {
 
       // Use Set to store unique values of dates(set not contain duplicate)
       const uniqueDatesSet = new Set(array);
-
       // console.log("uniqueDatesSet:", uniqueDatesSet);
 
       // Convert Set back to an array
       const uniqueDatesArray: string[] | Date[] = Array.from(uniqueDatesSet);
       setDatesArray(uniqueDatesArray.slice(0, 3))
-
     }
     fectAllScreeningGroupByDate()
+  }, [id, movieId, reducerValue])
 
+  // --------------------------------------- when date change:
+  useEffect(() => {
     // fect all screening of the movie and filter by date:
     const fechScreeningDataByDate = async () => {
+      console.log("selecting date:", showDate);
       const res = await getAllScreeningByMovieIdAndDate(movieId || '', showDate)
       let dataResponse = await res.json()
       // console.log("Screening by date:", dataResponse);
@@ -131,7 +155,11 @@ const MovieDetail = () => {
       setScreening(dataResponse)
     }
     fechScreeningDataByDate()
+    // scrollToSection(showSection)
+  }, [showDate])
 
+  // --------------------------------------- when screen change:
+  useEffect(() => {
     // -- fect seat of the screening:
     const fechSeatData = async () => {
       const res = await getSeatOfScreening(screenId || "")
@@ -166,32 +194,42 @@ const MovieDetail = () => {
         }
       }
       return setSeatIdOfScreen(seatData)
-
     }
     fechSeatData()
-
     // fect screening by id:
     const fechOneScreenData = async () => {
       const res = await getOneScreeningById(screenId || "")
-      let seatData = await res.json()
-      setOnceScreening(seatData)
-      setCinemaId(seatData.campusId)
+      let screeningNowData = await res.json()
+
+      if (screeningNowData) {
+        // fect cinema:
+        setCinemaId(screeningNowData.campusId)
+        const cinema = await getOneCinema(screeningNowData.campusId)
+        const cinemaJson = await cinema.json()
+        setCinemaName(cinemaJson.name)
+        setOncScreening(screeningNowData)
+        console.log("On Cinema:", cinemaJson.name);
+      }
+
+      // - test : screen props---------------------------------------------------------------:
+      setScreeningProps({
+        name: movie?.title || "",
+        Screening: [], // Update this array with your actual data
+        onClick: () => {
+          console.log("action");
+        },
+        showUpScreenId: "", // Assuming showUpScreenId is a string, change to the appropriate type if needed
+      });
+
+      // ---log:
+
+      console.log("ScreeningId:", screenId);
+      console.log("Choose screen time:", formatTimeTo12Hour(screeningNowData.startTime));
+
 
     }
     fechOneScreenData()
-
-    // for scroll section(whenever value of showSecton change --> this function is called)
-    const scrollToSection = () => {
-      scroller.scrollTo(showSection, {
-        duration: 800,
-        delay: 0,
-        smooth: 'easeInOutQuart',
-        offset: -100 //
-      });
-    };
-    scrollToSection()
-
-  }, [id, movieId, screenId, reducerValue, showDate, showSection])
+  }, [screenId])
 
 
   const handleClickSeat = (id: number) => {
@@ -267,7 +305,7 @@ const MovieDetail = () => {
     // Save the updatedBookingData to localStorage
     console.log("ReserveData LocalStorage:", reserveData);
     console.log("updatedBookingData:", updatedBookingData[0]);
-    setReserveDataToStorage(filteredBookingData)
+    // setReserveDataToStorage(filteredBookingData)
     localStorage.setItem("reserve", JSON.stringify(filteredBookingData));
   };
 
@@ -302,20 +340,17 @@ const MovieDetail = () => {
   const handleShowTime = () => {
     setShowSection('schedule_section')
     setShowSchedule(true)
-    // setShowDate(datesArray[0])
     setShowDate(currentDate)
+    scrollToSection(showSection)
+    // setShowDate(datesArray[0])
   }
 
 
   // functionality:
   const handleShowUpSeat = async (id: string) => {
-    const res = await getOneCinema('1')
-    const cinemaJson = await res.json()
-    setCinemaName(cinemaJson.name)
-
-    // setCinemaName(cinemaJson.name)
-    setShowSection('seat_section')
     setScreenId(id)
+    setShowSection('seat_section')
+    scrollToSection(showSection)
     setShowSeat(true)
     setSelectSeat([])   // when click another schedule then previous selected will remove
   }
@@ -323,7 +358,7 @@ const MovieDetail = () => {
 
 
   // console.log("selecting date:", showDate);
-  console.log("datesArray:", datesArray);
+  // console.log("datesArray:", datesArray);
   // console.log("screening:", screening);
   // console.log(currentDate);
   // console.log("Cinema:", cinemaName);
@@ -335,6 +370,11 @@ const MovieDetail = () => {
 
   // console.log("ReserveSeat:", reserveSeat);
   // console.log("Seat of Screen:", seatIdOfScreen);
+
+
+
+
+  console.log("screeningProps:", screeningProps);
 
 
 
@@ -381,16 +421,17 @@ const MovieDetail = () => {
               </div>
             </div>
           </div>
-          {/* Trailer Start */}
+
           <div >
-            <div className="container mx-auto mt-28">
+            {/* Trailer Start */}
+            <Element name='trailer_section' className="container mx-auto mt-28">
               <div className="relative w-100 h-48 overflow-hidden " style={{ paddingBottom: '56.25%' }}>
                 <iframe className="absolute top-0 left-0 w-full h-full"
                   src={`${movie?.trailer}`}
                   title="YouTube video player"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" />
               </div>
-            </div>
+            </Element>
             {/* Trailer End */}
             {
               showSchedule ? (
@@ -449,15 +490,10 @@ const MovieDetail = () => {
                           item.Screening.length === 0 ? (null) : (
                             < ShowTimeSchedule
                               key={index}
-                              id={item.id}
                               name={item.name}
-                              address={item.address}
-                              phone={item.phone}
-                              map={item.map}
                               Screening={item.Screening}
-                              onClick={(screeningId: string) => {
-                                handleShowUpSeat(screeningId)
-                              }}
+                              // --- we can write like this: because we have already specific whichb id already in <ShowTimeSchedule/> component:
+                              onClick={handleShowUpSeat}
                               showUpScreenId={screenId || ""}
                             />
                           )
@@ -484,7 +520,7 @@ const MovieDetail = () => {
                         <div className="flex flex-col my-10 overflow-y-auto h-4/5">
                           {
                             seatIdOfScreen?.map((itemRow: any, indexRow: number) => (
-                              <div className='flex flex-row justify-evenl place-items-center px-10'>
+                              <div key={indexRow} className='flex flex-row justify-evenl place-items-center px-10'>
                                 <div className='justify-center items-center text-2xl font-extrabold text-fuchsia-700 mb-5 w-10'>
                                   {getRowLetter(indexRow)}
                                 </div>

@@ -50,7 +50,6 @@ interface SelectMovieModel_props {
 // export const Seat: React.FunctionComponent<SeatProps> = (props: SeatProps) => {
 export const SelectMovieModel: React.FunctionComponent<SelectMovieModel_props> = (props: SelectMovieModel_props) => {
     const { image, cinema, title, movieType, movieDate, duration_min, auditoruim, showDate, timeShow, selected, onClickCancelSeat, onClickSubmit, onClickReserve } = props
-    console.log(cinema);
 
     return (
         <div className="flex flex-row">
@@ -68,8 +67,8 @@ export const SelectMovieModel: React.FunctionComponent<SelectMovieModel_props> =
                             {
                                 selected.length === 0 ? (
                                     <div className="font-medium text-gray-400">Please Select</div>
-                                ) : (selected.map((item: any) => (
-                                    <div className="border-2 border-collapse rounded-lg border-indigo-500 mb-3 hover:cursor-pointer">
+                                ) : (selected.map((item: any, index: number) => (
+                                    <div key={index} className="border-2 border-collapse rounded-lg border-indigo-500 mb-3 hover:cursor-pointer">
                                         <div className="flex flex-row h-12 justify-between items-stretch">
                                             <div className="flex flex-row items-center pl-4">
                                                 <p className=" w-12 text-white font-mono text-2xl">{item?.customId[0]}</p>

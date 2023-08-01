@@ -42,7 +42,7 @@ const Movie = () => {
     }
   }, []);
 
-  
+
   const color = `rgb(${red}, ${green}, ${blue})`;
   const totalPages = Math.ceil(movies.length / moviesPerPage);
 
@@ -69,6 +69,8 @@ const Movie = () => {
 
   const showPagination =
     totalPages > 1 && currentMovies.length >= 1; // Show pagination if there are more than 1 page and at least 3 movies on the current page
+
+
 
   return (
     <div className="movie bg-gradient-to-r from-red-900 to-purple-900 min-h-screen">

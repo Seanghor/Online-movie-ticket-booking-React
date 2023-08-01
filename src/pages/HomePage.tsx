@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { IconButton } from "../components/Icon_Button"
 import { MovieResponse } from "../types/movie.dto"
 import { getAllMovieFilterByStatus, getAllMovieFilterIsTop } from "../services/movie"
-import { HomeCard } from "../components/HomeCard"
+import { HomeCard } from "../components/Cards/HomeCard"
 import '../index.css'
 import { useLocation } from "react-router-dom";
 import ImageSlider from "../components/CoverSlider"
@@ -15,6 +15,30 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 const HomePage = () => {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const showing = urlParams.has('showing');
+  const soon = urlParams.has('soon');
+  const moviesPerPage = 8
+
+  // slide top movie:
+  const [topMovie, setTopMovie] = useState<MovieResponse[]>([])
+  const totalPagesTop = Math.ceil(topMovie.length / moviesPerPage);
+  const [currentPageTop, setCurrentPageTop] = useState<number>(1);
+  const [showCursorTopMov, setShowCursorTopMov] = useState(false)
+
+  // now playing:
+  const [nowPlaying, setNowPlaying] = useState<MovieResponse[]>([])
+  const totalPagesNowPlaying = Math.ceil(nowPlaying.length / moviesPerPage);
+  const [currentPageNowPlaying, setCurrentPageNowPlayingp] = useState(1);
+  const [showCursorNowPlayingMov, setShowCursorNowPlayingMov] = useState(false)
+
+  // comming soon
+  const [comingSoon, setComingSoon] = useState<MovieResponse[]>([])
+  const totalPagesSoon = Math.ceil(comingSoon.length / moviesPerPage);
+  const [currentPageSoon, setCurrentPageSoon] = useState(1);
+  const [showCursorSoonMov, setShowCursorSoonMov] = useState(false)
+
   const scrollToSection = (showSection: string) => {
     scroller.scrollTo(showSection, {
       duration: 800,
@@ -23,17 +47,6 @@ const HomePage = () => {
       offset: -500 //
     });
   };
-  const [comingSoon, setComingSoon] = useState<MovieResponse[]>([])
-  const [nowPlaying, setNowPlaying] = useState<MovieResponse[]>([])
-  const [topMovie, setTopMovie] = useState<MovieResponse[]>([])
-
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  const showing = urlParams.has('showing');
-  const soon = urlParams.has('soon');
-  // console.log("showing:", showing);
-  // console.log("soon:", soon);
-
   useEffect(() => {
     const fetchTopMovieData = async () => {
       const res = await getAllMovieFilterIsTop("true")
@@ -62,21 +75,9 @@ const HomePage = () => {
   }, []);
 
 
-  // slide top movie:
-  const moviesPerPage = 8
-  const totalPagesTop = Math.ceil(topMovie.length / moviesPerPage);
-  const [currentPageTop, setCurrentPageTop] = useState<number>(1);
-  const [showCursorTopMov, setShowCursorTopMov] = useState(false)
 
-  // now playing:
-  const totalPagesNowPlaying = Math.ceil(nowPlaying.length / moviesPerPage);
-  const [currentPageNowPlaying, setCurrentPageNowPlayingp] = useState(1);
-  const [showCursorNowPlayingMov, setShowCursorNowPlayingMov] = useState(false)
 
-  // comming soon
-  const totalPagesSoon = Math.ceil(comingSoon.length / moviesPerPage);
-  const [currentPageSoon, setCurrentPageSoon] = useState(1);
-  const [showCursorSoonMov, setShowCursorSoonMov] = useState(false)
+
 
 
   // dynamic function
@@ -135,6 +136,10 @@ const HomePage = () => {
   const handleMouseLeave = (setInvisible: Function) => {
     setTimeout(() => setInvisible(false), 1500);
   };
+
+
+
+
   return (
     <div className=' movie bg-gradient-to-r from-red-900 to-purple-900 min-h-screen '>
       <CoverSlider />

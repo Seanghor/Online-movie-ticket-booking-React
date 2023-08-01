@@ -20,7 +20,7 @@ const SearchBar: React.FunctionComponent<SearchProps> = (props: SearchProps) => 
     // You can perform any additional actions here before submitting the form
   };
 
-  console.log("Search:", search);
+  // console.log("Search:", search);
 
   return (
     <form className="mb-3" onSubmit={handleSubmit}>
