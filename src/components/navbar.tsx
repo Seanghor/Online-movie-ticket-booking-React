@@ -7,7 +7,8 @@ import { IconButton } from './Icon_Button';
 import { useNavigate } from 'react-router-dom';
 import { MDBBadge, MDBIcon } from 'mdb-react-ui-kit';
 import { Badge, Avatar } from "@material-tailwind/react";
-import { HomeIcon, BookmarkIcon, TicketIcon } from "@heroicons/react/24/solid";
+import MovieFilterRoundedIcon from '@mui/icons-material/MovieFilterRounded';
+// import { HomeIcon, BookmarkIcon, TicketIcon } from "@heroicons/react/24/solid";
 
 import { checkAccessTokenExpiration, getAccessToken, getRefreshToken, logOut } from '../services/auth';
 
@@ -112,7 +113,7 @@ const Navbar = () => {
 
                   <Link to={"/bill_detail"}>
                     <Badge content={noti}>
-                      <TicketIcon className="h-6 w-6 text-white" />
+                      <MovieFilterRoundedIcon className="h-6 w-6 text-white" />
                     </Badge>
                   </Link>
 
