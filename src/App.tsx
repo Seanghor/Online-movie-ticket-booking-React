@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes, BrowserRouter, Outlet } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, BrowserRouter, Outlet , useLocation} from 'react-router-dom';
 
 import ContactUs from './pages/ContactPage';
 import Movie from './pages/MoviePage';
@@ -15,6 +15,10 @@ import BillingDetailPage from './pages/BillingDetailPage';
 import Navbar from './components/navbar';
 
 function App() {
+  const location = useLocation();
+
+  // Check if the current route is the sign-in page
+  const hideFooter = location.pathname === '/login' || location.pathname === '/signup' ;
   return (
     <header>
       <Navbar />
@@ -31,7 +35,7 @@ function App() {
         <Route path="/cinema/moreinfiormation" element={<CinemaMoreInforDetail />} />
         <Route path="/bill_detail" element={<BillingDetailPage />} />
       </Routes>
-      <Footer />
+      {!hideFooter && <Footer />}
 
     </header>
   );

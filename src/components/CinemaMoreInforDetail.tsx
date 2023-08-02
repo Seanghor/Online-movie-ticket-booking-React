@@ -15,6 +15,7 @@ import {
 import { getOneCinema } from '../services/campus';
 import { CinemaResponse } from '../types/campus.dto';
 import { useLocation } from 'react-router-dom';
+import { Typography } from '@mui/material';
 
 const CinemaMoreInforDetail = () => {
 
@@ -87,9 +88,9 @@ const CinemaMoreInforDetail = () => {
       <div className="container flex-grow w-full py-4 sm:py-16 mx-auto">
         {/* Display Top Movie & Comming Soon Movie */}
         <Tabs value={activeTab}>
-          <div className="">
+          <div className="tabs-container">
           <TabsHeader
-            className="rounded-none ml-8 border-b border-blue-gray-50 bg-transparent p-0 w-96"
+            className="rounded-none ml-8 border-b border-blue-gray-50 bg-transparent p-0 w-[500px]"
             indicatorProps={{
               className: "bg-transparent border-b-2 border-blue-500 shadow-none rounded-none",
             }}
@@ -99,9 +100,9 @@ const CinemaMoreInforDetail = () => {
                 key={value}
                 value={value}
                 onClick={() => setActiveTab(value)}
-                className={`flex text-2xl font-semibold uppercase pb-5 ${activeTab === value ? "text-blue-500" : "text-white "} `}
+                className={`flex text-2xl font-semibold uppercase pb-8 ${activeTab === value ? "text-blue-500" : "text-white "} `}
               >
-                <h2>{label}</h2>{/* {label} */}
+                <h2 className='font-poppins'>{label}</h2>
               </Tab>
             ))}
           </TabsHeader>
@@ -136,15 +137,15 @@ const CinemaMoreInforDetail = () => {
         <div className="flex flex-row justify-between">
           <div className="flex flex-col p-5">
             <div className="m-5">
-              <h1 className="text-3xl text-white font-bold uppercase">
+              <h1 className="text-3xl text-white font-bold uppercase font-poppins">
                 address </h1>
-              <p className="mt-2 text-lg text-gray-50">{cinema?.address}</p>
+              <p className="mt-2 text-lg text-gray-50 font-poppins">{cinema?.address}</p>
             </div>
 
             <div className="m-5">
-              <h1 className="text-3xl text-white font-bold uppercase">
+              <h1 className="text-3xl text-white font-bold uppercase font-poppins">
                 Office Hours </h1>
-              <p className="mt-2 text-lg text-gray-50">9:00 AM - 21:00 PM</p>
+              <p className="mt-2 text-lg text-gray-50 font-poppins">9:00 AM - 21:00 PM</p>
             </div>
           </div>
 
