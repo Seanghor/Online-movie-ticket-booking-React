@@ -143,18 +143,19 @@ const HomePage = () => {
   return (
     <div className=' movie bg-gradient-to-r from-red-900 to-purple-900 min-h-screen '>
       <CoverSlider />
+      
       <div className="px-[145px] flex-grow w-full py-4 sm:py-16 mx-auto ">
         {/* <div className="group  w-60 h-40 m-3">
         </div> */}
         {/* Top Movie */}
         <div>
-          <h4 className=" ml-3 uppercase my-10 text-4xl font-bold bg-gradient-to-r from-yellow-100 via-green-500 to-yellow-200  text-transparent bg-clip-text animate-gradient">Top Movie</h4>
+          <h4 className="ml-3 uppercase font-poppins my-10 text-4xl font-bold animate-text bg-gradient-to-r from-yellow-200 via-blue-200 to-green-500 text-transparent bg-clip-text animate-gradient">Top Movie</h4>
           <div
             onMouseOver={() => { handleMouseEnter(setShowCursorTopMov) }}
             onMouseLeave={() => {
               handleMouseLeave(setShowCursorTopMov)
             }}
-            className="h-64  no-scrollbar flex flex-no-wrap justify-between items-center overflow-scroll  mb-20">
+            className="h-64 no-scrollbar flex flex-no-wrap justify-between items-center overflow-scroll  mb-20">
             <div
               onClick={() => goToPreviousPage(currentPageTop, totalPagesTop, setCurrentPageTop)}
               className="group">
@@ -183,12 +184,13 @@ const HomePage = () => {
               onClick={() => goToNextPage(currentPageTop, totalPagesTop, setCurrentPageTop)}
               className="group">
               <ArrowForwardIosIcon style={{ color: "" }} className={`text-cyan-300 hover:text-cyan-800 ${showCursorTopMov ? "visible" : "invisible"}`} />
-            </div>   </div>
+            </div>  
+          </div>
         </div>
 
         {/* Now Playing */}
         <Element name='nowPlaying_section'>
-          <h4 className=" ml-3 uppercase my-10 text-4xl font-bold bg-gradient-to-r from-blue-300 via-green-500 to-yellow-200  text-transparent bg-clip-text animate-gradient">Now Showing</h4>
+          <h4 className="ml-3 uppercase font-poppins my-10 text-4xl font-bold animate-text bg-gradient-to-r from-blue-300 via-green-500 to-yellow-200  text-transparent bg-clip-text animate-gradient">Now Showing</h4>
           <div
             onMouseOver={() => { handleMouseEnter(setShowCursorNowPlayingMov) }}
             onMouseLeave={() => {
@@ -228,7 +230,7 @@ const HomePage = () => {
 
         {/* Comming Movie */}
         <Element name='coming_section'>
-          <h4 className="ml-3 uppercase my-10 text-4xl font-bold bg-gradient-to-r from-green-500  via-yellow-200  to-blue-200 text-transparent bg-clip-text animate-gradient">Coming Soon</h4>
+          <h4 className="ml-3 uppercase font-poppins my-10 text-4xl font-bold animate-text bg-gradient-to-r from-green-500  via-yellow-200  to-blue-200 text-transparent bg-clip-text animate-gradient">Coming Soon</h4>
           <div
             onMouseOver={() => { handleMouseEnter(setShowCursorSoonMov) }}
             onMouseLeave={() => {

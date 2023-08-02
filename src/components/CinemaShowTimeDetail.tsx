@@ -289,7 +289,7 @@ const CinemaShowTimeDetail = () => {
     <div className='mx-auto bg-gradient-to-r from-red-900 to-purple-900 min-h-screen '>
       <div className="container flex-grow w-full py-4 sm:py-16 mx-auto">
         <div className="py-5 mt-10">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-white via-blue-400 to-green-600 text-transparent bg-clip-text animate-gradient">{cinema?.name}</h1>
+          <h1 className="text-5xl ml-3 uppercase font-poppins my-10 text-4xl font-bold animate-text bg-gradient-to-r from-green-500  via-yellow-200  to-blue-200 text-transparent bg-clip-text animate-gradient">{cinema?.name}</h1>
         </div>
 
         <div className="flex flex-row jus py-4 mt-10">

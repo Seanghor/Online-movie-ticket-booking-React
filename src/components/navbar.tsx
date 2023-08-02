@@ -7,7 +7,8 @@ import { IconButton } from './Icon_Button';
 import { useNavigate } from 'react-router-dom';
 import { MDBBadge, MDBIcon } from 'mdb-react-ui-kit';
 import { Badge, Avatar } from "@material-tailwind/react";
-import { HomeIcon, BookmarkIcon, TicketIcon } from "@heroicons/react/24/solid";
+import MovieFilterRoundedIcon from '@mui/icons-material/MovieFilterRounded';
+// import { HomeIcon, BookmarkIcon, TicketIcon } from "@heroicons/react/24/solid";
 
 import { checkAccessTokenExpiration, getAccessToken, getRefreshToken, logOut } from '../services/auth';
 
@@ -95,9 +96,9 @@ const Navbar = () => {
   }
   return (
     <nav className="bg-nav dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b  dark:border-gray-600">
-      <div className="flex flex-wrap items-center justify-between mx-auto p-4">
+      <div className="flex flex-wrap items-center justify-between mx-auto p-4 lg:px-20">
         <a href="https://flowbite.com/" className="flex items-center">
-          <Link to="/" className="text-white flex items-center justify-self-start cursor-pointer no-underline text-3xl">
+          <Link to="/" className="text-white font-poppins flex items-center justify-self-start cursor-pointer no-underline text-3xl">
             <BiMoviePlay className="mr-2" onClick={closeMobileMenu} />
             MovieTick
           </Link>
@@ -112,7 +113,7 @@ const Navbar = () => {
 
                   <Link to={"/bill_detail"}>
                     <Badge content={noti}>
-                      <TicketIcon className="h-6 w-6 text-white" />
+                      <MovieFilterRoundedIcon className="h-6 w-6 text-white" />
                     </Badge>
                   </Link>
 
@@ -135,7 +136,7 @@ const Navbar = () => {
                 isIconOnly={false}
                 onClick={() => { handleClickBtn() }}
                 isDisabled={false}
-                className={"ml-3 text-white bg-[#0284c7] font-semibold hover:text-white py-2 px-6 border border-blue hover:bg-transparent rounded uppercase"}
+                className={"ml-3 font-poppins text-white bg-[#0284c7] font-semibold hover:text-white py-2 px-6 border border-blue hover:bg-transparent rounded uppercase"}
               />
             </Link>
           </div>
@@ -192,29 +193,29 @@ const Navbar = () => {
         <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
           <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border md:flex-row md:space-x-8 md:mt-0 md:border-0">
             <li className=''>
-              <NavLink to="/" className={({ isActive }) => `${isActive ? 'text-blue-400' : "text-white"}`}>
+              <NavLink to="/" className={({ isActive }) => `font-poppins font-bold text-lg ${isActive ? 'text-blue-400' : "text-white"}`}>
                 HOME
               </NavLink>
             </li>
 
             <li >
-              <NavLink to="/movie" className={({ isActive }) => `${isActive ? 'text-blue-400' : "text-white"}`}>
+              <NavLink to="/movie" className={({ isActive }) => `font-poppins font-bold text-lg ${isActive ? 'text-blue-400' : "text-white"}`}>
                 MOVIE
               </NavLink>
             </li>
             <li>
-              <NavLink to="/cinema" className={({ isActive }) => `${isActive ? 'text-blue-400' : "text-white"}`}>
+              <NavLink to="/cinema" className={({ isActive }) => `font-poppins font-bold text-lg ${isActive ? 'text-blue-400' : "text-white"}`}>
                 CINEMAS
               </NavLink>
             </li>
             <li>
-              <NavLink to="/promotion" className={({ isActive }) => `${isActive ? 'text-blue-400' : "text-white"}`}>
+              <NavLink to="/promotion" className={({ isActive }) => `font-poppins font-bold text-lg ${isActive ? 'text-blue-400' : "text-white"}`}>
                 PROMOTIONS
               </NavLink>
             </li>
 
             <li >
-              <NavLink to="/contactus" className={({ isActive }) => `${isActive ? 'text-blue-400' : "text-white"}`}>
+              <NavLink to="/contactus" className={({ isActive }) => `font-poppins font-bold text-lg ${isActive ? 'text-blue-400' : "text-white"}`}>
                 CONTACT US
               </NavLink>
             </li>
@@ -227,20 +228,20 @@ const Navbar = () => {
       <div
         className={`${isMenuOpen ? 'block' : 'hidden'} sm:hidden`} id="mobile-menu">
         <div className="px-2 pt-2 pb-3 space-y-1 text-center">
-          <NavLink to="/home" className={({ isActive }) => `${isActive ? 'text-blue-400 hover:bg-blue-400 hover:text-white block px-3 py-2 rounded-md text-base font-medium' : "text-white hover:bg-blue-400 hover:text-white block px-3 py-2 rounded-md text-base font-medium"}`}>
+          <NavLink to="/home" className={({ isActive }) => `font-poppins font-bold text-lg ${isActive ? 'text-blue-400 hover:bg-blue-400 hover:text-white block px-3 py-2 rounded-md text-base font-medium' : "text-white hover:bg-blue-400 hover:text-white block px-3 py-2 rounded-md text-base font-medium"}`}>
             HOME
           </NavLink>
-          <NavLink to="/movie" className={({ isActive }) => `${isActive ? 'text-blue-400 hover:bg-blue-400 hover:text-white block px-3 py-2 rounded-md text-base font-medium' : "text-white hover:bg-blue-400 hover:text-white block px-3 py-2 rounded-md text-base font-medium"}`}>
+          <NavLink to="/movie" className={({ isActive }) => `font-poppins font-bold text-lg ${isActive ? 'text-blue-400 hover:bg-blue-400 hover:text-white block px-3 py-2 rounded-md text-base font-medium' : "text-white hover:bg-blue-400 hover:text-white block px-3 py-2 rounded-md text-base font-medium"}`}>
             MOVIE
           </NavLink>
-          <NavLink to="/cinema" className={({ isActive }) => `${isActive ? 'text-blue-400 hover:bg-blue-400 hover:text-white block px-3 py-2 rounded-md text-base font-medium' : "text-white hover:bg-blue-400 hover:text-white block px-3 py-2 rounded-md text-base font-medium"}`}>
+          <NavLink to="/cinema" className={({ isActive }) => `font-poppins font-bold text-lg ${isActive ? 'text-blue-400 hover:bg-blue-400 hover:text-white block px-3 py-2 rounded-md text-base font-medium' : "text-white hover:bg-blue-400 hover:text-white block px-3 py-2 rounded-md text-base font-medium"}`}>
             CINEMAS
           </NavLink>
-          <NavLink to="/promotion" className={({ isActive }) => `${isActive ? 'text-blue-400 hover:bg-blue-400 hover:text-white block px-3 py-2 rounded-md text-base font-medium' : "text-white hover:bg-blue-400 hover:text-white block px-3 py-2 rounded-md text-base font-medium"}`}>
+          <NavLink to="/promotion" className={({ isActive }) => `font-poppins font-bold text-lg ${isActive ? 'text-blue-400 hover:bg-blue-400 hover:text-white block px-3 py-2 rounded-md text-base font-medium' : "text-white hover:bg-blue-400 hover:text-white block px-3 py-2 rounded-md text-base font-medium"}`}>
             PROMOTIONS
           </NavLink>
 
-          <NavLink to="/contactus" className={({ isActive }) => `${isActive ? 'text-blue-400 hover:bg-blue-400 hover:text-white block px-3 py-2 rounded-md text-base font-medium' : "text-white hover:bg-blue-400 hover:text-white block px-3 py-2 rounded-md text-base font-medium"}`}>
+          <NavLink to="/contactus" className={({ isActive }) => `font-poppins font-bold text-lg ${isActive ? 'text-blue-400 hover:bg-blue-400 hover:text-white block px-3 py-2 rounded-md text-base font-medium' : "text-white hover:bg-blue-400 hover:text-white block px-3 py-2 rounded-md text-base font-medium"}`}>
             CONTACT US
           </NavLink>
         </div>

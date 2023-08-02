@@ -11,21 +11,40 @@ module.exports = {
   ],
   theme: {
     extend: {
+      animation: {
+        text: 'text 5s ease infinite',
+      },
       keyframes: {
-        animatedgradient: {
-          '0%': { backgroundPosition: '0% 50%' },
-          '50%': { backgroundPosition: '100% 50%' },
-          '100%': { backgroundPosition: '0% 50%' },
+        text: {
+          '0%, 100%': {
+            'background-size': '200% 200%',
+            'background-position': 'left center',
+          },
+          '50%': {
+            'background-size': '200% 200%',
+            'background-position': 'right center',
+          },
         },
       },
-      backgroundSize: {
-        '300%': '300%',
-      },
-      animation: {
-        gradient: 'animatedgradient 6s ease infinite alternate',
-      },
+      // keyframes: {
+      //   animatedgradient: {
+      //     '0%': { backgroundPosition: '0% 50%' },
+      //     '50%': { backgroundPosition: '100% 50%' },
+      //     '100%': { backgroundPosition: '0% 50%' },
+      //   },
+      // },
+      // backgroundSize: {
+      //   '300%': '300%',
+      // },
+      // animation: {
+      //   gradient: 'animatedgradient 6s ease infinite alternate',
+      // },
       fontFamily: {
         'poppins': ['Poppins', 'sans-serif'],
+        'Angkor':['Angkor', 'cursive'],
+        'DancingScript':['Dancing Script', 'cursive'],
+        'Dangrek':['Dangrek', 'cursive'],
+        'Fasthand':['Fasthand','cursive'],
       },
       backgroundImage: {
         my_bg_image: "url('../public/images/login_background.png')"

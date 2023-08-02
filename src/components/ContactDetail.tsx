@@ -11,9 +11,9 @@ export const ContactDetail: React.FunctionComponent<ContactDetailProps> = (props
     const { title, info} = props;
     return (
         <div className="flex flex-row mb-5">
-        <p className="w-48 text-white font-bold text-2xl">{title}</p>
-        <p className="ml-10 text-white font-bold text-2xl">:</p>
-        <p className="ml-10 text-white font-bold text-2xl">{info}</p>
+        <p className="w-48 text-white font-bold text-2xl font-DancingScript">{title}</p>
+        <p className="ml-10 text-white font-bold text-2xl font-DancingScript">:</p>
+        <p className="ml-10 text-white font-bold text-2xl font-DancingScript">{info}</p>
       </div>
     );
 }

@@ -276,7 +276,7 @@ const BillingDetailPage = () => {
             <div className='shadow-md mt-4'>
               {/* Phone Number Input */}
               <div className="mb-4 bg-white p-4 rounded-lg">
-                <label className="block text-gray-700 font-bold mb-2" htmlFor="phoneNumber">
+                <label className="block text-gray-700 font-bold mb-5" htmlFor="phoneNumber">
                   Phone Number
                 </label>
                 <input
@@ -292,16 +292,20 @@ const BillingDetailPage = () => {
               </div>
             </div>
 
-            <div className="mb-4 shadow-lg mt-4 p-4 rounded-lg bg-white px-4">
-              <label className="block text-gray-700 font-medium mb-2" htmlFor="remark">
+            <div className="mb-4 shadow mt-4 p-4 rounded-lg bg-white px-4">
+              <label className="block text-gray-700 font-medium mb-5" htmlFor="remark">
                 Other
               </label>
               <Input
-                className=""
-                label="Remark"
+               variant="outlined" 
+               label="Remark"
+                className="shadow appearance-none border-2 border-gray-200 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 value={remark}
                 onChange={(e) => setRemark(e.target.value)}
               />
+              {/* <div className="w-72 h-72 ">
+                <Input label="Username" className='border-2 border-red-500' />
+              </div> */}
             </div>
             <div className='flex flex-col'>
               <Checkbox onClick={() => { setAgree(!agree) }} className='border-2 border-gray-500'
