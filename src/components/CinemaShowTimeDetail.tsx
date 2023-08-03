@@ -17,10 +17,10 @@ import { getOneScreeningById } from '../services/screening';
 import { EachScreeningResponse } from '../types/screening.dto';
 import { SelectMovieModel } from './Select_movie_model';
 import SeatNote from './SeatNote';
-import image_seat from '../assets/seat_available.svg'
-import image_sealectedSeat from '../assets/seat_selected.svg'
+import image_seat from '../assets/images/seat/seat_available.svg'
+import image_sealectedSeat from '../assets/images/seat/seat_selected.svg'
 import bookIcon from '../assets/booked.svg'
-import image_notAvialable from '../assets/not_avialable.svg'
+import image_notAvialable from '../assets/images/seat/not_avialable.svg'
 import { Seat } from './Seat';
 import { CreateBookingDto } from '../types/booking.dto';
 import { booking } from '../services/booking';

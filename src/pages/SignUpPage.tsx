@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import SignupImg from '../assets/signup.png';
+import SignupImg from '../assets/images/sinin_signup_bg/signup.png';
 import { GenderEnum } from '../types/enum.type';
 import { RegisterInput } from '../types/user';
 import { registerUser } from '../services/user';
 import { useNavigate } from 'react-router-dom';
-import SignupBgImage from '../assets/signupBg.png';
+import SignupBgImage from '../assets/images/sinin_signup_bg/signupBg.png';
 import PersonIcon from '@mui/icons-material/Person';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';

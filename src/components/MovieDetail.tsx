@@ -18,10 +18,10 @@ import { SelectMovieModel } from "./Select_movie_model";
 import { convertMinutesToHHMM, formatDateToShortCurt, formatDateTo_dd_mm_yy, formatTimeTo12Hour, getRowLetter } from "../utils/utils";
 import SeatNote from "./SeatNote";
 import { Element, scroller } from 'react-scroll';
-import image_seat from '../assets/seat_available.svg'
-import image_sealectedSeat from '../assets/seat_selected.svg'
+import image_seat from '../assets/images/seat/seat_available.svg'
+import image_sealectedSeat from '../assets/images/seat/seat_selected.svg'
 import bookIcon from '../assets/booked.svg'
-import image_notAvialable from '../assets/not_avialable.svg'
+import image_notAvialable from '../assets/images/seat/not_avialable.svg'
 import SearchBar from './SearchBar';
 import { useNavigate } from 'react-router-dom';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';

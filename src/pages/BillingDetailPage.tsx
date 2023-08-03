@@ -17,10 +17,10 @@ import { Checkbox, Typography, Input } from "@material-tailwind/react";
 import CloseIcon from '@mui/icons-material/Close';
 
 // -- method:
-import paypal_logo from '../assets/paypal.svg'
-import aba_logo from '../assets/aba.png'
-import acleda_logo from '../assets/acleda.png'
-import philip_logo from '../assets/philip.jpg'
+import paypal_logo from '../assets/images/bank//paypal.svg'
+import aba_logo from '../assets/images/bank//aba.png'
+import acleda_logo from '../assets/images/bank//acleda.png'
+import philip_logo from '../assets/images/bank/philip.jpg';
 // -- icon:
 import aba_payment_icon from '../assets/paymentMethod_icon/aba_icon.svg'
 import acleda_payment_icon from '../assets/paymentMethod_icon/acleda_icon.png'

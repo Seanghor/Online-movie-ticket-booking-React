@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAccessToken, logIn } from '../services/auth';
 import LockIcon from '@mui/icons-material/Lock';
-import SignInBgImage from '../assets/signinBg.png';
+import SignInBgImage from '../assets/images/sinin_signup_bg/signinBg.png';
 import PersonIcon from '@mui/icons-material/Person';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';

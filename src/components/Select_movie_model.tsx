@@ -135,19 +135,19 @@ export const SelectMovieModel: React.FunctionComponent<SelectMovieModel_props> =
             <div className="w-28 ml-4">
 
                 <div className="">
-                    <h4 className="text-neutral-800 font-semibold text-left">Date:</h4>
-                    <div className="bg-transparent border-slate-800  shadow-md text-neutral-900 font-semibold py-2 px-4 border  rounded  ">
-                        <p className="text-4xl">{getDayNumber(showDate.toString())}</p>
-                        <p className="uppercase ">{getMonthName(showDate.toString())}</p>
+                    <h4 className="text-white font-semibold text-left mb-5">Date</h4>
+                    <div className="bg-transparent border-white-800  shadow-md text-neutral-900 font-semibold py-2 px-4 border rounded  ">
+                        <p className="text-4xl text-white">{getDayNumber(showDate.toString())}</p>
+                        <p className="uppercase text-white ">{getMonthName(showDate.toString())}</p>
                     </div>
                 </div>
-                <div className="text-left border-zinc-800  shadow-md mt-4">
-                    <h4 className="font-semibold text-neutral-800 ">Time</h4>
-                    <p className="text-neutral-900 font-semibold px-6">{formatTimeTo12Hour(timeShow.toString())}</p>
+                <div className="text-left shadow-md mt-4 boder-yellow-500">
+                    <h4 className="font-semibold text-white mb-3">Time</h4>
+                    <p className="text-white py-3 shadow-xl bg-transparent border-white-800 font-semibold px-6 border rounded">{formatTimeTo12Hour(timeShow.toString())}</p>
                 </div>
-                <div className="text-left border-zinc-800  shadow-md mt-4">
-                    <h4 className="font-semibold text-neutral-800 ">Theatre:</h4>
-                    <p className="text-neutral-900 font-semibold px-6">{auditoruim}</p>
+                <div className="text-left  mt-4 ">
+                    <h4 className="font-semibold text-white mb-3">Theatre</h4>
+                    <p className="text-white py-3 shadow-xl bg-transparent border-white-800 font-semibold px-6 border rounded">{auditoruim}</p>
                 </div>
             </div>
 
