@@ -141,7 +141,7 @@ const HomePage = () => {
 
 
   return (
-    <div className=' movie bg-gradient-to-r from-red-900 to-purple-900 min-h-screen '>
+    <div className='movie bg-gradient-to-r from-red-900 to-purple-900 min-h-screen '>
       <CoverSlider />
       
       <div className="px-[145px] flex-grow w-full py-4 sm:py-16 mx-auto ">

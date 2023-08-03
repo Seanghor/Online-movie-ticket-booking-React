@@ -9,7 +9,7 @@ import { CursorButtonNext } from "../components/Buttons/CursorButtonNext";
 const Movie = () => {
   const [movies, setMovies] = useState<MovieResponse[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const moviesPerPage = 14;
+  const moviesPerPage = 12;
 
   // RGB color
   const [red, setRed] = useState(255);
@@ -33,7 +33,7 @@ const Movie = () => {
     }, 50);
 
     // scroll bar
-    document.body.style.overflow = "hidden";
+    //document.body.style.overflow = "hidden";
     return () => {
       fetchAllMovieData();
       clearInterval(interval);
@@ -75,7 +75,7 @@ const Movie = () => {
   return (
     <div className="movie bg-gradient-to-r from-red-900 to-purple-900 min-h-screen">
 
-      <div className=" flex-grow w-full py-4 sm:py-16 mx-auto relative ">
+      <div className="flex-grow w-full py- sm:py-16 mx-auto relative mt-16">
         <h4
           id="runningColorText"
           className="bg-gradient-to-r from-crimson to-springgreen via-orange bg-clip-text bg-gradient-rainbow text-transparent text-5xl w-80vw mx-auto my-20 text-center transition-colors duration-200 uppercase font-extrabold from-neutral-700 mb-2 mt-4 font-poppins"
@@ -86,7 +86,8 @@ const Movie = () => {
 
         <div className="flex flex-row ">
           <CursorButtonNext onClick={() => { goToNextPage() }} />
-          <div className="container w-full py-4  mx-auto relative grid grid-cols-7 gap-3">
+          
+          <div className="container w-full py-4 mx-auto relative grid grid-cols-6 gap-5">
             {currentMovies?.map((item: MovieResponse, index: number) => (
               <Link
                 key={index}
@@ -95,7 +96,7 @@ const Movie = () => {
                   console.log("selected now playing");
                 }}
               >
-                <Card image={item?.image || ""} title={item?.title || ""} />
+                <Card image={item?.image || ""} title={item?.title || ""} opening_date={item?.opening_date || ""} />
               </Link>
             ))}
           </div>

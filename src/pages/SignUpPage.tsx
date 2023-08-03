@@ -53,78 +53,8 @@ export default function Signup() {
             alt="sign up with image"
           />
         </div>
-
-        {/* Sign up form */}
-        {/* <div className="w-full bg-transparent rounded-md lg:max-w-xl">
-          <h1 className="text-2xl font-semibold text-center text-white">
-            Create an account
-          </h1>
-          <form className="mt-6" onSubmit={handleSignUp}>
-            <div className="mb-2">
-              <label
-                htmlFor="name"
-                className="block text-sm font-semibold text-white"
-              >
-                Name
-              </label>
-              <input
-                type="text"
-                placeholder='Username'
-                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </div>
-            <div className="mb-2">
-              <label
-                htmlFor="email"
-                className="block text-sm font-semibold text-white"
-              >
-                Email
-              </label>
-              <input
-                type="email"
-                placeholder='example@gmail.com'
-                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            <div className="mb-2">
-              <label
-                htmlFor="password"
-                className="block text-sm font-semibold text-white"
-              >
-                Password
-              </label>
-              <input
-                type="password"
-                placeholder='password'
-                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            <p className="text-xs text-white font-bold">
-              Password must be at least 8 characters long
-            </p>
-            <div className="mt-6">
-              <button className="w-full px-4 py-2 text-white bg-[#0284c7] rounded-lg hover:bg-gray-900 focus:outline-none focus:bg-gray-600">
-                Sign up
-              </button>
-            </div>
-          </form>
-
-          <p className="mt-5 text-sm text-center text-white">
-            {" "}
-            Already a member?{" "}
-            <a href="/login" className="font-medium text-[#0284c7] hover:underline">
-              Sign in
-            </a>
-          </p>
-        </div> */}
+        
         {/* Sign Up form */}
-
         <div className="w-full flex flex-col m-auto shadow-md lg:max-w-3xl">
           <div className="bg-purple-300 py-10 bg-opacity-25 w-full p-6">
             <h1 className='text-5xl text-white w-1/2 m-auto font-bold text-center font-DancingScript'>Welcome</h1>

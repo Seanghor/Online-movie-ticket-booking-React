@@ -3,6 +3,8 @@ import { Link, Element, scroller } from 'react-scroll';
 import { ContactDetail } from "../components/ContactDetail"
 import { ContactForm } from "../components/ContactForm"
 import ContactUsBgImage from "../assets/contactusBg.png";
+import Profilebg from '../assets/Profilebg.png';
+import Kimsour from '../assets/kimsour3.png';
 const ContactUs = () => {
 
   return (
@@ -21,7 +23,15 @@ const ContactUs = () => {
             <ContactForm />
           </div>
         </div>
+
+        {/* <div className="flex w-full h-full bg-cover" style={{backgroundImage : `url(${Profilebg})` }}>
+          <div className="flex flex-row">
+            <div className="rounded-full w-96 h-96 bg-red-500"></div>
+          </div>
+        </div> */}
       </div>
+
+     
     </body>
 
   )

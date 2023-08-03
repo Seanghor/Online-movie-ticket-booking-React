@@ -406,7 +406,7 @@ const MovieDetail = () => {
                 <h4 className="font-[poppins] font-normal text-slate-200 text-lg ml-3">{movie?.movieType}</h4>
               </div>
               <div className="text-left">
-                <p className="my-3 font-normal text-slate-200 dark:text-gray-200">{movie?.description}</p>
+                <p className="my-3 font-normal text-slate-200 dark:text-gray-200 font-poppins">{movie?.description}</p>
                 {
                   // || (screening.length !== 0)
                   (showSchedule) ? null : (
@@ -478,7 +478,7 @@ const MovieDetail = () => {
                       <SearchBar search={search} onChange={setSearch} placeHolder='search' />
                       {/* Add other components or logic related to displaying movies */}
                     </div>
-                    <div className="h-screen">
+                    <div className="">
                       {screening?.filter(
                         ((item: any) => {
                           return search?.toLocaleLowerCase() === ""

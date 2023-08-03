@@ -12,6 +12,7 @@ import { IconButton } from "./Icon_Button";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import croos_img from '../assets/croos.svg'
 import { formatDateDayAndMonth, getDayNumber, getMonthName } from "../utils/utils";
+import CloseIcon from '@mui/icons-material/Close';
 
 function formatTimeTo12Hour(timeString: string) {
     const date = new Date(timeString);
@@ -88,7 +89,8 @@ export const SelectMovieModel: React.FunctionComponent<SelectMovieModel_props> =
                                             <div
                                                 onClick={() => onClickCancelSeat(item.id)}
                                                 className="flex flex-row items-center w-12 pr-2">
-                                                <img className="object-cover w-8 h-8 hover:w-10 hover:h-10" src={croos_img} alt="" />
+                                                {/* <img className="object-cover w-8 h-8 hover:w-10 hover:h-10" src={croos_img} alt="" /> */}
+                                                <CloseIcon className="ml-3 text-white hover:text-red-500 hover:w-8 hover:h-8"/>
                                             </div>
                                         </div>
                                     </div>

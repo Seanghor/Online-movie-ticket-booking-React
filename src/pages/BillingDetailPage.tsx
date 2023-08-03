@@ -14,7 +14,7 @@ import { booking } from '../services/booking';
 import { CreatePurchaseDto } from '../types/purchase.dto';
 import { createPurchase } from '../services/purchase';
 import { Checkbox, Typography, Input } from "@material-tailwind/react";
-
+import CloseIcon from '@mui/icons-material/Close';
 
 // -- method:
 import paypal_logo from '../assets/paypal.svg'
@@ -244,6 +244,8 @@ const BillingDetailPage = () => {
     forceUpdate()
   }
 
+
+
   return (
     <div className="mx-auto w-full h-full bg-gradient-to-r from-red-900 to-purple-900 min-h-screen font-sans">
       <img src={CinemaImg} alt="" className='w-full h-96 object-cover' />
@@ -398,6 +400,13 @@ const BillingDetailPage = () => {
                           <span className='text-red-600'>{movie.seat.length}</span>
                         </h3>
                         <p className="text-[#9333ea] font-normal text-lg ml-5">${calculateTotalPriceOfEachMovie(movie.price, movie.seat.length)}</p>
+                      </div>
+
+                      <div
+                        onClick={() => {}}
+                        className="flex flex-row items-center w-12 pr-2">
+                        {/* <img className="object-cover w-8 h-8 hover:w-10 hover:h-10" src={croos_img} alt="" /> */}
+                        <CloseIcon className="ml-3 text-gray-500 hover:text-red-500 hover:w-8 hover:h-8"/>
                       </div>
                     </div>
                   </div>

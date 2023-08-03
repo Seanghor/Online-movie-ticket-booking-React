@@ -2,8 +2,9 @@ import { useState } from "react";
 import { BiMoviePlay } from "react-icons/bi";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { scroller } from "react-scroll";
-
-
+import Kimsour from "../assets/kimsour3.png";
+import Avatar from "./AvatarProp";
+import Seanghor from "../assets/seanghor1.png";
 
 
 const Footer = () => {
@@ -11,12 +12,26 @@ const Footer = () => {
         <footer className="bg-footer dark:bg-gray-900">
             <div className="mx-auto w-full p-20 py-6 lg:py-8">
                 <div className="md:flex md:justify-between">
+                    {/* Movie Tick Left side */}
                     <div className="mb-6 md:mb-0">
                         <a href="https://flowbite.com/" className="flex items-center">
                             <BiMoviePlay className="h-8 text-white text-3xl mr-3" />
                             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white font-poppins">MovieTick</span>
                         </a>
                     </div>
+                    {/* Movie Tick Left Side */}
+
+                    {/* Developer Role*/}
+                    {/* <div className="flex flex-row gap-7">
+                        <Avatar imageUrl={Kimsour} userName={"Rith Kimsour"} role={"Frontend"}/>
+                        <Avatar imageUrl={Seanghor} userName={"Hai Seanghor"} role={"Backend"}/>
+                    </div>
+                   */}
+                    {/* Developer Role */}
+
+                    
+
+                    {/* Content Right Side */}
                     <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
                         <div>
                             <h2 className="mb-6 text-sm font-semibold uppercase dark:text-white font-poppins">Movie</h2>
@@ -61,8 +76,12 @@ const Footer = () => {
                             </ul>
                         </div>
                     </div>
+                    {/* Content Right Side */}
                 </div>
+
+                {/* divider */}
                 <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+                {/* Copy Right */}
                 <div className="sm:flex sm:items-center sm:justify-between">
                     <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400 font-poppins">© 2023 <a href="https://flowbite.com/" className="hover:underline font-poppins">MovieTick™</a>. All Rights Reserved.
                     </span>
@@ -99,11 +118,13 @@ const Footer = () => {
                         </a>
                     </div>
                 </div>
+                {/* Copy Right */}
             </div>
         </footer>
 
 
     )
 }
+
 
 export default Footer
