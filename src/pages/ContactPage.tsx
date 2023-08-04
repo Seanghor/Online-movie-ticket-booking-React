@@ -27,7 +27,7 @@ const ContactUs = () => {
           </div>
         </div>
         {/* Developer Role */}
-          <div className="flex flex-col">
+          <div className="pb-20 w-full shrink-0 grow-0 basis-auto md:mb-0 md:w-full md:px-3 lg:px-6">
           <Avatar imageUrl={Kimsour} userName={'Rith Kimsour'} role={'Frontend Developer'}/>
           <Avatar imageUrl={Seanghor} userName={'Hai Seanghor'} role={'Backend Developer'}/>
           </div>

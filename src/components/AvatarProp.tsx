@@ -5,16 +5,17 @@ import YellowBottomRightShape from '../assets/images/contactus/yellowBottomRight
 import CircleProfileShape from '../assets/images/contactus/CircleBg.png';
 import CrossShape from '../assets/images/contactus/cross.png';
 import Brush from '../assets/images/contactus/brush.png';
+
 interface AvatarProps {
   imageUrl: string;
   userName: string;
   role: string;
 }
 
-const Avatar: React.FunctionComponent<AvatarProps> = (props:AvatarProps) => {
-    const {imageUrl, userName,role} = props;
+const Avatar: React.FunctionComponent<AvatarProps> = (props: AvatarProps) => {
+  const { imageUrl, userName, role } = props;
   return (
-    <div className="relative lg:h-[800px] md:h-[1000px] w-full bg-white mt-20 rounded-3xl">
+    <div className="relative bg-white mt-20 rounded-3xl overflow-hidden">
       <div className="absolute left-0 top-0 w-1/4">
         <img src={GreenTopLeftShape} alt="" className="object-cover bg-cover rounded-tl-3xl" />
       </div>
@@ -26,20 +27,29 @@ const Avatar: React.FunctionComponent<AvatarProps> = (props:AvatarProps) => {
         <img src={YellowBottomRightShape} alt="" className="object-cover bg-cover rounded-br-3xl" />
       </div>
 
-      <div className="absolute flex flex-col items-center justify-start left-20 top-52 md:flex-row md:items-center md:justify-start">
-        <div style={{ borderRadius: '50%', overflow: 'hidden', width: '500px', height: '500px', position: 'relative' }}>
+      <div className="flex flex-col items-center justify-start pt-16 md:flex-row md:items-center justify-center">
+        <div
+          style={{ borderRadius: '50%', overflow: 'hidden', width: '300px', height: '300px', position: 'relative' }}
+          className="w-48 h-48 md:w-72 md:h-72"
+        >
           <img src={CircleProfileShape} alt="" className="object-cover bg-cover" style={{ position: 'relative', zIndex: '1' }} />
-          <img src={imageUrl} alt="Kimsour" className="rounded-full bg-transparent" style={{ position: 'absolute', top: '55%', left: '50%', transform: 'translate(-50%, -50%)', maxWidth: '90%', maxHeight: '90%', zIndex: '2' }} />
+          <img
+            src={imageUrl}
+            alt="Kimsour"
+            className="rounded-full bg-transparent"
+            style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', maxWidth: '90%', maxHeight: '90%', zIndex: '2' }}
+          />
         </div>
-        <div className="ml-8 md:ml-24 md:mt-0">
-          <h1 className="text-5xl text-[#7dd7d2] font-bold font-DancingScript mb-10">{userName}</h1>
-          <p className="text-5xl text-[#e9d578] font-bold mt-2 font-Angkor mb-10">{role}</p>
-
-          <div className="absolute w-1/5">
-            <img src={CrossShape} alt="" className="object-cover bg-cover rounded-br-3xl" />
-          </div>
-          <div className="absolute w-1/5 right-0 bottom-5">
-            <img src={Brush} alt="" className="object-cover bg-cover rounded-br-3xl" />
+        <div className="mt-8 md:mt-0 ml-32 ">
+          <h1 className="text-3xl md:text-5xl text-[#7dd7d2] font-bold font-DancingScript mb-4 md:mb-10">{userName}</h1>
+          <p className="text-2xl md:text-5xl text-[#e9d578] font-bold mt-2 font-Angkor mb-4 md:mb-10">{role}</p>
+          <div className="flex flex-row gap-4">
+            <div className="w-1/5">
+              <img src={CrossShape} alt="" className="object-cover bg-cover rounded-br-3xl" />
+            </div>
+            <div className="w-1/5">
+              <img src={Brush} alt="" className="object-cover bg-cover rounded-br-3xl" />
+            </div>
           </div>
         </div>
       </div>
@@ -48,4 +58,3 @@ const Avatar: React.FunctionComponent<AvatarProps> = (props:AvatarProps) => {
 };
 
 export default Avatar;
-
