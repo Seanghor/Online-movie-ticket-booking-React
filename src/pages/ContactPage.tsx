@@ -22,7 +22,7 @@ const ContactUs = () => {
             <ContactDetail title={"Telephone"} info={"099 999 999"} />
           </div>
 
-          <div className="shrink-0 grow-0 basis-auto md:mb-0 md:w-6/12 md:px-3 lg:px-6 pt-36">
+          <div className="flex flex-wrap items-center min-w-lg p-5">
             <ContactForm />
           </div>
         </div>

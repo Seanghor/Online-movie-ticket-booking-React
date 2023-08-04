@@ -21,16 +21,7 @@ const Footer = () => {
                     </div>
                     {/* Movie Tick Left Side */}
 
-                    {/* Developer Role*/}
-                    {/* <div className="flex flex-row gap-7">
-                        <Avatar imageUrl={Kimsour} userName={"Rith Kimsour"} role={"Frontend"}/>
-                        <Avatar imageUrl={Seanghor} userName={"Hai Seanghor"} role={"Backend"}/>
-                    </div>
-                   */}
-                    {/* Developer Role */}
-
-                    
-
+                   
                     {/* Content Right Side */}
                     <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
                         <div>
