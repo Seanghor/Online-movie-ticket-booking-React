@@ -75,12 +75,11 @@ const Movie = () => {
   return (
     <div className="movie bg-gradient-to-r from-red-900 to-purple-900 min-h-screen">
 
-      <div className="flex-grow w-full py- sm:py-16 mx-auto relative mt-16">
+      <div className="flex-grow w-full py- sm:py-16 mx-auto relative">
         <h4
           id="runningColorText"
           className="bg-gradient-to-r from-crimson to-springgreen via-orange bg-clip-text bg-gradient-rainbow text-transparent text-5xl w-80vw mx-auto my-20 text-center transition-colors duration-200 uppercase font-extrabold from-neutral-700 mb-2 mt-4 font-poppins"
-          style={{ color }}
-        >
+          style={{ color }}>
           Movies
         </h4>
 

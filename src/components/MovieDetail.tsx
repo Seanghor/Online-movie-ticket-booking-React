@@ -512,9 +512,9 @@ const MovieDetail = () => {
                   <div className="flex flex-row ">
                     <div className="flex flex-row">
                       {/*  Select Seat */}
-                      <div style={{ perspective: '600px' }} className="h-screen -5 bg-slate-800 flex flex-col justify-center items-center rounded-xl py-5">
+                      <div style={{ perspective: '600px' }} className=" h-screen bg-slate-800 flex flex-col justify-center items-center rounded-xl py-5">
                         {/* Screen */}
-                        <div className=" screen rounded-t-[0%] rounded-b-[0%] " style={{ transform: 'rotateX(-30deg)' }}></div>
+                        <div className="screen rounded-t-[0%] rounded-b-[0%]" style={{ transform: 'rotateX(-40deg)' }}></div>
                         {/* Sreen End */}
                         {/* <div className="grid grid-cols-3 content-start mx-4 my-10"> */}
                         <div className="flex flex-col my-10 overflow-y-auto h-4/5">
