@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import CinemaImg from '../assets/cinema.jpg';
+// import CinemaImg from '../assets/cinema.jpg';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 let CLIENT_ID = "AaIdMgqRpEw49AwLiGvNXZ9B3_dLlD4EQ5wSeLmmVQXIlYAmQTQoamiBrf6qI2d71yaMoqtLIW6Ao2hQ"
 console.log("CLIENT_ID:", CLIENT_ID);
@@ -35,6 +35,8 @@ const PayPalCheckout: React.FunctionComponent<PayPalCheckoutProps> = (props: Pay
                     // onClick:
                     onClick={(data: any, actions: any) => {
                         // const hasAlreadyBought = true
+                        console.log("data:", data);
+                        
                         if (paidFor) {
                             setError("You already book this ticket, get your ticket now")
                             return actions.reject()
@@ -43,7 +45,7 @@ const PayPalCheckout: React.FunctionComponent<PayPalCheckoutProps> = (props: Pay
                         }
                     }}
                     // createOrder
-                    createOrder={(data, actions) => {
+                    createOrder={(_data, actions) => {
                         return actions.order.create({
                             purchase_units: [
                                 {
@@ -55,7 +57,7 @@ const PayPalCheckout: React.FunctionComponent<PayPalCheckoutProps> = (props: Pay
                         });
                     }}
                     // onApprove
-                    onApprove={async (data: any, actions: any) => {
+                    onApprove={async (_data: any, actions: any) => {
                         const order = await actions.order.capture()
                         console.log("Order:", order);
                         onClickPay()

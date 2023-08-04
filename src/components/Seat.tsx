@@ -1,8 +1,8 @@
 import React from "react";
-import image_seat from '../assets/seat.svg'
-import image_text from '../assets/text.svg'
-import image_notAvialable from '../assets/not_avialable.svg'
-import image_user from '../assets/user.svg'
+// import image_seat from '../assets/seat.svg'
+// import image_text from '../assets/text.svg'
+// import image_notAvialable from '../assets/not_avialable.svg'
+// import image_user from '../assets/user.svg'
 
 interface SeatProps {
     image: string

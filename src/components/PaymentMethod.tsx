@@ -1,5 +1,5 @@
 import React from "react";
-import paypal_logo from '../assets/paypal.svg'
+// import paypal_logo from '../assets/paypal.svg'
 import tick_icon from '../assets/tick.svg'
 import untick_icon from '../assets/unTick.svg'
 

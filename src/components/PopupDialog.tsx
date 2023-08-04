@@ -2,12 +2,12 @@ import React from "react";
 import {
   Button,
   Dialog,
-  DialogHeader,
+  // DialogHeader,
   DialogBody,
   DialogFooter,
   Typography,
 } from "@material-tailwind/react";
-import { BiFontFamily } from "react-icons/bi";
+// import { BiFontFamily } from "react-icons/bi";
  
 export function NotificationDialog() {
   const [open, setOpen] = React.useState(false);

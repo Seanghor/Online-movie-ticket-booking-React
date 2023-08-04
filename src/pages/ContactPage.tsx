@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Link, Element, scroller } from 'react-scroll';
+// import React, { useEffect, useState } from 'react';
+// import { Link, Element, scroller } from 'react-scroll';
 import { ContactDetail } from "../components/ContactDetail"
 import { ContactForm } from "../components/ContactForm"
 import ContactUsBgImage from "../assets/contactusBg.png";

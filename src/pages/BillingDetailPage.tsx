@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import CinemaImg from '../assets/cinema.jpg';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import WeekendIcon from '@mui/icons-material/Weekend';
@@ -31,14 +31,8 @@ let CLIENT_ID = import.meta.env.VITE_PAYPAL_CLIENT_ID
 console.log("CLIENT_ID:", CLIENT_ID);
 
 
-type SeatData = {
-  id: number;
-  customId: string;
-  price: number;
-};
-type BookingData = {
-  seat: SeatData[];
-};
+
+
 
 type BookingProps = {
   cinema: string,
@@ -112,18 +106,6 @@ const paymentMethods = [
   }
 ] as payMethod[]
 const BillingDetailPage = () => {
-  // const [formData, setFormData] = useState({
-  //   cardNumber: '',
-  //   firstName: '',
-  //   lastName: '',
-  //   email: '',
-  //   phoneNumber: '',
-  //   remark: '',
-  // });
-
-
-
-
   // payment id:
   const [payId, setPayId] = useState<number | null>(null)
   const [chooseMethod, setChooseMethod] = useState<payMethod | null>(null)
@@ -135,7 +117,7 @@ const BillingDetailPage = () => {
   const [phone, setPhone] = useState("")
   const [agree, setAgree] = useState(false)
   const [showButton, setShowButton] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  // const [error, setError] = useState<string | null>(null)
 
   // refresh:
   const [reducerValue, forceUpdate] = useReducer(x => x + 1, 0)
@@ -225,6 +207,7 @@ const BillingDetailPage = () => {
     if (resCreatePurchaseData.ok !== true) {
       return;
     }
+    setPaidFor(true)
     // set reserve data:
     const emptyArray: CreateBookingDto[] | [] = [];
     const emptyArrayString = JSON.stringify(emptyArray);

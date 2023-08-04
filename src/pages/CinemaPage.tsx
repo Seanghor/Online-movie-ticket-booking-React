@@ -3,7 +3,7 @@ import CinemaImg from '../assets/cinema.jpg';
 import { CinemaBranch } from '../components/CinemaBranch';
 
 import { CinemaResponse } from '../types/campus.dto';
-import { log } from 'console';
+// import { log } from 'console';
 import { getAllCinema } from '../services/campus';
 import SearchBar from '../components/SearchBar';
 // import { getTheaters } from '../services/campus';

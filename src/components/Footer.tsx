@@ -1,7 +1,5 @@
-import { useState } from "react";
 import { BiMoviePlay } from "react-icons/bi";
-import { Link, NavLink, useLocation } from "react-router-dom";
-import { scroller } from "react-scroll";
+
 
 
 

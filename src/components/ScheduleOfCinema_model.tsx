@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { MovieTypeEnum, ScreeningStatusEnum } from "../types/enum.type";
 import { MovieResponse } from "../types/movie.dto";
 import TimerIcon from '@mui/icons-material/Timer';
 import CategoryIcon from '@mui/icons-material/Category';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ClosedCaptionOffIcon from '@mui/icons-material/ClosedCaptionOff';
-import { getAllMovie, getMovieById } from "../services/movie";
+// import { getAllMovie, getMovieById } from "../services/movie";
 import { convertMinutesToHHMM, formatDateTo_dd_mm_yy, formatTimeTo12Hour } from "../utils/utils";
-import { scroller } from "react-scroll";
+// import { scroller } from "react-scroll";
 export interface ScreeningProps {
   id: string,
   image: string,
@@ -37,7 +37,7 @@ export interface ScreeningProps {
 
 export const ScheduleOfCinema: React.FunctionComponent<ScreeningProps> = (props: ScreeningProps) => {
   // eslint-disable-next-line @typescript-eslint/no-redeclare
-  const { id, onClick, showUpScreenId, image, title, opening_date, duration_min, sub_title, movieType, screeningData } = props
+  const { onClick, showUpScreenId, image, title, opening_date, duration_min, sub_title, movieType, screeningData } = props
   // const [movieId, setMovieId] = us
 
 

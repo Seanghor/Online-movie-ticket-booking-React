@@ -1,4 +1,4 @@
-import { SeatStatusEnum } from "../types/enum.type";
+
 import { UpdateStatusOfSeat } from "../types/seat.dto";
 import { getAccessToken } from "./auth";
 

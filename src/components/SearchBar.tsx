@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { MovieResponse } from "../types/movie.dto";
-import { getAllMovieFilterByTitle } from "../services/movie";
+// import { useState, useEffect } from "react";
+// import { MovieResponse } from "../types/movie.dto";
+
 
 export interface SearchProps {
   search: string,

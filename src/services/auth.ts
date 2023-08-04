@@ -1,4 +1,3 @@
-import { Token } from "typescript";
 import { LoginInput } from "../types/auth.dto";
 import { getUserProfile } from "./user";
 import { CreateBookingDto } from "../types/booking.dto";

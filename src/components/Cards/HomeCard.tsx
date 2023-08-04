@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { CardShadow } from "./Card_Shadow";
 import { MovieTypeEnum } from "../../types/enum.type";
-import { idText } from "typescript";
-import { useLocation } from "react-router-dom";
+
 
 
 interface HomeCardProps {

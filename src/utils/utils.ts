@@ -25,6 +25,7 @@ export function formatDateToShortCurt(dateString: string) {
 
     const [year, month, day] = dateString.split('-');
     const monthText = months[parseInt(month) - 1];
+    console.log(year);
 
     return `${day} ${monthText}`;
 }

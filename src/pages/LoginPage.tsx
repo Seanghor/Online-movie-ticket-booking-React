@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAccessToken, logIn } from '../services/auth';
+import {logIn } from '../services/auth';
 import LockIcon from '@mui/icons-material/Lock';
 import SignInBgImage from '../assets/signinBg.png';
-import PersonIcon from '@mui/icons-material/Person';
+// import PersonIcon from '@mui/icons-material/Person';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import EmailIcon from '@mui/icons-material/Email';
@@ -11,7 +11,7 @@ import EmailIcon from '@mui/icons-material/Email';
 // const navigate = useNavigate();
 export default function LoginPage() {
   const navigate = useNavigate();
-  const [status, setStatus] = useState(false);
+  // const [status, setStatus] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -82,7 +82,7 @@ export default function LoginPage() {
               {/* Login Btn */}
               <div className="flex flex-row mt-8 items-center justify-center">
                   <button
-                      className="bg-purple-700 w-1/2 p-4 tracking-wide text-white text-bold font-poppins text-lg uppercase transition-colors duration-200 transform bg-purple-700 rounded-full hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
+                      className="bg-purple-700 w-1/2 p-4 tracking-wide text-white text-bold font-poppins text-lg uppercase transition-colors duration-200 transform rounded-full hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
                   // onClick={() => handleLogin()}
                   // type='submit'
                   >

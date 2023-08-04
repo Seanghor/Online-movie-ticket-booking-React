@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import icon from '../assets/paymentMethod_icon/philip_icon.png'
+// import icon from '../assets/paymentMethod_icon/philip_icon.png'
 let CLIENT_ID = "AaIdMgqRpEw49AwLiGvNXZ9B3_dLlD4EQ5wSeLmmVQXIlYAmQTQoamiBrf6qI2d71yaMoqtLIW6Ao2hQ"
 console.log("CLIENT_ID:", CLIENT_ID);
 
@@ -15,12 +15,13 @@ interface CheckoutBankProps {
 
 }
 const CheckoutBank: React.FunctionComponent<CheckoutBankProps> = (props: CheckoutBankProps) => {
-    const { amount, onClickPay, paidFor, icon_pay, bg_normal, bg_hover } = props
+    const {  onClickPay, paidFor, icon_pay, bg_normal, bg_hover } = props
     const [error, setError] = useState<string | null>(null)
     if (paidFor) {
         alert("Thank you for your purches.")
     }
     if (error) {
+        setError('Error')
         alert(error)
     }
     return (

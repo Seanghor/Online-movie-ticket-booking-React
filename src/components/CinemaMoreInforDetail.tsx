@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { ScheduleOfCinema } from './ScheduleOfCinema_model'
-import CinemaIcon from '../assets/cinema_icon.svg';
 import CinemaImg from '../assets/cinema.jpg';
 import { MovieResponse } from '../types/movie.dto';
 import { HomeCard } from './Cards/HomeCard';
-import { getAllMovieFilterByStatus, getAllMovieFilterIsTop } from '../services/movie';
+import { getAllMovieFilterByStatus } from '../services/movie';
 import {
   Tabs,
   TabsHeader,
@@ -15,7 +13,7 @@ import {
 import { getOneCinema } from '../services/campus';
 import { CinemaResponse } from '../types/campus.dto';
 import { useLocation } from 'react-router-dom';
-import { Typography } from '@mui/material';
+
 
 const CinemaMoreInforDetail = () => {
 

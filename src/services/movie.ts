@@ -1,4 +1,3 @@
-import { title } from "process";
 import { getAccessToken } from "./auth";
 import { MovieStatusEnum } from "../types/enum.type";
 let URL = import.meta.env.VITE_BASE_URL

@@ -1,4 +1,4 @@
-import { LoginInput } from "../types/auth.dto";
+
 import { RegisterInput } from "../types/user";
 import { getAccessToken, setAccessToken, setRefreshToken, setUserInfor } from "./auth";
 

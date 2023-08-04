@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { getAllMovie, getAllMovieOnScreening } from "../services/movie";
+import { useEffect, useState } from "react";
+import {  getAllMovieOnScreening } from "../services/movie";
 import { Card } from "../components/Cards/Card";
 import { Link } from "react-router-dom";
 import { MovieResponse } from "../types/movie.dto";
@@ -67,8 +67,8 @@ const Movie = () => {
   const endIndex = startIndex + moviesPerPage;
   const currentMovies = movies.slice(startIndex, endIndex);
 
-  const showPagination =
-    totalPages > 1 && currentMovies.length >= 1; // Show pagination if there are more than 1 page and at least 3 movies on the current page
+  // const showPagination =
+  //   totalPages > 1 && currentMovies.length >= 1; // Show pagination if there are more than 1 page and at least 3 movies on the current page
 
 
 

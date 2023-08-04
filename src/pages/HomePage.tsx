@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react"
-import { IconButton } from "../components/Icon_Button"
+// import { IconButton } from "../components/Icon_Button"
 import { MovieResponse } from "../types/movie.dto"
 import { getAllMovieFilterByStatus, getAllMovieFilterIsTop } from "../services/movie"
 import { HomeCard } from "../components/Cards/HomeCard"
 import '../index.css'
-import { useLocation } from "react-router-dom";
-import ImageSlider from "../components/CoverSlider"
+// import { useLocation } from "react-router-dom";
+// import ImageSlider from "../components/CoverSlider"
 import CoverSlider from "../components/CoverSlider"
 import { Link, Element, scroller } from 'react-scroll';
-import { CursorButtonNext } from "../components/Buttons/CursorButtonNext"
-import { CursorButtonPrevious } from "../components/Buttons/CursorPreviousButton"
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+// import { CursorButtonNext } from "../components/Buttons/CursorButtonNext"
+// import { CursorButtonPrevious } from "../components/Buttons/CursorPreviousButton"
+// import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 

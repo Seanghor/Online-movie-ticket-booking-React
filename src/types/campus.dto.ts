@@ -1,6 +1,5 @@
-import { MovieTypeEnum, ScreeningStatusEnum } from "./enum.type"
+import {  ScreeningStatusEnum } from "./enum.type"
 import { MovieResponse } from "./movie.dto"
-import { EachScreeningResponse } from "./screening.dto"
 
 export interface CinemaResponse {
     id: number,

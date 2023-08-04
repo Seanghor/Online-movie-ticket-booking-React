@@ -1,16 +1,15 @@
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { BiMoviePlay } from "react-icons/bi";
-import { FaTimes, FaBars } from "react-icons/fa";
-import GradeIcon from '@mui/icons-material/Grade';
+// import { FaTimes, FaBars } from "react-icons/fa";
+// import GradeIcon from '@mui/icons-material/Grade';
 import { IconButton } from './Icon_Button';
-import { useNavigate } from 'react-router-dom';
-import { MDBBadge, MDBIcon } from 'mdb-react-ui-kit';
-import { Badge, Avatar } from "@material-tailwind/react";
+// import { useNavigate } from 'react-router-dom';
+import { Badge } from "@material-tailwind/react";
 import MovieFilterRoundedIcon from '@mui/icons-material/MovieFilterRounded';
 // import { HomeIcon, BookmarkIcon, TicketIcon } from "@heroicons/react/24/solid";
 
-import { checkAccessTokenExpiration, getAccessToken, getRefreshToken, logOut } from '../services/auth';
+import {  getAccessToken, getRefreshToken, logOut } from '../services/auth';
 
 const Navbar = () => {
   const location = useLocation();
@@ -18,8 +17,8 @@ const Navbar = () => {
   console.log("Current route:", currentPath);
 
   const [click, setClick] = useState(false);
-  const handleClick = () => setClick(!click);
-  const closeMobileMenu = () => setClick(false);
+  // const handleClick = () => setClick(!click);
+  // const closeMobileMenu = () => setClick(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [btnTitle, setBtnTitle] = useState('Sign Up')
   const [isAuth, setIsAuth] = useState(false)
@@ -99,7 +98,7 @@ const Navbar = () => {
       <div className="flex flex-wrap items-center justify-between mx-auto p-4 lg:px-20">
         <a href="https://flowbite.com/" className="flex items-center">
           <Link to="/" className="text-white font-poppins flex items-center justify-self-start cursor-pointer no-underline text-3xl">
-            <BiMoviePlay className="mr-2" onClick={closeMobileMenu} />
+            <BiMoviePlay className="mr-2" onClick={()=> {setClick(!click)}} />
             MovieTick
           </Link>
         </a>

@@ -1,17 +1,17 @@
 import React from "react";
-import GradeIcon from '@mui/icons-material/Grade';
-import TimerIcon from '@mui/icons-material/Timer';
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-import CategoryIcon from '@mui/icons-material/Category';
-import image_seat from '../assets/seat.svg'
-import image_text from '../assets/text.svg'
-import image_notAvialable from '../assets/not_avialable.svg'
-import image_user from '../assets/user.svg'
+// import GradeIcon from '@mui/icons-material/Grade';
+// import TimerIcon from '@mui/icons-material/Timer';
+// import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+// import CategoryIcon from '@mui/icons-material/Category';
+// import image_seat from '../assets/seat.svg'
+// import image_text from '../assets/text.svg'
+// import image_notAvialable from '../assets/not_avialable.svg'
+// import image_user from '../assets/user.svg'
 import { MovieTypeEnum } from "../types/enum.type";
 import { IconButton } from "./Icon_Button";
-import { Link, NavLink, useLocation } from "react-router-dom";
+// import { Link, NavLink, useLocation } from "react-router-dom";
 import croos_img from '../assets/croos.svg'
-import { formatDateDayAndMonth, getDayNumber, getMonthName } from "../utils/utils";
+import {  getDayNumber, getMonthName } from "../utils/utils";
 
 function formatTimeTo12Hour(timeString: string) {
     const date = new Date(timeString);
@@ -49,7 +49,7 @@ interface SelectMovieModel_props {
 
 // export const Seat: React.FunctionComponent<SeatProps> = (props: SeatProps) => {
 export const SelectMovieModel: React.FunctionComponent<SelectMovieModel_props> = (props: SelectMovieModel_props) => {
-    const { image, cinema, title, movieType, movieDate, duration_min, auditoruim, showDate, timeShow, selected, onClickCancelSeat, onClickSubmit, onClickReserve } = props
+    const { image, cinema,auditoruim, showDate, timeShow, selected, onClickCancelSeat, onClickSubmit, onClickReserve } = props
 
     return (
         <div className="flex flex-row">

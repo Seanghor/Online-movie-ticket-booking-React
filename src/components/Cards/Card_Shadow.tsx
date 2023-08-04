@@ -15,7 +15,7 @@ interface CardShadowProps {
     onClick2: Function
 }
 export const CardShadow: React.FunctionComponent<CardShadowProps> = (props: CardShadowProps) => {
-    const { trailer, title, movieType, movieStatus, duration_min, onClick1, onClick2 } = props;
+    const { title, movieType, movieStatus, duration_min, onClick1, onClick2 } = props;
     return (
         <>
             <div className="flex items-start absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black group-hover:from-black/70 group-hover:via-black/60 group-hover:to-black/70"></div>

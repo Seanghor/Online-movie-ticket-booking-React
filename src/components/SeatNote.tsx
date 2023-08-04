@@ -1,5 +1,5 @@
 import image_availableSeat from '../assets/seat_available.svg'
-import image_text from '../assets/text.svg'
+// import image_text from '../assets/text.svg'
 import image_selectedSeat from '../assets/seat_selected.svg'
 import image_unavailableSeat from '../assets/not_avialable.svg'
 import bookIcon from '../assets/booked.svg'

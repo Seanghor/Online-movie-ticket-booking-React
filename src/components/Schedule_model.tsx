@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { ScreeningStatusEnum } from "../types/enum.type";
+// import { useEffect, useState } from "react";
 import CinemaIcon from '../assets/cinema_icon.svg';
 import { formatTimeTo12Hour } from "../utils/utils";
 import full from '../assets/booking/movieFull.png'

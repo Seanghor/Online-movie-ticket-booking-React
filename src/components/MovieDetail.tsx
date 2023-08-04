@@ -1,19 +1,16 @@
-
-import React from 'react';
 import { useEffect, useReducer, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { getMovieById } from "../services/movie";
 import { MovieResponse } from "../types/movie.dto";
 import GradeIcon from '@mui/icons-material/Grade';
 import TimerIcon from '@mui/icons-material/Timer';
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import CategoryIcon from '@mui/icons-material/Category';
 import { ScreeningProps, ShowTimeSchedule } from "./Schedule_model";
 import { getAllScreeningByMovieIdAndDate, getAllScreeningByMovieIdAndGroupByDate, getOneScreeningById } from "../services/screening";
 import { DifferentCinemaScreeningResponse, DifferentDateScreeningResponse } from "../types/screening.dto";
 import { Seat } from "./Seat";
 import { getSeatOfScreening } from "../services/seat";
-import { SeatList, SingleRowOfSeat, SingleSeatRespone } from "../types/seat.dto";
+import {  SingleRowOfSeat, SingleSeatRespone } from "../types/seat.dto";
 import { SelectMovieModel } from "./Select_movie_model";
 import { convertMinutesToHHMM, formatDateToShortCurt, formatDateTo_dd_mm_yy, formatTimeTo12Hour, getRowLetter } from "../utils/utils";
 import SeatNote from "./SeatNote";
@@ -47,7 +44,7 @@ const MovieDetail = () => {
   const navigate = useNavigate();
   // movie
   const { id } = useParams();
-  const [movieId, setMovieId] = useState(id)
+  // const [movieId, setMovieId] = useState(id)
   const [movie, setMovie] = useState<MovieResponse | null>(null);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -60,22 +57,22 @@ const MovieDetail = () => {
   const [oneScreening, setOncScreening] = useState<any | null>(null)
   const [screening, setScreening] = useState<DifferentCinemaScreeningResponse[]>([])
   const [showSchedule, setShowSchedule] = useState<boolean>(booleanValue)
-  const [screeningDataGroupByDate, setScreeningDataGroupByDate] = useState<DifferentDateScreeningResponse[]>([])
+  // const [screeningDataGroupByDate, setScreeningDataGroupByDate] = useState<DifferentDateScreeningResponse[]>([])
   const [datesArray, setDatesArray] = useState<string[] | []>([])
   const [showDate, setShowDate] = useState(currentDate)
-  const [isAvailable, setIsAvailable] = useState(false)
+  // const [isAvailable, setIsAvailable] = useState(false)
   const [cinemaName, setCinemaName] = useState<string>('')
-  const [cinemaId, setCinemaId] = useState('')
+  // const [cinemaId, setCinemaId] = useState('')
 
 
   // seat:
-  const [seatData, setSeatData] = useState<SeatList | [][]>([])
+  // const [seatData, setSeatData] = useState<SeatList | [][]>([])
   const [showSeat, setShowSeat] = useState(false)
   const [selectSeat, setSelectSeat] = useState<any | []>([])
-  const [reserveDataToStorage, setReserveDataToStorage] = useState<any | []>([])
+  // const [reserveDataToStorage, setReserveDataToStorage] = useState<any | []>([])
   const [seatIdOfScreen, setSeatIdOfScreen] = useState<any>([])
   const [reserveData, setReserveData] = useState<any | []>([])
-  const [listSeatId, setListSeatId] = useState<number[] | []>([])
+  // const [listSeatId, setListSeatId] = useState<number[] | []>([])
 
   // book or reserve:
   // const [cinema, setCinema] = useState("")
@@ -106,7 +103,7 @@ const MovieDetail = () => {
   useEffect(() => {
     // fect singleMovie data:
     const fechMovieData = async () => {
-      const res = await getMovieById(movieId || "")
+      const res = await getMovieById(id || "")
       let movieData = await res.json()
       setMovie(movieData);
     }
@@ -114,14 +111,14 @@ const MovieDetail = () => {
 
     // fect all screening of the movie group by date(to display all screen of the movie)
     const fectAllScreeningGroupByDate = async () => {
-      const res = await getAllScreeningByMovieIdAndGroupByDate(movieId || "")
+      const res = await getAllScreeningByMovieIdAndGroupByDate(id || "")
       let fectDataResponse = await res.json()
       // console.log("res:", fectDataResponse);
-      if (fectDataResponse.statusCode == 400) {
-        setScreeningDataGroupByDate([])
-        return
-      }
-      setScreeningDataGroupByDate(fectDataResponse)
+      // if (fectDataResponse.statusCode == 400) {
+      //   setScreeningDataGroupByDate([])
+      //   return
+      // }
+      // setScreeningDataGroupByDate(fectDataResponse)
 
       // get all dateShow of movie:
       const array: string[] | [] | "" = fectDataResponse
@@ -137,14 +134,14 @@ const MovieDetail = () => {
       setDatesArray(uniqueDatesArray.slice(0, 3))
     }
     fectAllScreeningGroupByDate()
-  }, [id, movieId, reducerValue])
+  }, [id, reducerValue])
 
   // --------------------------------------- when date change:
   useEffect(() => {
     // fect all screening of the movie and filter by date:
     const fechScreeningDataByDate = async () => {
       console.log("selecting date:", showDate);
-      const res = await getAllScreeningByMovieIdAndDate(movieId || '', showDate)
+      const res = await getAllScreeningByMovieIdAndDate(id || '', showDate)
       let dataResponse = await res.json()
       // console.log("Screening by date:", dataResponse);
 
@@ -203,7 +200,7 @@ const MovieDetail = () => {
 
       if (screeningNowData) {
         // fect cinema:
-        setCinemaId(screeningNowData.campusId)
+        // setCinemaId(screeningNowData.campusId)
         const cinema = await getOneCinema(screeningNowData.campusId)
         const cinemaJson = await cinema.json()
         setCinemaName(cinemaJson.name)
@@ -259,7 +256,7 @@ const MovieDetail = () => {
 
   // handle add reserve data to localStorage
   const handleAddReserveDataToLocalStorage = (updatedSeatIdOfScreen: SingleSeatRespone[]) => {
-    const updatedBookingData = reserveData?.map((reserve: any, index: number) => {
+    const updatedBookingData = reserveData?.map((reserve: any) => {
       if (reserve.screeningId === screenId) {
         if (reserve.seat.length === 0) {
           return

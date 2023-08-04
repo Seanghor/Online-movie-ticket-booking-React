@@ -1,4 +1,3 @@
-import { log } from 'console';
 import { CreateBookingDto } from "../types/booking.dto";
 import { checkAccessTokenExpiration, getAccessToken, refreshAccessToken } from "./auth";
 
@@ -25,6 +24,6 @@ export const booking = async (createBookingDto: CreateBookingDto) => {
     });
 
     const response = await res.json()
-    const statusCode = response.statusCode
+    // const statusCode = response.statusCode
     return response
 }

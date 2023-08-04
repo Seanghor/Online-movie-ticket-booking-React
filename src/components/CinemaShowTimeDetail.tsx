@@ -1,17 +1,16 @@
-import React, { useEffect, useReducer, useState } from 'react'
+import  { useEffect, useReducer, useState } from 'react'
 import { ScheduleOfCinema } from './ScheduleOfCinema_model'
-import CinemaIcon from '../assets/cinema_icon.svg';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Link, Element, scroller } from 'react-scroll';
-import { CinemaResponse, CinemaResponse_includeScreening, GroupScreening_Of_Movie } from '../types/campus.dto';
-import { getAllMovieScreeningOfCampusId, getAllScreeningOfCampusId, getOneCinema } from '../services/campus';
+import { useNavigate } from 'react-router-dom';
+import {  Element, scroller } from 'react-scroll';
+import { CinemaResponse } from '../types/campus.dto';
+import { getAllScreeningOfCampusId, getOneCinema } from '../services/campus';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 import { MovieResponse, ScreeningDataPerDay } from '../types/movie.dto';
-import { getAllMovie, getAllMovieByCampusIdFilterDate, getAllMovieFilterByTitle, getMovieById } from '../services/movie';
+import { getAllMovieByCampusIdFilterDate, getMovieById } from '../services/movie';
 import movieDefault from '../assets/default_movie_image.png'
-import { formatDateDayAndMonth, formatDateToShortCurt, getRowLetter } from '../utils/utils';
-import { SeatList, SingleRowOfSeat, SingleSeatRespone } from '../types/seat.dto';
+import {  formatDateToShortCurt, getRowLetter } from '../utils/utils';
+import {SingleRowOfSeat, SingleSeatRespone } from '../types/seat.dto';
 import { getSeatOfScreening } from '../services/seat';
 import { getOneScreeningById } from '../services/screening';
 import { EachScreeningResponse } from '../types/screening.dto';
@@ -22,10 +21,8 @@ import image_sealectedSeat from '../assets/seat_selected.svg'
 import bookIcon from '../assets/booked.svg'
 import image_notAvialable from '../assets/not_avialable.svg'
 import { Seat } from './Seat';
-import { CreateBookingDto } from '../types/booking.dto';
-import { booking } from '../services/booking';
 import SearchBar from './SearchBar';
-import { isAuth } from '../services/auth';
+
 
 
 
@@ -203,7 +200,7 @@ const CinemaShowTimeDetail = () => {
 
   // handle add reserve data to localStorage
   const handleAddReserveDataToLocalStorage = (updatedSeatIdOfScreen: SingleSeatRespone[]) => {
-    const updatedBookingData = reserveData?.map((reserve: any, index: number) => {
+    const updatedBookingData = reserveData?.map((reserve: any) => {
       if (reserve.screeningId === screenId) {
         if (reserve.seat.length === 0) {
           return
