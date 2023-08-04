@@ -27,6 +27,7 @@ import { useNavigate } from 'react-router-dom';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { getOneCinema } from '../services/campus';
+import { getAccessToken, getRefreshToken, getUserInfor } from '../services/auth';
 
 // for scroll section(whenever value of showSecton change --> this function is called)
 const scrollToSection = (showSection: string) => {
@@ -45,6 +46,12 @@ const scrollToSection = (showSection: string) => {
 const currentDate = new Date().toISOString().substring(0, 10);
 const MovieDetail = () => {
   const navigate = useNavigate();
+  // check token:
+  const accessToken = getAccessToken()
+  const refreshToken = getRefreshToken()
+  const userInfo = getUserInfor()
+  const [isAuth, setIsAuth] = useState(false)
+
   // movie
   const { id } = useParams();
   const [movieId, setMovieId] = useState(id)
@@ -348,6 +355,11 @@ const MovieDetail = () => {
 
   // functionality:
   const handleShowUpSeat = async (id: string) => {
+    if (!accessToken || !refreshToken || !userInfo) {
+      navigate('/signup')
+      return
+    }
+
     setScreenId(id)
     setShowSection('seat_section')
     scrollToSection(showSection)
@@ -374,7 +386,7 @@ const MovieDetail = () => {
 
 
 
-  console.log("screeningProps:", screeningProps);
+  console.log("seatIdOfScreen:", seatIdOfScreen);
 
 
 

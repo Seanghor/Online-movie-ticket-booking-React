@@ -26,6 +26,7 @@ import aba_payment_icon from '../assets/paymentMethod_icon/aba_icon.svg'
 import acleda_payment_icon from '../assets/paymentMethod_icon/acleda_icon.png'
 import philip_payment_icon from '../assets/paymentMethod_icon/philip_icon.png'
 import ButtonLoading from '../components/Buttons/ButtonLoading';
+import { NotificationDialog } from '../components/PopupDialog';
 
 
 let CLIENT_ID = import.meta.env.VITE_PAYPAL_CLIENT_ID
@@ -207,41 +208,47 @@ const BillingDetailPage = () => {
   // handle PayPalCheckout:
   const handlePay = async () => {
     setIsLoadingPay(true)
+
+
     setTimeout(
-      () => setIsLoadingPay(false),
-      2000
+      async () => {
+        setIsLoadingPay(false)
+        const resCreateBookingData = await Promise.all(
+          arrayBookingDto.map(async (createSingleBooking: CreateBookingDto) => {
+            return await handleCreateBooking(createSingleBooking);
+          })
+        );
+        setIsLoadingPay(true)
+        let purchaseData = {
+          total: totalPrice,
+          phoneNumber: phone,
+          payMentMethod: chooseMethod?.enum,
+          remark: remark,
+          bookings: {
+            connect: resCreateBookingData.map((singleBook: any) => { return { id: singleBook.id } })
+          }
+        } as CreatePurchaseDto
+        console.log("purchaseData:", purchaseData);
+
+        const resCreatePurchaseData = await handlePurchase(purchaseData)
+        console.log("resCreatePurchaseData:", resCreatePurchaseData);
+        if (resCreatePurchaseData.ok !== true) {
+          return;
+        }
+        // set reserve data:
+        const emptyArray: CreateBookingDto[] | [] = [];
+        const emptyArrayString = JSON.stringify(emptyArray);
+        // Store the JSON string in localStorage
+        localStorage.setItem('reserve', emptyArrayString);
+        setPaidFor(true)
+        // Dispatch a custom event to notify the Navbar component
+        const event = new Event('reservationUpdated');
+        window.dispatchEvent(event);
+      },
+      1500
     );
 
-    const resCreateBookingData = await Promise.all(
-      arrayBookingDto.map(async (createSingleBooking: CreateBookingDto) => {
-        return await handleCreateBooking(createSingleBooking);
-      })
-    );
-    setIsLoadingPay(true)
-    let purchaseData = {
-      total: totalPrice,
-      phoneNumber: phone,
-      payMentMethod: chooseMethod?.enum,
-      remark: remark,
-      bookings: {
-        connect: resCreateBookingData.map((singleBook: any) => { return { id: singleBook.id } })
-      }
-    } as CreatePurchaseDto
-    console.log("purchaseData:", purchaseData);
 
-    const resCreatePurchaseData = await handlePurchase(purchaseData)
-    console.log("resCreatePurchaseData:", resCreatePurchaseData);
-    if (resCreatePurchaseData.ok !== true) {
-      return;
-    }
-    // set reserve data:
-    const emptyArray: CreateBookingDto[] | [] = [];
-    const emptyArrayString = JSON.stringify(emptyArray);
-    // Store the JSON string in localStorage
-    localStorage.setItem('reserve', emptyArrayString);
-    // Dispatch a custom event to notify the Navbar component
-    const event = new Event('reservationUpdated');
-    window.dispatchEvent(event);
 
 
     // if (paidFor) {
@@ -256,7 +263,17 @@ const BillingDetailPage = () => {
   }
 
 
-console.log('ShowButton:', showButton);
+  const handleRemove = async (screenId: string) => {
+    const newArrayReserve = bookReserveData.filter((screen: any) => screen.screeningId !== screenId)
+    setBookReserveData(newArrayReserve)
+    console.log("newArrayReserver:", newArrayReserve);
+    setBookReserveData(newArrayReserve)
+    localStorage.setItem("reserve", JSON.stringify(newArrayReserve))
+    const event = new Event('reservationUpdated');
+    window.dispatchEvent(event);
+  }
+
+  console.log('ShowButton:', bookReserveData);
 
   return (
     <div className="mx-auto w-full h-full bg-gradient-to-r from-red-900 to-purple-900 min-h-screen font-sans">
@@ -344,11 +361,17 @@ console.log('ShowButton:', showButton);
               <button
                 onClick={() => { setShowButton(true) }}
                 disabled={agree && phone && payId ? false : true}
-                className={agree && phone && payId
-                  ? `mt-2 text-white bg-[#db2777] font-semibold hover:text-white
-                py-2 px-10 border border-blue hover:border-transparent rounded uppercase`
-                  : `mt-2 text-white bg-slate-400  font-semibold hover:text-white
-                  py-2 px-10 border border-blue hover:border-transparent rounded uppercase`
+                // className={agree && phone && payId
+                //   ? `mt-2 text-white bg-[#db2777] font-semibold hover:text-white
+                // py-2 px-10 border border-blue hover:border-transparent rounded uppercase`
+                //   : `mt-2 text-white bg-slate-400  font-semibold hover:text-white
+                //   py-2 px-10 border border-blue hover:border-transparent rounded uppercase`
+                // }
+
+                className={
+                  `mt-2 text-white font-semibold hover:text-white
+                py-2 px-10 border border-blue hover:border-transparent rounded uppercase ${agree && phone && payId && !showButton ? "bg-[#db2777]": showButton ? "bg-[#852852]": "bg-slate-400"}`
+                 
                 }
               >
                 Save & Continue
@@ -415,7 +438,7 @@ console.log('ShowButton:', showButton);
                       </div>
 
                       <div
-                        onClick={() => { }}
+                        onClick={() => { handleRemove(movie.screeningId) }}
                         className="flex flex-row items-center w-10 pr-2">
                         <CloseIcon className="ml-3 text-gray-500 hover:text-red-500 hover:w-8 hover:h-8" />
                       </div>
@@ -462,7 +485,7 @@ console.log('ShowButton:', showButton);
                         />)
                   }
                 </div>
-
+                <NotificationDialog isOpen={paidFor} />
               </div>
             </div>
           </div>

@@ -31,7 +31,7 @@ export default function LoginPage() {
     } else {
       setTimeout(
         () => navigate('/'),
-        500
+        1500
       );
 
     }

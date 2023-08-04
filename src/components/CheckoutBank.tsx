@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import icon from '../assets/paymentMethod_icon/philip_icon.png'
 import ButtonLoading from './Buttons/ButtonLoading';
+import { NotificationDialog } from './PopupDialog';
 let CLIENT_ID = "AaIdMgqRpEw49AwLiGvNXZ9B3_dLlD4EQ5wSeLmmVQXIlYAmQTQoamiBrf6qI2d71yaMoqtLIW6Ao2hQ"
 console.log("CLIENT_ID:", CLIENT_ID);
 
@@ -21,6 +22,7 @@ const CheckoutBank: React.FunctionComponent<CheckoutBankProps> = (props: Checkou
     const { amount, onClickPay, paidFor, icon_pay, bg_normal, bg_hover, isLoadingPay, isDisable } = props
     const [error, setError] = useState<string | null>(null)
     if (paidFor) {
+        return (<NotificationDialog isOpen={true} />)
         alert("Thank you for your purches.")
     }
     if (error) {

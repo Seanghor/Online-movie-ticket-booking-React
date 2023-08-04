@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import CinemaImg from '../assets/cinema.jpg';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import ButtonLoading from './Buttons/ButtonLoading';
+import { NotificationDialog } from './PopupDialog';
 let CLIENT_ID = "AaIdMgqRpEw49AwLiGvNXZ9B3_dLlD4EQ5wSeLmmVQXIlYAmQTQoamiBrf6qI2d71yaMoqtLIW6Ao2hQ"
 console.log("CLIENT_ID:", CLIENT_ID);
 
@@ -14,13 +15,13 @@ interface PayPalCheckoutProps {
     paidFor: boolean
     isLoadingPay: boolean
     isDisable: boolean
-
 }
 const PayPalCheckout: React.FunctionComponent<PayPalCheckoutProps> = (props: PayPalCheckoutProps) => {
     const { amount, onClickPay, paidFor, isLoadingPay, isDisable } = props
     const [error, setError] = useState<string | null>(null)
     if (paidFor) {
-        alert("Thank you for your purches.")
+        
+        // alert("Thank you for your purches.")
     }
     if (error) {
         alert(error)
