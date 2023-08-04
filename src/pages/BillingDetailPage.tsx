@@ -27,7 +27,7 @@ import acleda_payment_icon from '../assets/paymentMethod_icon/acleda_icon.png'
 import philip_payment_icon from '../assets/paymentMethod_icon/philip_icon.png'
 import ButtonLoading from '../components/Buttons/ButtonLoading';
 import { NotificationDialog } from '../components/PopupDialog';
-
+import dialog_icon_tick from '../assets/images/dialog/tick.svg'
 
 let CLIENT_ID = import.meta.env.VITE_PAYPAL_CLIENT_ID
 console.log("CLIENT_ID:", CLIENT_ID);
@@ -208,8 +208,6 @@ const BillingDetailPage = () => {
   // handle PayPalCheckout:
   const handlePay = async () => {
     setIsLoadingPay(true)
-
-
     setTimeout(
       async () => {
         setIsLoadingPay(false)
@@ -370,8 +368,8 @@ const BillingDetailPage = () => {
 
                 className={
                   `mt-2 text-white font-semibold hover:text-white
-                py-2 px-10 border border-blue hover:border-transparent rounded uppercase ${agree && phone && payId && !showButton ? "bg-[#db2777]": showButton ? "bg-[#852852]": "bg-slate-400"}`
-                 
+                py-2 px-10 border border-blue hover:border-transparent rounded uppercase ${agree && phone && payId && !showButton ? "bg-[#db2777]" : showButton ? "bg-[#852852]" : "bg-slate-400"}`
+
                 }
               >
                 Save & Continue
@@ -485,7 +483,7 @@ const BillingDetailPage = () => {
                         />)
                   }
                 </div>
-                <NotificationDialog isOpen={paidFor} />
+
               </div>
             </div>
           </div>

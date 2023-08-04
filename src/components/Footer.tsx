@@ -31,10 +31,10 @@ const Footer = () => {
                                 <li className="mb-4" onClick={() => {
                                     console.log("to Now Showing");
                                 }}>
-                                    <a href="?showing" className="hover:underline font-poppins">Now Showing</a>
+                                    <a href="/?showing" className="hover:underline font-poppins">Now Showing</a>
                                 </li>
                                 <li className="mb-4">
-                                    <a href="?soon" className="hover:underline font-poppins">Coming Soon</a>
+                                    <a href="/?soon" className="hover:underline font-poppins">Coming Soon</a>
                                 </li>
                                 <li className="mb-4">
                                     <a href="/promotion" className="hover:underline font-poppins">Promotion</a>
