@@ -24,7 +24,7 @@ const CoverSlider = () => {
     {
       image: CV4,
       title: "Kirirom Institute of Technology",
-      description: "Kirirom Institute of Technology is a private university in Cambodia that focuses on IT and was founded in 2014. Currently, it consists of two departments, Software engineering and International Leaders Hospitality Management with around 230 students from Cambodia and Japan."
+      description: "Kirirom Institute of Technology is a university in Cambodia that focuses on IT and was founded in 2014. Currently, it consists of two departments, Software engineering and International Leaders Hospitality Management with around 230 students."
     }, 
   ];
   const [activeIndex, setActiveIndex] = useState(0);

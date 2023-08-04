@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useReducer, useState } from 'react';
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { BiMoviePlay } from "react-icons/bi";
@@ -9,8 +10,10 @@ import { MDBBadge, MDBIcon } from 'mdb-react-ui-kit';
 import { Badge, Avatar } from "@material-tailwind/react";
 import MovieFilterRoundedIcon from '@mui/icons-material/MovieFilterRounded';
 // import { HomeIcon, BookmarkIcon, TicketIcon } from "@heroicons/react/24/solid";
-import AvatarProfile from '../assets/images/developer_image/avatar.png';
-import { checkAccessTokenExpiration, getAccessToken, getRefreshToken, logOut } from '../services/auth';
+import AvatarFemale from '../assets/images/developer_image/avatar_female.png';
+import AvatarMale from '../assets/images/developer_image/avatar_male.png';
+import { checkAccessTokenExpiration, getAccessToken, getRefreshToken, getUserInfor, logOut } from '../services/auth';
+import { UserLogo } from './UserLogo';
 
 const Navbar = () => {
   const location = useLocation();
@@ -31,10 +34,13 @@ const Navbar = () => {
   const hiddenRoutes = ['/login', '/signup'];
   const accessToken = getAccessToken()
   const refreshToken = getRefreshToken()
-  const userInfo = getRefreshToken()
+  const userInfo = getUserInfor()
   // Check if the current route is in the hiddenRoutes array
   const isHiddenRoute = hiddenRoutes.includes(location.pathname);
 
+  const [username, setUsername] = useState<string>("")
+  const [email, setEmail] = useState<string>("")
+  const [gender, setGender] = useState<string>("MALE")
 
   // Fetch data from localStorage
   useEffect(() => {
@@ -64,6 +70,11 @@ const Navbar = () => {
       if (accessToken && refreshToken && userInfo) {
         setIsAuth(true)
         setBtnTitle("Log Out")
+        console.log("userInfor:", userInfo);
+        setUsername(JSON.parse(userInfo).name)
+        setEmail(JSON.parse(userInfo).email)
+        setGender(JSON.parse(userInfo).gender)
+
       } else {
         setIsAuth(false)
         setBtnTitle("Sign Up")
@@ -94,12 +105,10 @@ const Navbar = () => {
     }
 
   }
-  const handleProfileClick = () => {
-    setIsProfileOpen(!isProfileOpen);
-  };
+
   return (
-    <nav className="bg-nav dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b  dark:border-gray-600">
-      <div className="flex flex-wrap items-center justify-between mx-auto p-4 lg:px-20">
+    <nav className="bg-nav dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b  dark:border-gray-600"  onMouseLeave={()=>{setIsProfileOpen(false)}}>
+      <div className="flex flex-wrap items-center justify-between mx-auto p-4 lg:px-4" >
         <a href="https://flowbite.com/" className="flex items-center">
           <Link to="/" className="text-white font-poppins flex items-center justify-self-start cursor-pointer no-underline text-3xl">
             <BiMoviePlay className="mr-2" onClick={closeMobileMenu} />
@@ -107,54 +116,52 @@ const Navbar = () => {
           </Link>
         </a>
         {/* Hamburger and Cross Sign */}
-        <div className="flex flex-row items-center md:order-2 ">
-          <div className='px-10 w-10'>
-            {
-              noti === 0 || currentPath === "/bill_detail"
-                ? (null)
-                : (
+        <div className="flex flex-row items-center md:order-2">
+          <div className="flex flex-row justify-center items-center">
+            <div className='px-10 w-10'>
+              {
+                noti === 0 || currentPath === "/bill_detail"
+                  ? (null)
+                  : (
 
-                  <Link to={"/bill_detail"}>
-                    <Badge content={noti}>
-                      <MovieFilterRoundedIcon className="h-6 w-6 text-white" />
-                    </Badge>
-                  </Link>
-
-                )
-            }
-          </div>
-          
-          {/* UserProfile */}
-          <div className="flex flex-row items-center md:order-2 space-x-3 nav-profile mx-5"
-            onClick={handleProfileClick}>
-              <div className="relative">
-                <div className="h-10 w-10 rounded-full cursor-pointer overflow-hidden">
-                  <img
-                    className="h-full w-full object-cover"
-                    src={AvatarProfile}
-                    alt="User Profile"
-                  />
-                </div>
-                {isProfileOpen && (
-                  <div className="absolute mt-2">
-                    <div>
-                      <Link to={isAuth ? '/login' : "/signup"}>
-                        <IconButton
-                          title={btnTitle}
-                          emoji={''}
-                          isTitleOnly={true}
-                          isIconOnly={false}
-                          onClick={() => { handleClickBtn() }}
-                          isDisabled={false}
-                          className="ml-3 font-poppins text-white bg-[#0284c7] font-semibold hover:text-white py-2 px-4 border border-blue hover:bg-transparent rounded uppercase text-xs whitespace-nowrap"
-                        />
+                    <Link to={"/bill_detail"}>
+                      <Badge content={noti}>
+                        <MovieFilterRoundedIcon className="h-6 w-6 text-white" />
+                      </Badge>
                     </Link>
-                    </div>
-                  </div>
-                )}
-              </div>
-              <div className="text-white font-poppins">{" Kimsour"}</div>
+
+                  )
+              }
             </div>
+
+            {/* UserProfile */}
+            <div className="ml-4" onClick={() => { setIsProfileOpen(!isProfileOpen) }}>
+              {
+                isAuth ? (
+                  <UserLogo
+                    image={gender === 'FEMALE' ? AvatarFemale : AvatarMale}
+                    onClick={() => {
+                      handleClickBtn()
+                    }}
+                    username={username}
+                    email={email}
+                    isProfileOn={isProfileOpen}
+                  />) : (<div>
+                    <Link to={isAuth ? '/login' : "/signup"}>
+                      <IconButton
+                        title={btnTitle}
+                        emoji={''}
+                        isTitleOnly={true}
+                        isIconOnly={false}
+                        onClick={() => { handleClickBtn() }}
+                        isDisabled={false}
+                        className="ml-3 font-poppins text-white bg-[#0284c7] font-semibold hover:text-white py-2 px-4 border border-blue hover:bg-transparent rounded uppercase text-xs whitespace-nowrap"
+                      />
+                    </Link>
+                  </div>)
+              }
+            </div>
+          </div>
           {/* User Profile */}
 
 
@@ -207,7 +214,7 @@ const Navbar = () => {
 
         </div>
         {/* Hamburger and Cross Sign End */}
-        <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+        <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky" >
           <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border md:flex-row md:space-x-8 md:mt-0 md:border-0">
             <li className=''>
               <NavLink to="/" className={({ isActive }) => `font-poppins font-bold text-lg ${isActive ? 'text-blue-400' : "text-white"}`}>

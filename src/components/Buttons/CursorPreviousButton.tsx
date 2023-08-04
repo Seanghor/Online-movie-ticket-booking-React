@@ -5,7 +5,7 @@ export const CursorButtonPrevious: React.FunctionComponent<CursorPreviousProp> =
     const { onClick } = props
     return (
         <button
-            className="mx-5 absolute top-1/2 left-0 transform -translate-y-1/2 z-[1] flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full opacity-75 hover:opacity-100 transition-opacity duration-300 focus:outline-none"
+            className="backdrop-contrast-125 bg-white/30 mx-5 mx-5 absolute top-1/2 left-0 transform -translate-y-1/2 z-[1] flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full opacity-75 hover:opacity-100 transition-opacity duration-300 focus:outline-none"
             onClick={() => onClick()}
         >
             <span className="sr-only">Previous</span>

@@ -15,7 +15,7 @@ import { Seat } from "./Seat";
 import { getSeatOfScreening } from "../services/seat";
 import { SeatList, SingleRowOfSeat, SingleSeatRespone } from "../types/seat.dto";
 import { SelectMovieModel } from "./Select_movie_model";
-import { convertMinutesToHHMM, formatDateToShortCurt, formatDateTo_dd_mm_yy, formatTimeTo12Hour, getRowLetter } from "../utils/utils";
+import { convertMinutesToHHMM, formatDateToShortCurt, formatDateTo_dd_mm_yy, formatName, formatTimeTo12Hour, getRowLetter } from "../utils/utils";
 import SeatNote from "./SeatNote";
 import { Element, scroller } from 'react-scroll';
 import image_seat from '../assets/images/seat/seat_available.svg'
@@ -386,8 +386,11 @@ const MovieDetail = () => {
           {/* Movie Detaile */}
           <div className="flex flex-col items-center md:flex-row md:max-w-xl">
             <img className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={movie?.image || ""} alt="" />
-            <div className="flex flex-col justify-between pl-10 leading-normal">
-              <h5 className=" flex flex-row mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{movie?.title ? movie?.title.toLocaleUpperCase() : movie?.title}</h5>
+            <div className="flex flex-col justify-between pl-10 leading-normal w-full">
+              <div className='w-80 '>
+                <h5 className="w-full flex flex-row mb-2  text-left text-2xl font-bold tracking-tight text-gray-900 dark:text-white ">{movie?.title ? formatName(movie?.title.toLocaleUpperCase(), 20) : formatName(movie?.title || "", 20)}
+                </h5>
+              </div>
               <div className="flex flex-row">
                 <CalendarMonthIcon className="text-white text-5xl" />
                 <h4 className="font-[poppins] font-normal text-slate-200 text-lg ml-3">{formatDateTo_dd_mm_yy(movie?.opening_date.toString() || "")}</h4>

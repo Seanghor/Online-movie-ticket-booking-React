@@ -17,16 +17,16 @@ const formatName=(title:string) => {
 export const Card: React.FunctionComponent<MovieCardProps> = (props: MovieCardProps) => {
     const { image,title,opening_date} = props;
     return (
-        <div className="shadow-cyan-500/50 h-[420px] hover:border-2 border-cyan-100 flex-shrink-0 m-4 w-56  relative overflow-hidden bg-slate-950 rounded-lg max-w-md shadow-2xl">
-            <div className="relative flex items-center justify-center">
-                <img src={image} alt="" className="w-full h-full object-cover object-center" />
+        <div className="shadow-cyan-500/50 h-[350px] hover:border-2 border-cyan-100 flex-shrink-0 m-4 w-56  relative overflow-hidden bg-slate-950 rounded-lg max-w-md shadow-2xl">
+            <div className="relative flex h-72 items-center justify-center">
+                <img src={image} alt="" className="w-full h-full object-cover object-center scale-95 rounded-t-lg hover:scale-105" />
             </div>
-            <div className="relative text-white px-3 pb-6 mt-4 hover:text-white">
+            <div className="relative text-white px-3 pb- mt-2 hover:text-white">
                 <div className="flex flex-col justify-between w-full">
-                    <span className="block font-semibold text-md capitalize truncate h-5 font-poppins">{title}</span>
-                    <div className="flex flex-row items-center text-sm mt-3">
-                    <CalendarMonthIcon className="mr-1 text-[#22d3ee]" sx={{ fontSize: "30px" }} />
-                    <span className="block font-poppins rounded-2xl text-[#22d3ee] text-lg font-normal px-3 py-2 leading-none flex items-center">
+                    <span className="block font-semibold text-sm capitalize truncate h-5 font-poppins">{title}</span>
+                    <div className="flex flex-row items-center text-sm mt-">
+                    <CalendarMonthIcon className="mr-1 text-[#22d3ee]" sx={{ fontSize: "20px" }} />
+                    <span className="block font-poppins rounded-2xl text-[#22d3ee] text-sm font-normal px-3 py-2 leading-none flex items-center">
                         {formatDateTo_dd_mm_yy(opening_date.toString())}
                     </span>
                     </div>

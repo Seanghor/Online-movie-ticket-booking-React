@@ -25,6 +25,7 @@ import philip_logo from '../assets/images/bank/philip.jpg';
 import aba_payment_icon from '../assets/paymentMethod_icon/aba_icon.svg'
 import acleda_payment_icon from '../assets/paymentMethod_icon/acleda_icon.png'
 import philip_payment_icon from '../assets/paymentMethod_icon/philip_icon.png'
+import ButtonLoading from '../components/Buttons/ButtonLoading';
 
 
 let CLIENT_ID = import.meta.env.VITE_PAYPAL_CLIENT_ID
@@ -125,7 +126,7 @@ const BillingDetailPage = () => {
 
 
   // payment id:
-  const [payId, setPayId] = useState<number | null>(null)
+  const [payId, setPayId] = useState<number | null>(1)
   const [chooseMethod, setChooseMethod] = useState<payMethod | null>(null)
   const [bookReserveData, setBookReserveData] = useState<BookingProps[] | []>([])
   const [arrayBookingDto, setArrayBookingDto] = useState<CreateBookingDto[] | []>([])
@@ -134,8 +135,9 @@ const BillingDetailPage = () => {
   const [remark, setRemark] = useState("")
   const [phone, setPhone] = useState("")
   const [agree, setAgree] = useState(false)
-  const [showButton, setShowButton] = useState(false)
+  const [showButton, setShowButton] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
+  const [isLoadingPay, setIsLoadingPay] = useState<boolean>(false)
 
   // refresh:
   const [reducerValue, forceUpdate] = useReducer(x => x + 1, 0)
@@ -194,21 +196,28 @@ const BillingDetailPage = () => {
   // handle click payment method:
   const handleClickPaymentMethod = (id: number) => {
     setPayId(id)
-    setShowButton(false)
+
     let choosen = paymentMethods.find((method: payMethod) => method.id === id)
     setChooseMethod(choosen || null)
     console.log("choosen:", choosen);
+
 
   }
 
   // handle PayPalCheckout:
   const handlePay = async () => {
+    setIsLoadingPay(true)
+    setTimeout(
+      () => setIsLoadingPay(false),
+      2000
+    );
+
     const resCreateBookingData = await Promise.all(
       arrayBookingDto.map(async (createSingleBooking: CreateBookingDto) => {
         return await handleCreateBooking(createSingleBooking);
       })
     );
-
+    setIsLoadingPay(true)
     let purchaseData = {
       total: totalPrice,
       phoneNumber: phone,
@@ -241,10 +250,13 @@ const BillingDetailPage = () => {
     // if (error) {
     //   alert(error)
     // }
+
+
     forceUpdate()
   }
 
 
+console.log('ShowButton:', showButton);
 
   return (
     <div className="mx-auto w-full h-full bg-gradient-to-r from-red-900 to-purple-900 min-h-screen font-sans">
@@ -299,9 +311,9 @@ const BillingDetailPage = () => {
                 Other
               </label>
               <Input
-               variant="outlined" 
-               label="Remark"
-                className="shadow appearance-none border-2 border-gray-200 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                variant="outlined"
+                label="Remark"
+                className="shadow appearance-none   rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 value={remark}
                 onChange={(e) => setRemark(e.target.value)}
               />
@@ -347,7 +359,7 @@ const BillingDetailPage = () => {
 
 
           {/* Total Summary */}
-          <div className="px-20 md:w-1/2 max-h-screen items-start  md:mt-0 font-sans pb-10">
+          <div className="px-20 md:w-2/3 max-h-screen items-start  md:mt-0 font-sans pb-10 ">
             <div className=" w-full h-full mx-auto border border-gray-400  p-10 rounded-md bg-[#faf5ff] "> {/** bg-[#faf5ff] */}
               <div className=" flex flex-row justify-between">
                 <div className='flex flex-row items-center'>
@@ -365,7 +377,7 @@ const BillingDetailPage = () => {
                       <div className="flex items-center">
                         <img src={movie?.image} alt={movie.title} className="w-20 h-24 rounded-md mr-4" />
                         <div className="flex flex-col justify-between w- mx-2">
-                          <div>
+                          <div className='w-80'>
                             <h3 className="font-medium text-[#9333ea] text-lg font-sans uppercase">{movie?.movie}</h3>
                           </div>
                           <div className='flex flex-row items-center text-xs  font-mono'>
@@ -403,10 +415,9 @@ const BillingDetailPage = () => {
                       </div>
 
                       <div
-                        onClick={() => {}}
-                        className="flex flex-row items-center w-12 pr-2">
-                        {/* <img className="object-cover w-8 h-8 hover:w-10 hover:h-10" src={croos_img} alt="" /> */}
-                        <CloseIcon className="ml-3 text-gray-500 hover:text-red-500 hover:w-8 hover:h-8"/>
+                        onClick={() => { }}
+                        className="flex flex-row items-center w-10 pr-2">
+                        <CloseIcon className="ml-3 text-gray-500 hover:text-red-500 hover:w-8 hover:h-8" />
                       </div>
                     </div>
                   </div>
@@ -427,27 +438,30 @@ const BillingDetailPage = () => {
                     Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purpose described in our privacy policy.
                   </p>
                 </div>
-                {
-                  showButton ? (
-                    <div className='flex flex-col justify-center items-center mt-10'>
-                      {
-                        payId === 1
-                          ? (<PayPalCheckout
-                            amount={totalPrice}
-                            onClickPay={() => handlePay()}
-                            paidFor={paidFor}
-                          />) : (
-                            <CheckoutBank
-                              amount={500}
-                              icon_pay={chooseMethod?.icon_pay || ""}
-                              onClickPay={() => { handlePay() }}
-                              paidFor={paidFor}
-                              bg_normal={chooseMethod?.bg_normal || ""}
-                              bg_hover={chooseMethod?.bg_hover || ""}
-                            />)
-                      }
-                    </div>) : (null)
-                }
+                {/* <ButtonLoading /> */}
+
+                <div className='flex flex-col justify-center items-center mt-10'>
+                  {
+                    payId === 1
+                      ? (<PayPalCheckout
+                        amount={totalPrice}
+                        onClickPay={() => handlePay()}
+                        paidFor={paidFor}
+                        isLoadingPay={isLoadingPay}
+                        isDisable={showButton ? false : true}
+                      />) : (
+                        <CheckoutBank
+                          amount={500}
+                          icon_pay={chooseMethod?.icon_pay || ""}
+                          onClickPay={() => { handlePay() }}
+                          paidFor={paidFor}
+                          bg_normal={chooseMethod?.bg_normal || ""}
+                          bg_hover={chooseMethod?.bg_hover || ""}
+                          isLoadingPay={isLoadingPay}
+                          isDisable={showButton ? false : true}
+                        />)
+                  }
+                </div>
 
               </div>
             </div>

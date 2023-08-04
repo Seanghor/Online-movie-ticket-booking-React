@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities; */
 
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
@@ -12,9 +12,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Angkor&family=Dancing+Script:wght@400;700&family=Dangrek&family=Fasthand&family=Khmer&family=Nokora:wght@100;300;400;700;900&family=Poppins&family=Suwannaphum:wght@700&display=swap');
 
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
+
 
 body {
   margin: 0;
