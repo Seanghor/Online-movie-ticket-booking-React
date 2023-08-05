@@ -20,7 +20,7 @@ export const CinemaBranch: React.FunctionComponent<CinemaBranchProps> = (props: 
       </div>
 
       <div className="flex flex-col">
-        <p className="text-gray-50 text-2xl font-bold m-2 font-poppins" >{branchName}</p>
+        <p className="text-orange-300 text-2xl font-bold m-2 font-poppins" >{branchName}</p>
         <p className="text-gray-100 text-1xl font-bold m-2 font-poppins">{address}</p>
         <p className="text-gray-100 text-1xl font-bold m-2 font-poppins">{phone}</p>
 

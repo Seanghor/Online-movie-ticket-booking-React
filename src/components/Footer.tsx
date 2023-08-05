@@ -7,6 +7,8 @@ import Seanghor from "../assets/seanghor1.png";
 
 
 const Footer = () => {
+
+    
     return (
         <footer className="bg-footer dark:bg-gray-900">
             <div className="mx-auto w-full p-20 py-6 lg:py-8">
@@ -20,7 +22,7 @@ const Footer = () => {
                     </div>
                     {/* Movie Tick Left Side */}
 
-                   
+
                     {/* Content Right Side */}
                     <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
                         <div>
@@ -46,6 +48,9 @@ const Footer = () => {
                         <div>
                             <h2 className="mb-6 text-sm font-semibold uppercase dark:text-white font-poppins">Follow us</h2>
                             <ul className="text-gray-500 dark:text-gray-400 font-medium">
+                                <li className="mb-4">
+                                    <a href="/contactus?developer" className="hover:underline font-poppins">Developers</a>
+                                </li>
                                 <li className="mb-4">
                                     <a href="" className="hover:underline font-poppins">Github</a>
                                 </li>
