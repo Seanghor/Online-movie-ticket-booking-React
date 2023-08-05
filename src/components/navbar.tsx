@@ -13,7 +13,8 @@ import AvatarFemale from '../assets/images/developer_image/avatar_female.png';
 import AvatarMale from '../assets/images/developer_image/avatar_male.png';
 import { checkAccessTokenExpiration, getAccessToken, getRefreshToken, getUserInfor, logOut } from '../services/auth';
 import { UserLogo } from './UserLogo';
-import cinela_icon from '../assets/cinema/web_icon.png'
+import cinema_logo from '../assets/cinema/cinema_logo.png'
+import cinema_icon from '../assets/cinema/cinema_icon.png'
 
 const Navbar = () => {
 
@@ -118,15 +119,19 @@ const Navbar = () => {
     <nav className="bg-nav dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b  dark:border-gray-600" onMouseLeave={() => { setIsProfileOpen(false) }}>
       <div className="flex flex-wrap items-center justify-between mx-auto p-4 lg:px-4" >
         <a href="https://flowbite.com/" className="flex items-center">
-          <Link to="/" className="text-white font-poppins flex items-center justify-self-start cursor-pointer no-underline text-3xl">
+          <Link to="/" className="text-white font-poppins flex flex-row items-center justify-self-start cursor-pointer no-underline text-3xl">
             {/* <BiMoviePlay className="mr-2 " onClick={() => { setClick(!click) }} /> */}
-            <img src={cinela_icon} alt="cinema" className="h-8 scale-125 mr-2"/>
-            <h4
-              id="runningColorText"
-              className="font-Angkor animate-text bg-gradient-to-r from-blue-600 via-lime-500 to-red-600  text-transparent bg-clip-text animate-gradient "
-            >
-              Avatar
-            </h4>
+            <div className="items-center">
+              <img src={cinema_icon} alt="cinema" className="h-8  mr-2" />
+            </div>
+            <div className="items-center">
+              <h4
+                id="runningColorText"
+                className="font-Angkor animate-text bg-gradient-to-r from-blue-600 via-lime-500 to-red-600  text-transparent bg-clip-text animate-gradient "
+              >
+                Avatar
+              </h4>
+            </div>
           </Link>
         </a>
         {/* Hamburger and Cross Sign */}

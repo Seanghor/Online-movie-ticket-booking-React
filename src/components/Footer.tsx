@@ -4,11 +4,12 @@ import { scroller } from "react-scroll";
 import Kimsour from "../assets/kimsour3.png";
 import Avatar from "./AvatarProp";
 import Seanghor from "../assets/seanghor1.png";
+import cinema_icon from '../assets/cinema/cinema_icon.png'
 
 
 const Footer = () => {
 
-    
+
     return (
         <footer className="bg-footer dark:bg-gray-900">
             <div className="mx-auto w-full p-20 py-6 lg:py-8">
@@ -16,8 +17,10 @@ const Footer = () => {
                     {/* Movie Tick Left side */}
                     <div className="mb-6 md:mb-0">
                         <a href="https://flowbite.com/" className="flex items-center">
-                            <BiMoviePlay className="h-8 text-white text-3xl mr-3" />
-                            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white font-poppins">MovieTick</span>
+                            <div className="items-center">
+                                <img src={cinema_icon} alt="cinema" className="h-8  mr-3" />
+                            </div>
+                            <span className="self-center font-poppins text-2xl font-semibold whitespace-nowrap dark:text-white ">MovieTick</span>
                         </a>
                     </div>
                     {/* Movie Tick Left Side */}

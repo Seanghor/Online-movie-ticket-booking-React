@@ -23,6 +23,9 @@ import image_notAvialable from '../assets/images/seat/not_avialable.svg'
 import { Seat } from './Seat';
 import SearchBar from './SearchBar';
 import logo from '../assets/cinema/logo_icon.png'
+import cinema_icon from '../assets/cinema/cinema_icon.png'
+import cinema_logo from '../assets/cinema/cinema_logo.png'
+import { getAccessToken, getRefreshToken, getUserInfor } from '../services/auth';
 
 
 
@@ -33,6 +36,12 @@ const CinemaShowTimeDetail = () => {
   const currentDate = new Date().toISOString().substring(0, 10);
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get('id')
+
+  // check token:
+  const accessToken = getAccessToken()
+  const refreshToken = getRefreshToken()
+  const userInfo = getUserInfor()
+
   // const [data, setData] = useState<CinemaResponse_includeScreening | null>(null)
   const [showDate, setShowDate] = useState(currentDate)
   const [dateArray, setDateArray] = useState<string[] | []>([])
@@ -193,6 +202,13 @@ const CinemaShowTimeDetail = () => {
 
 
   const handleShowUpSeat = async (id: string) => {
+    if (!accessToken || !refreshToken || !userInfo) {
+      setTimeout(
+        () => navigate('/signup'),
+        1500
+      );
+      return
+    }
     setShowSection('seat_section')
     setScreenId(id)
     setShowSeat(true)
@@ -287,7 +303,7 @@ const CinemaShowTimeDetail = () => {
     <div className='mx-auto bg-gradient-to-r from-red-900 to-purple-900 min-h-screen '>
       <div className="container flex-grow w-full py-4 sm:py-16 mx-auto">
         <div className="py-5 mt-10 flex flex-row items-center">
-          <img src={logo} alt='logo' className='h-40 w-40  ' />
+          <img src={cinema_logo} alt='logo' className='h-28 w-28  ' />
           <h1 className="text-5xl ml-3 uppercase my-10 font-black animate-text bg-gradient-to-r from-orange-500  via-cyan-400 to-blue-500 text-transparent bg-clip-text animate-gradient">{cinema?.name}</h1>
         </div>
 

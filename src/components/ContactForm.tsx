@@ -75,7 +75,6 @@ export const ContactForm: React.FunctionComponent = () => {
         () => navigate('/signup'), 
         1500
       );
-      
     }
     const res = await createFeedback(createFeedbackDto)
     console.log("res:", res);

@@ -236,7 +236,7 @@ const MovieDetail = () => {
 
     }
     fechOneScreenData()
-  }, [screenId])
+  }, [screenId, reducerValue])
 
 
   const handleClickSeat = (id: number) => {
@@ -355,7 +355,10 @@ const MovieDetail = () => {
   // functionality:
   const handleShowUpSeat = async (id: string) => {
     if (!accessToken || !refreshToken || !userInfo) {
-      navigate('/signup')
+      setTimeout(
+        () => navigate('/signup'),
+        1500
+      );
       return
     }
 

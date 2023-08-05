@@ -7,6 +7,8 @@ import Avatar from '../components/AvatarProp';
 import the_avatar_cineplex_logo from '../assets/cinema/logo_icon.png'
 import { useEffect, useState } from "react";
 import { Link, Element, scroller } from 'react-scroll';
+import cinema_logo from '../assets/cinema/cinema_logo.png'
+import cinema_icon from '../assets/cinema/cinema_icon.png'
 import { useNavigate } from "react-router-dom";
 import { getAccessToken, getRefreshToken, getUserInfor } from "../services/auth";
 
@@ -36,7 +38,7 @@ const ContactUs = () => {
         <div className="flex flex-row  items-center min-w-lg p-5 h-screen">
           <div className="flex flex-col justify-start mb-10 w-full shrink-0 grow-0 basis-auto md:mb-20 md:w-6/12 md:px-3 lg:px-6">
             <div className="flex items-center">
-              <img src={the_avatar_cineplex_logo} alt="the avatar logo" className="h-48 w-56" />
+              <img src={cinema_logo} alt="the avatar logo" className="h-32 w-32" />
             </div>
             <div className="">
               <h2 className="mb-6 text-3xl font-bold text-yellow-500 font-DancingScript">Business Development</h2>

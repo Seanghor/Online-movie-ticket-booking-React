@@ -1,6 +1,6 @@
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {logIn } from '../services/auth';
+import { logIn } from '../services/auth';
 import LockIcon from '@mui/icons-material/Lock';
 import SignInBgImage from '../assets/images/signin_signup_bg/signinBg.png';
 import PersonIcon from '@mui/icons-material/Person';
@@ -33,6 +33,8 @@ export default function LoginPage() {
         () => navigate('/'),
         1500
       );
+      setIsClick(false)
+      return
 
     }
   }
@@ -87,7 +89,7 @@ export default function LoginPage() {
 
             {/* Login Btn */}
             <div className="flex flex-row mt-8 items-center justify-center">
-              
+
               {
                 isClick ? (<button disabled type="button" className="bg-purple-700 w-1/2 p-4 tracking-wide text-white text-bold font-poppins text-lg uppercase transition-colors duration-200 transform rounded-full hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
                   <svg aria-hidden="true" role="status" className="inline w-4 h-4 mr-3 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">

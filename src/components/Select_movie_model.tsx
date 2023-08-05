@@ -7,6 +7,7 @@ import React from "react";
 // import image_text from '../assets/text.svg'
 // import image_notAvialable from '../assets/not_avialable.svg'
 // import image_user from '../assets/user.svg'
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { MovieTypeEnum } from "../types/enum.type";
 import { IconButton } from "./Icon_Button";
 // import { Link, NavLink, useLocation } from "react-router-dom";
@@ -50,7 +51,7 @@ interface SelectMovieModel_props {
 
 // export const Seat: React.FunctionComponent<SeatProps> = (props: SeatProps) => {
 export const SelectMovieModel: React.FunctionComponent<SelectMovieModel_props> = (props: SelectMovieModel_props) => {
-    const { image, cinema,auditoruim, showDate, timeShow, selected, onClickCancelSeat, onClickSubmit, onClickReserve } = props
+    const { image, cinema, auditoruim, showDate, timeShow, selected, onClickCancelSeat, onClickSubmit, onClickReserve } = props
 
     return (
         <div className="flex flex-row">
@@ -59,9 +60,12 @@ export const SelectMovieModel: React.FunctionComponent<SelectMovieModel_props> =
                     <div className=" w-72 shadow-xl  border-1 border-collapse rounded-lg border-indigo-900">
                         <img className="object-cover w-full h-full rounded-lg" src={image} alt="" />
                     </div>
-                    <h1 className={cinema && cinema.length <= 20 ? "text-left text-blue-100 font-bold p-2 text-lg" : "text-left text-blue-100 font-bold p-2 text-xs "}>
-                        {cinema}
-                    </h1>
+                    <div className="flex flex-row items-center px-1">
+                        <LocationOnIcon className=" from-neutral-50 text-slate-400" sx={{ fontSize: "17px" }} />
+                        <h1 className={cinema && cinema.length <= 20 ? "text-left  text-red-500 font-bold p-2 text-lg" : "text-left text-red-400 font-bold p-2 text-xs "}>
+                            {cinema}
+                        </h1>
+                    </div>
 
                     <div className="w-72 h-64 mt-4  max-h-80 overflow-y-auto">
                         <div className="h-64">
@@ -90,7 +94,7 @@ export const SelectMovieModel: React.FunctionComponent<SelectMovieModel_props> =
                                                 onClick={() => onClickCancelSeat(item.id)}
                                                 className="flex flex-row items-center w-12 pr-2">
                                                 {/* <img className="object-cover w-8 h-8 hover:w-10 hover:h-10" src={croos_img} alt="" /> */}
-                                                <CloseIcon className="ml-3 text-white hover:text-red-500 hover:w-8 hover:h-8"/>
+                                                <CloseIcon className="ml-3 text-white hover:text-red-500 hover:w-8 hover:h-8" />
                                             </div>
                                         </div>
                                     </div>
