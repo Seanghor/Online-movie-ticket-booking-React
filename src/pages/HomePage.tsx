@@ -156,7 +156,7 @@ const HomePage = () => {
             <div
               onClick={() => goToPreviousPage(currentPageTop, totalPagesTop, setCurrentPageTop)}
               className="group ">
-              <ArrowBackIosIcon style={{ color: "" }} className={`text-cyan-300  hover:text-cyan-800 ${showCursorTopMov ? "visible" : "invisible"}`} />
+              <ArrowBackIosIcon style={{ color: "" }} className={ `cursor-pointer text-cyan-300  hover:text-cyan-800 ${showCursorTopMov ? "visible" : "invisible"}`} />
             </div>
             {/* <div className="px- justify-between grid grid-cols-8 w-full items-center justify-items-center"> */}
             <div id="default-carousel" className="relative w-full px- justify-between grid grid-cols-8 items-center justify-items-center" data-carousel="slide">
@@ -181,7 +181,7 @@ const HomePage = () => {
             <div
               onClick={() => goToNextPage(currentPageTop, totalPagesTop, setCurrentPageTop)}
               className="group">
-              <ArrowForwardIosIcon style={{ color: "" }} className={`text-cyan-300 hover:text-cyan-800 ${showCursorTopMov ? "visible" : "invisible"}`} />
+              <ArrowForwardIosIcon style={{ color: "" }} className={`cursor-pointer text-cyan-300 hover:text-cyan-800 ${showCursorTopMov ? "visible" : "invisible"}`} />
             </div>
           </div>
         </div>
@@ -198,7 +198,7 @@ const HomePage = () => {
             <div
               onClick={() => goToPreviousPage(currentPageNowPlaying, totalPagesNowPlaying, setCurrentPageNowPlayingp)}
               className="">
-              <ArrowBackIosIcon style={{ color: "" }} className={`text-cyan-300 hover:text-cyan-800 ${showCursorNowPlayingMov ? "visible" : "invisible"}`} />
+              <ArrowBackIosIcon style={{ color: "" }} className={`cursor-pointer text-cyan-300 hover:text-cyan-800 ${showCursorNowPlayingMov ? "visible" : "invisible"}`} />
             </div>
             <div className="justify-between grid grid-cols-8 w-full items-start justify-items-start">
               {
@@ -221,7 +221,7 @@ const HomePage = () => {
             <div
               onClick={() => goToNextPage(currentPageNowPlaying, totalPagesNowPlaying, setCurrentPageNowPlayingp)}
               className="">
-              <ArrowForwardIosIcon style={{ color: "" }} className={`text-cyan-300 hover:text-cyan-800 ${showCursorNowPlayingMov ? "visible" : "invisible"}`} />
+              <ArrowForwardIosIcon style={{ color: "" }} className={`cursor-pointer text-cyan-300 hover:text-cyan-800 ${showCursorNowPlayingMov ? "visible" : "invisible"}`} />
             </div>
           </div>
         </Element>
@@ -238,7 +238,7 @@ const HomePage = () => {
             <div
               onClick={() => goToPreviousPage(currentPageSoon, totalPagesSoon, setCurrentPageSoon)}
               className="">
-              <ArrowBackIosIcon style={{ color: "" }} className={`text-cyan-300 hover:text-cyan-800 ${showCursorSoonMov ? "visible" : "invisible"}`} />
+              <ArrowBackIosIcon style={{ color: "" }} className={`cursor-pointer text-cyan-300 hover:text-cyan-800 ${showCursorSoonMov ? "visible" : "invisible"}`} />
             </div>
             <div className="justify-between grid grid-cols-8 w-full items-start justify-items-start">
               {
@@ -261,7 +261,7 @@ const HomePage = () => {
             <div
               onClick={() => goToNextPage(currentPageSoon, totalPagesSoon, setCurrentPageSoon)}
               className="">
-              <ArrowForwardIosIcon style={{ color: "" }} className={`text-cyan-300 hover:text-cyan-800 ${showCursorSoonMov ? "visible" : "invisible"}`} />
+              <ArrowForwardIosIcon style={{ color: "" }} className={`cursor-pointer text-cyan-300 hover:text-cyan-800 ${showCursorSoonMov ? "visible" : "invisible"}`} />
             </div>
           </div>
         </Element>

@@ -17,10 +17,11 @@ interface NotificationDialogProps {
   main_title: string
   discription: string
   icon: string
+  onClick: Function
 }
 export const NotificationDialog: React.FunctionComponent<NotificationDialogProps> = (props: NotificationDialogProps) => {
   const navigate = useNavigate();
-  const { isOpen, main_title, discription, icon } = props
+  const { isOpen, main_title, discription, icon, onClick } = props
   const [open, setOpen] = React.useState(isOpen);
 
   const handleOpen = () => setOpen(!isOpen);
@@ -56,7 +57,7 @@ export const NotificationDialog: React.FunctionComponent<NotificationDialogProps
               <Button variant="text" color="blue-gray" onClick={handleOpen}>
                 close
               </Button>
-              <Button className="text-white bg-pink-700" onClick={handleCloseSession}>
+              <Button className="text-white bg-pink-700" onClick={() => {handleOpen(),onClick()}}>
                 Ok, Got it
               </Button>
             </DialogFooter>

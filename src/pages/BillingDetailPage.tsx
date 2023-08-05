@@ -236,18 +236,17 @@ const BillingDetailPage = () => {
         // set reserve data:
         const emptyArray: CreateBookingDto[] | [] = [];
         const emptyArrayString = JSON.stringify(emptyArray);
+
         // Store the JSON string in localStorage
         localStorage.setItem('reserve', emptyArrayString);
         setPaidFor(true)
         // Dispatch a custom event to notify the Navbar component
         const event = new Event('reservationUpdated');
         window.dispatchEvent(event);
+        forceUpdate()
       },
       1500
     );
-
-
-
 
     // if (paidFor) {
     //   alert("Thank you for your purches.")
@@ -257,7 +256,7 @@ const BillingDetailPage = () => {
     // }
 
 
-    forceUpdate()
+   
   }
 
 

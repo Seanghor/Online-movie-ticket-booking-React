@@ -1,8 +1,11 @@
 import React from "react";
 import { NotificationDialog } from "./PopupDialog";
 import icon from '../assets/images/dialog/tick.svg'
+import { useNavigate } from "react-router-dom";
+
 
 export const ContactForm: React.FunctionComponent = () => {
+  const navigate = useNavigate();
   return (
     <form className="w-full min-w-lg bg-white bg-opacity-25 p-10 rounded-md">
       <div className="flex flex-wrap -mx-3 mb-6">
@@ -38,16 +41,17 @@ export const ContactForm: React.FunctionComponent = () => {
           <p className="text-white text-xs italic font-DancingScript">Please let us know more detail</p>
         </div>
       </div>
-
-      <button className="mx-3 font-DancingScrip text-white bg-[#db2777] text-white font-semibold hover:text-white py-2 px-10 border border-blue hover:border-transparent rounded uppercase">
-        Send
-      </button>
-      <NotificationDialog
+      {/* <NotificationDialog
         isOpen={true}
         main_title={"You have successfully purchased ticket"}
         discription={"A small river named Duden flows by their place and supplies it with the necessary regelialia"}
         icon={icon}
-      />
+        onClick={() => { setTimeout(() => navigate('/'), 1500) }}
+      /> */}
+      <button className="mx-3 font-DancingScrip text-white bg-[#db2777] text-white font-semibold hover:text-white py-2 px-10 border border-blue hover:border-transparent rounded uppercase">
+        Send
+      </button>
+
 
     </form>
   );
