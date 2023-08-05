@@ -29,13 +29,13 @@ export const HomeCard: React.FunctionComponent<HomeCardProps> = (props: HomeCard
     }
 
     return (
-        <div className=" flex-shrink-0 mx-4 w-[160px]  relative overflow-hidden bg-slate-950 rounded-lg max-w-xs shadow-2xl border-cyan-100 
+        <div className="mr-5 flex-shrink-0 mx-0 w-44 h-64 relative overflow-hidden bg-slate-950 rounded-2xl max-w-xs shadow-2xl border-cyan-100 
             hover:border-2
-            group cursor-pointer items-start justify-start  transition-shadow hover:shadow-xl hover:shadow-black/30
+            group cursor-pointer items-start justify-start transition-shadow hover:shadow-xl hover:shadow-black/30
             ">
             <div className="group relative cursor-pointer items-start justify-start overflow-hidden transition-shadow hover:shadow-xl hover:shadow-black/30">
-                <div className="h-60 w-48">
-                    <img className="h-full w-full object-cover transition-transform duration-500 group-hover:rotate-3 group-hover:scale-125"
+                <div className="h-64 w-44 justify-center items-center place-items-center">
+                    <img className="h-full w-full bg-cover object-cover transition-transform duration-500 group-hover:rotate-3 group-hover:scale-125"
                         src={image} alt="" />
                 </div>
                 <div className="flex items-start">

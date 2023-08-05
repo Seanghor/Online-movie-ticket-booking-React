@@ -1,29 +1,33 @@
+
+import React from 'react';
 import { useEffect, useReducer, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { getMovieById } from "../services/movie";
 import { MovieResponse } from "../types/movie.dto";
 import GradeIcon from '@mui/icons-material/Grade';
 import TimerIcon from '@mui/icons-material/Timer';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import CategoryIcon from '@mui/icons-material/Category';
 import { ScreeningProps, ShowTimeSchedule } from "./Schedule_model";
 import { getAllScreeningByMovieIdAndDate, getAllScreeningByMovieIdAndGroupByDate, getOneScreeningById } from "../services/screening";
 import { DifferentCinemaScreeningResponse, DifferentDateScreeningResponse } from "../types/screening.dto";
 import { Seat } from "./Seat";
 import { getSeatOfScreening } from "../services/seat";
-import {  SingleRowOfSeat, SingleSeatRespone } from "../types/seat.dto";
+import { SeatList, SingleRowOfSeat, SingleSeatRespone } from "../types/seat.dto";
 import { SelectMovieModel } from "./Select_movie_model";
-import { convertMinutesToHHMM, formatDateToShortCurt, formatDateTo_dd_mm_yy, formatTimeTo12Hour, getRowLetter } from "../utils/utils";
+import { convertMinutesToHHMM, formatDateToShortCurt, formatDateTo_dd_mm_yy, formatName, formatTimeTo12Hour, getRowLetter } from "../utils/utils";
 import SeatNote from "./SeatNote";
 import { Element, scroller } from 'react-scroll';
-import image_seat from '../assets/seat_available.svg'
-import image_sealectedSeat from '../assets/seat_selected.svg'
+import image_seat from '../assets/images/seat/seat_available.svg'
+import image_sealectedSeat from '../assets/images/seat/seat_selected.svg'
 import bookIcon from '../assets/booked.svg'
-import image_notAvialable from '../assets/not_avialable.svg'
+import image_notAvialable from '../assets/images/seat/not_avialable.svg'
 import SearchBar from './SearchBar';
 import { useNavigate } from 'react-router-dom';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { getOneCinema } from '../services/campus';
+import { getAccessToken, getRefreshToken, getUserInfor } from '../services/auth';
 
 // for scroll section(whenever value of showSecton change --> this function is called)
 const scrollToSection = (showSection: string) => {
@@ -42,9 +46,15 @@ const scrollToSection = (showSection: string) => {
 const currentDate = new Date().toISOString().substring(0, 10);
 const MovieDetail = () => {
   const navigate = useNavigate();
+  // check token:
+  const accessToken = getAccessToken()
+  const refreshToken = getRefreshToken()
+  const userInfo = getUserInfor()
+  const [isAuth, setIsAuth] = useState(false)
+
   // movie
   const { id } = useParams();
-  // const [movieId, setMovieId] = useState(id)
+  const [movieId, setMovieId] = useState(id)
   const [movie, setMovie] = useState<MovieResponse | null>(null);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -57,22 +67,22 @@ const MovieDetail = () => {
   const [oneScreening, setOncScreening] = useState<any | null>(null)
   const [screening, setScreening] = useState<DifferentCinemaScreeningResponse[]>([])
   const [showSchedule, setShowSchedule] = useState<boolean>(booleanValue)
-  // const [screeningDataGroupByDate, setScreeningDataGroupByDate] = useState<DifferentDateScreeningResponse[]>([])
+  const [screeningDataGroupByDate, setScreeningDataGroupByDate] = useState<DifferentDateScreeningResponse[]>([])
   const [datesArray, setDatesArray] = useState<string[] | []>([])
   const [showDate, setShowDate] = useState(currentDate)
-  // const [isAvailable, setIsAvailable] = useState(false)
+  const [isAvailable, setIsAvailable] = useState(false)
   const [cinemaName, setCinemaName] = useState<string>('')
-  // const [cinemaId, setCinemaId] = useState('')
+  const [cinemaId, setCinemaId] = useState('')
 
 
   // seat:
-  // const [seatData, setSeatData] = useState<SeatList | [][]>([])
+  const [seatData, setSeatData] = useState<SeatList | [][]>([])
   const [showSeat, setShowSeat] = useState(false)
   const [selectSeat, setSelectSeat] = useState<any | []>([])
-  // const [reserveDataToStorage, setReserveDataToStorage] = useState<any | []>([])
+  const [reserveDataToStorage, setReserveDataToStorage] = useState<any | []>([])
   const [seatIdOfScreen, setSeatIdOfScreen] = useState<any>([])
   const [reserveData, setReserveData] = useState<any | []>([])
-  // const [listSeatId, setListSeatId] = useState<number[] | []>([])
+  const [listSeatId, setListSeatId] = useState<number[] | []>([])
 
   // book or reserve:
   // const [cinema, setCinema] = useState("")
@@ -103,7 +113,7 @@ const MovieDetail = () => {
   useEffect(() => {
     // fect singleMovie data:
     const fechMovieData = async () => {
-      const res = await getMovieById(id || "")
+      const res = await getMovieById(movieId || "")
       let movieData = await res.json()
       setMovie(movieData);
     }
@@ -111,14 +121,14 @@ const MovieDetail = () => {
 
     // fect all screening of the movie group by date(to display all screen of the movie)
     const fectAllScreeningGroupByDate = async () => {
-      const res = await getAllScreeningByMovieIdAndGroupByDate(id || "")
+      const res = await getAllScreeningByMovieIdAndGroupByDate(movieId || "")
       let fectDataResponse = await res.json()
       // console.log("res:", fectDataResponse);
-      // if (fectDataResponse.statusCode == 400) {
-      //   setScreeningDataGroupByDate([])
-      //   return
-      // }
-      // setScreeningDataGroupByDate(fectDataResponse)
+      if (fectDataResponse.statusCode == 400) {
+        setScreeningDataGroupByDate([])
+        return
+      }
+      setScreeningDataGroupByDate(fectDataResponse)
 
       // get all dateShow of movie:
       const array: string[] | [] | "" = fectDataResponse
@@ -134,14 +144,14 @@ const MovieDetail = () => {
       setDatesArray(uniqueDatesArray.slice(0, 3))
     }
     fectAllScreeningGroupByDate()
-  }, [id, reducerValue])
+  }, [id, movieId, reducerValue])
 
   // --------------------------------------- when date change:
   useEffect(() => {
     // fect all screening of the movie and filter by date:
     const fechScreeningDataByDate = async () => {
       console.log("selecting date:", showDate);
-      const res = await getAllScreeningByMovieIdAndDate(id || '', showDate)
+      const res = await getAllScreeningByMovieIdAndDate(movieId || '', showDate)
       let dataResponse = await res.json()
       // console.log("Screening by date:", dataResponse);
 
@@ -200,7 +210,7 @@ const MovieDetail = () => {
 
       if (screeningNowData) {
         // fect cinema:
-        // setCinemaId(screeningNowData.campusId)
+        setCinemaId(screeningNowData.campusId)
         const cinema = await getOneCinema(screeningNowData.campusId)
         const cinemaJson = await cinema.json()
         setCinemaName(cinemaJson.name)
@@ -256,7 +266,7 @@ const MovieDetail = () => {
 
   // handle add reserve data to localStorage
   const handleAddReserveDataToLocalStorage = (updatedSeatIdOfScreen: SingleSeatRespone[]) => {
-    const updatedBookingData = reserveData?.map((reserve: any) => {
+    const updatedBookingData = reserveData?.map((reserve: any, index: number) => {
       if (reserve.screeningId === screenId) {
         if (reserve.seat.length === 0) {
           return
@@ -345,6 +355,11 @@ const MovieDetail = () => {
 
   // functionality:
   const handleShowUpSeat = async (id: string) => {
+    if (!accessToken || !refreshToken || !userInfo) {
+      navigate('/signup')
+      return
+    }
+
     setScreenId(id)
     setShowSection('seat_section')
     scrollToSection(showSection)
@@ -371,7 +386,7 @@ const MovieDetail = () => {
 
 
 
-  console.log("screeningProps:", screeningProps);
+  console.log("seatIdOfScreen:", seatIdOfScreen);
 
 
 
@@ -383,8 +398,11 @@ const MovieDetail = () => {
           {/* Movie Detaile */}
           <div className="flex flex-col items-center md:flex-row md:max-w-xl">
             <img className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={movie?.image || ""} alt="" />
-            <div className="flex flex-col justify-between pl-10 leading-normal">
-              <h5 className=" flex flex-row mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{movie?.title ? movie?.title.toLocaleUpperCase() : movie?.title}</h5>
+            <div className="flex flex-col justify-between pl-10 leading-normal w-full">
+              <div className='w-80 '>
+                <h5 className="w-full flex flex-row mb-2  text-left text-2xl font-bold tracking-tight text-gray-900 dark:text-white ">{movie?.title ? formatName(movie?.title.toLocaleUpperCase(), 20) : formatName(movie?.title || "", 20)}
+                </h5>
+              </div>
               <div className="flex flex-row">
                 <CalendarMonthIcon className="text-white text-5xl" />
                 <h4 className="font-[poppins] font-normal text-slate-200 text-lg ml-3">{formatDateTo_dd_mm_yy(movie?.opening_date.toString() || "")}</h4>
@@ -403,7 +421,7 @@ const MovieDetail = () => {
                 <h4 className="font-[poppins] font-normal text-slate-200 text-lg ml-3">{movie?.movieType}</h4>
               </div>
               <div className="text-left">
-                <p className="my-3 font-normal text-slate-200 dark:text-gray-200">{movie?.description}</p>
+                <p className="my-3 font-normal text-slate-200 dark:text-gray-200 font-poppins">{movie?.description}</p>
                 {
                   // || (screening.length !== 0)
                   (showSchedule) ? null : (
@@ -475,7 +493,7 @@ const MovieDetail = () => {
                       <SearchBar search={search} onChange={setSearch} placeHolder='search' />
                       {/* Add other components or logic related to displaying movies */}
                     </div>
-                    <div className="h-screen">
+                    <div className="">
                       {screening?.filter(
                         ((item: any) => {
                           return search?.toLocaleLowerCase() === ""
@@ -509,9 +527,9 @@ const MovieDetail = () => {
                   <div className="flex flex-row ">
                     <div className="flex flex-row">
                       {/*  Select Seat */}
-                      <div style={{ perspective: '600px' }} className="h-screen -5 bg-slate-800 flex flex-col justify-center items-center rounded-xl py-5">
+                      <div style={{ perspective: '600px' }} className=" h-screen bg-slate-800 flex flex-col justify-center items-center rounded-xl py-5">
                         {/* Screen */}
-                        <div className=" screen rounded-t-[0%] rounded-b-[0%] " style={{ transform: 'rotateX(-30deg)' }}></div>
+                        <div className="screen rounded-t-[0%] rounded-b-[0%]" style={{ transform: 'rotateX(-40deg)' }}></div>
                         {/* Sreen End */}
                         {/* <div className="grid grid-cols-3 content-start mx-4 my-10"> */}
                         <div className="flex flex-col my-10 overflow-y-auto h-4/5">
@@ -594,5 +612,4 @@ const MovieDetail = () => {
 }
 
 export default MovieDetail
-
 

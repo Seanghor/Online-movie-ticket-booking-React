@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import CV1 from '../assets/cv1.png';
-import CV2 from '../assets/cv2.png';
-import CV3 from '../assets/cv3.png';
-import CV4 from '../assets/cv4.png';
-
+import CV1 from '../assets/images/coverSlider/cv1.png';
+import CV2 from '../assets/images/coverSlider/cv2.png';
+import CV3 from '../assets/images/coverSlider/cv3.png';
+import CV4 from '../assets/images/coverSlider/cv4.png';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 const CoverSlider = () => {
   const images = [
     {
@@ -24,7 +24,7 @@ const CoverSlider = () => {
     {
       image: CV4,
       title: "Kirirom Institute of Technology",
-      description: "Kirirom Institute of Technology is a private university in Cambodia that focuses on IT and was founded in 2014. Currently, it consists of two departments, Software engineering and International Leaders Hospitality Management with around 230 students from Cambodia and Japan."
+      description: "Kirirom Institute of Technology is a university in Cambodia that focuses on IT and was founded in 2014. Currently, it consists of two departments, Software engineering and International Leaders Hospitality Management with around 230 students."
     }, 
   ];
   const [activeIndex, setActiveIndex] = useState(0);

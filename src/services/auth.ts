@@ -61,6 +61,7 @@ export const logOut = async () => {
     removeAccessToken()
     removeRefreshToken()
     removeUserInfo()
+    localStorage.removeItem('reserve')
 };
 // export const logOut = async () => {
 

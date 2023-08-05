@@ -1,19 +1,20 @@
 import { useState } from 'react';
-import SignupImg from '../assets/signup.png';
+import SignupImg from '../assets/images/signin_signup_bg/signup.png';
 import { GenderEnum } from '../types/enum.type';
 import { RegisterInput } from '../types/user';
 import { registerUser } from '../services/user';
 import { useNavigate } from 'react-router-dom';
-import SignupBgImage from '../assets/signupBg.png';
+import SignupBgImage from '../assets/images/signin_signup_bg/signupBg.png';
 import PersonIcon from '@mui/icons-material/Person';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import TransgenderIcon from '@mui/icons-material/Transgender';
 import LockIcon from '@mui/icons-material/Lock';
 import EmailIcon from '@mui/icons-material/Email';
 
 export default function Signup() {
   const navigate = useNavigate();
-  // const [status, setStatus] = useState(false);
+  const [status, setStatus] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [gender, setGender] = useState<GenderEnum | string>("MALE")
@@ -22,8 +23,6 @@ export default function Signup() {
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
-
-  setGender("MALE")
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     const registerData = {
@@ -56,77 +55,7 @@ export default function Signup() {
           />
         </div>
 
-        {/* Sign up form */}
-        {/* <div className="w-full bg-transparent rounded-md lg:max-w-xl">
-          <h1 className="text-2xl font-semibold text-center text-white">
-            Create an account
-          </h1>
-          <form className="mt-6" onSubmit={handleSignUp}>
-            <div className="mb-2">
-              <label
-                htmlFor="name"
-                className="block text-sm font-semibold text-white"
-              >
-                Name
-              </label>
-              <input
-                type="text"
-                placeholder='Username'
-                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </div>
-            <div className="mb-2">
-              <label
-                htmlFor="email"
-                className="block text-sm font-semibold text-white"
-              >
-                Email
-              </label>
-              <input
-                type="email"
-                placeholder='example@gmail.com'
-                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            <div className="mb-2">
-              <label
-                htmlFor="password"
-                className="block text-sm font-semibold text-white"
-              >
-                Password
-              </label>
-              <input
-                type="password"
-                placeholder='password'
-                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            <p className="text-xs text-white font-bold">
-              Password must be at least 8 characters long
-            </p>
-            <div className="mt-6">
-              <button className="w-full px-4 py-2 text-white bg-[#0284c7] rounded-lg hover:bg-gray-900 focus:outline-none focus:bg-gray-600">
-                Sign up
-              </button>
-            </div>
-          </form>
-
-          <p className="mt-5 text-sm text-center text-white">
-            {" "}
-            Already a member?{" "}
-            <a href="/login" className="font-medium text-[#0284c7] hover:underline">
-              Sign in
-            </a>
-          </p>
-        </div> */}
         {/* Sign Up form */}
-
         <div className="w-full flex flex-col m-auto shadow-md lg:max-w-3xl">
           <div className="bg-purple-300 py-10 bg-opacity-25 w-full p-6">
             <h1 className='text-5xl text-white w-1/2 m-auto font-bold text-center font-DancingScript'>Welcome</h1>
@@ -138,34 +67,45 @@ export default function Signup() {
               User Sign Up
             </h1>
             <form className='p-6' onSubmit={handleSignUp}>
-              <div className="py-4 flex flex-row px-8">
+              <div className="py-2 flex flex-row px-8">
                 <div className="relative flex items-center rounded-full p-3 mr-4 bg-white bg-opacity-50 jusify-center">
                   <PersonIcon style={{ fontSize: 40 }} className='w-full h-full flex text-purple-600' />
                 </div>
                 <input
                   type="text"
-                  className="block w-full px-4 py-2 text-purple-700 font-poppins placeholder-purple-700 placeholder-bold text-lg bg-white bg-opacity-50 border rounded-full focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                  className="block w-full px-4 py- text-purple-700 font-poppins placeholder-purple-700 placeholder-bold text-lg bg-white bg-opacity-50 border rounded-full focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
                   value={username}
                   required
                   placeholder='Username'
                   onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
-              <div className="py-4 flex flex-row px-8">
+              <div className="py-2 flex flex-row px-8">
                 <div className="relative flex items-center rounded-full p-3 mr-4 bg-white bg-opacity-50 jusify-center">
                   <EmailIcon style={{ fontSize: 40 }} className='w-full h-full flex text-purple-600' />
                 </div>
                 <input
                   type="email"
-                  className="block w-full px-4 py-2 text-purple-700 font-poppins placeholder-purple-700 placeholder-bold text-lg bg-white bg-opacity-50 border rounded-full focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                  className="block w-full px-4 py- text-purple-700 font-poppins placeholder-purple-700 placeholder-bold text-lg bg-white bg-opacity-50 border rounded-full focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
                   value={email}
                   required
                   placeholder='Email'
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
+              <div className="py-2 flex flex-row px-8">
+                <div className="relative flex items-center rounded-full p-3 mr-4 bg-white bg-opacity-50 jusify-center">
+                  <TransgenderIcon style={{ fontSize: 40 }} className='w-full h-full flex text-purple-600' />
+                </div>
+                <select onChange={(e) => setGender(e.target.value)} id="large" className="block w-full px-4 py- text-purple-700 font-poppins placeholder-purple-700 placeholder-bold text-lg bg-white bg-opacity-50 border rounded-full focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40">
+                  <option selected>Select Gender</option>
+                  <option value="FEMALE">FEMALE</option>
+                  <option value="MALE">MALE</option>
+                </select>
 
-              <div className="py-4 flex flex-row px-8 ">
+              </div>
+
+              <div className="py-2 flex flex-row px-8 ">
                 <div className="relative flex items-center rounded-full p-3 mr-4 bg-white bg-opacity-50 jusify-center">
                   <LockIcon style={{ fontSize: 40 }} className='w-full h-full flex text-purple-600' />
                 </div>
@@ -182,7 +122,7 @@ export default function Signup() {
                   <div
                     onClick={togglePasswordVisibility}
                     className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
-                    {passwordVisible ? <VisibilityOffIcon className='text-purple-600' /> : <VisibilityIcon className='text-purple-600' />}
+                    {passwordVisible ? <VisibilityIcon className='text-purple-600' /> : < VisibilityOffIcon className='text-purple-600' />}
                   </div>
                 </div>
               </div>

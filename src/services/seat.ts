@@ -2,7 +2,7 @@
 import { UpdateStatusOfSeat } from "../types/seat.dto";
 import { getAccessToken } from "./auth";
 
-let URL = import.meta.env.VITE_BASE_URL
+const URL = import.meta.env.VITE_BASE_URL
 // let URL = import.meta.env.VITE_BASE_URL_LOCAL
 export const getSeatOfAuditorum = async (id: string) => {
     const res = await fetch(`${URL}/seat?auditoriumId=${id}`, {

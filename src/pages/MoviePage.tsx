@@ -9,7 +9,7 @@ import { CursorButtonNext } from "../components/Buttons/CursorButtonNext";
 const Movie = () => {
   const [movies, setMovies] = useState<MovieResponse[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const moviesPerPage = 14;
+  const moviesPerPage = 12;
 
   // RGB color
   const [red, setRed] = useState(255);
@@ -33,7 +33,7 @@ const Movie = () => {
     }, 50);
 
     // scroll bar
-    document.body.style.overflow = "hidden";
+    //document.body.style.overflow = "hidden";
     return () => {
       fetchAllMovieData();
       clearInterval(interval);
@@ -73,65 +73,33 @@ const Movie = () => {
 
 
   return (
-    <div className="movie bg-gradient-to-r from-red-900 to-purple-900 min-h-screen">
+    <div className="flex flex-col movie bg-gradient-to-r from-red-900 to-purple-900 min-h-screen sm:py-16">
 
-      <div className=" flex-grow w-full py-4 sm:py-16 mx-auto relative ">
+      <div className=" justify-center w-full mx-auto relative">
         <h4
           id="runningColorText"
-          className="bg-gradient-to-r from-crimson to-springgreen via-orange bg-clip-text bg-gradient-rainbow text-transparent text-5xl w-80vw mx-auto my-20 text-center transition-colors duration-200 uppercase font-extrabold from-neutral-700 mb-2 mt-4 font-poppins"
-          style={{ color }}
-        >
+          className="font-black  bg-gradient-to-r from-crimson to-springgreen via-orange bg-clip-text bg-gradient-rainbow text-transparent text-5xl w-80vw mx-auto my-4 text-center transition-colors duration-200 uppercase  from-neutral-700 mt-4 "
+          style={{ color }}>
           Movies
         </h4>
-
-        <div className="flex flex-row ">
-          <CursorButtonNext onClick={() => { goToNextPage() }} />
-          <div className="container w-full py-4  mx-auto relative grid grid-cols-7 gap-3">
-            {currentMovies?.map((item: MovieResponse, index: number) => (
-              <Link
-                key={index}
-                to={`/movie/${item.id}`}
-                onClick={() => {
-                  console.log("selected now playing");
-                }}
-              >
-                <Card image={item?.image || ""} title={item?.title || ""} />
-              </Link>
-            ))}
-          </div>
-          <CursorButtonPrevious onClick={() => { goToPreviousPage() }} />
-        </div>
       </div>
-
-
-      {/* {showPagination && (
-        <div className="pagination-container absolute bottom-4 right-4">
-          <button
-            className={`px-2 py-1 text-white rounded-md mr-2 ${currentPage === 1
-              ? "bg-gray-500 cursor-not-allowed"
-              : " bg-red-500 hover:bg-red-600"
-              }`}
-            onClick={goToPreviousPage}
-            disabled={currentPage === 1}
-          >
-            Previous
-          </button>
-          <span className="text-white">{`Page `}</span>
-          <span className="text-orange-500">{`${currentPage} `}</span>
-          <span className="text-white">of</span>
-          <span className="text-white">{` ${totalPages}`}</span>
-          <button
-            className={`px-2 py-1 text-white rounded-md ml-2 ${currentPage === totalPages
-              ? "bg-gray-500  cursor-not-allowed"
-              : "hover: bg-red-500 hover:bg-red-600"
-              }`}
-            onClick={goToNextPage}
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </button>
+      <div className="flex flex-row justify-center items-center ">
+        <CursorButtonNext onClick={() => { goToNextPage() }} />
+        <div className="container grid grid-cols-6 gap-5 flex-row justify- items- w-full">
+          {currentMovies?.map((item: MovieResponse, index: number) => (
+            <Link
+              key={index}
+              to={`/movie/${item.id}`}
+              onClick={() => {
+                console.log("selected now playing");
+              }}
+            >
+              <Card image={item?.image || ""} title={item?.title || ""} opening_date={item?.opening_date || ""} />
+            </Link>
+          ))}
         </div>
-      )} */}
+        <CursorButtonPrevious onClick={() => { goToPreviousPage() }} />
+      </div>
     </div >
   );
 };

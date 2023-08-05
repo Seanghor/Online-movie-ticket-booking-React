@@ -14,18 +14,20 @@ import { booking } from '../services/booking';
 import { CreatePurchaseDto } from '../types/purchase.dto';
 import { createPurchase } from '../services/purchase';
 import { Checkbox, Typography, Input } from "@material-tailwind/react";
-
+import CloseIcon from '@mui/icons-material/Close';
 
 // -- method:
-import paypal_logo from '../assets/paypal.svg'
-import aba_logo from '../assets/aba.png'
-import acleda_logo from '../assets/acleda.png'
-import philip_logo from '../assets/philip.jpg'
+import paypal_logo from '../assets/images/bank//paypal.svg'
+import aba_logo from '../assets/images/bank//aba.png'
+import acleda_logo from '../assets/images/bank//acleda.png'
+import philip_logo from '../assets/images/bank/philip.jpg';
 // -- icon:
 import aba_payment_icon from '../assets/paymentMethod_icon/aba_icon.svg'
 import acleda_payment_icon from '../assets/paymentMethod_icon/acleda_icon.png'
 import philip_payment_icon from '../assets/paymentMethod_icon/philip_icon.png'
-
+import ButtonLoading from '../components/Buttons/ButtonLoading';
+import { NotificationDialog } from '../components/PopupDialog';
+import dialog_icon_tick from '../assets/images/dialog/tick.svg'
 
 let CLIENT_ID = import.meta.env.VITE_PAYPAL_CLIENT_ID
 console.log("CLIENT_ID:", CLIENT_ID);
@@ -107,7 +109,7 @@ const paymentMethods = [
 ] as payMethod[]
 const BillingDetailPage = () => {
   // payment id:
-  const [payId, setPayId] = useState<number | null>(null)
+  const [payId, setPayId] = useState<number | null>(1)
   const [chooseMethod, setChooseMethod] = useState<payMethod | null>(null)
   const [bookReserveData, setBookReserveData] = useState<BookingProps[] | []>([])
   const [arrayBookingDto, setArrayBookingDto] = useState<CreateBookingDto[] | []>([])
@@ -116,8 +118,9 @@ const BillingDetailPage = () => {
   const [remark, setRemark] = useState("")
   const [phone, setPhone] = useState("")
   const [agree, setAgree] = useState(false)
-  const [showButton, setShowButton] = useState(false)
-  // const [error, setError] = useState<string | null>(null)
+  const [showButton, setShowButton] = useState<boolean>(false)
+  const [error, setError] = useState<string | null>(null)
+  const [isLoadingPay, setIsLoadingPay] = useState<boolean>(false)
 
   // refresh:
   const [reducerValue, forceUpdate] = useReducer(x => x + 1, 0)
@@ -176,47 +179,56 @@ const BillingDetailPage = () => {
   // handle click payment method:
   const handleClickPaymentMethod = (id: number) => {
     setPayId(id)
-    setShowButton(false)
+
     let choosen = paymentMethods.find((method: payMethod) => method.id === id)
     setChooseMethod(choosen || null)
     console.log("choosen:", choosen);
+
 
   }
 
   // handle PayPalCheckout:
   const handlePay = async () => {
-    const resCreateBookingData = await Promise.all(
-      arrayBookingDto.map(async (createSingleBooking: CreateBookingDto) => {
-        return await handleCreateBooking(createSingleBooking);
-      })
+    setIsLoadingPay(true)
+    setTimeout(
+      async () => {
+        setIsLoadingPay(false)
+        const resCreateBookingData = await Promise.all(
+          arrayBookingDto.map(async (createSingleBooking: CreateBookingDto) => {
+            return await handleCreateBooking(createSingleBooking);
+          })
+        );
+        setIsLoadingPay(true)
+        let purchaseData = {
+          total: totalPrice,
+          phoneNumber: phone,
+          payMentMethod: chooseMethod?.enum,
+          remark: remark,
+          bookings: {
+            connect: resCreateBookingData.map((singleBook: any) => { return { id: singleBook.id } })
+          }
+        } as CreatePurchaseDto
+        console.log("purchaseData:", purchaseData);
+
+        const resCreatePurchaseData = await handlePurchase(purchaseData)
+        console.log("resCreatePurchaseData:", resCreatePurchaseData);
+        if (resCreatePurchaseData.ok !== true) {
+          return;
+        }
+        // set reserve data:
+        const emptyArray: CreateBookingDto[] | [] = [];
+        const emptyArrayString = JSON.stringify(emptyArray);
+
+        // Store the JSON string in localStorage
+        localStorage.setItem('reserve', emptyArrayString);
+        setPaidFor(true)
+        // Dispatch a custom event to notify the Navbar component
+        const event = new Event('reservationUpdated');
+        window.dispatchEvent(event);
+        forceUpdate()
+      },
+      1500
     );
-
-    let purchaseData = {
-      total: totalPrice,
-      phoneNumber: phone,
-      payMentMethod: chooseMethod?.enum,
-      remark: remark,
-      bookings: {
-        connect: resCreateBookingData.map((singleBook: any) => { return { id: singleBook.id } })
-      }
-    } as CreatePurchaseDto
-    console.log("purchaseData:", purchaseData);
-
-    const resCreatePurchaseData = await handlePurchase(purchaseData)
-    console.log("resCreatePurchaseData:", resCreatePurchaseData);
-    if (resCreatePurchaseData.ok !== true) {
-      return;
-    }
-    setPaidFor(true)
-    // set reserve data:
-    const emptyArray: CreateBookingDto[] | [] = [];
-    const emptyArrayString = JSON.stringify(emptyArray);
-    // Store the JSON string in localStorage
-    localStorage.setItem('reserve', emptyArrayString);
-    // Dispatch a custom event to notify the Navbar component
-    const event = new Event('reservationUpdated');
-    window.dispatchEvent(event);
-
 
     // if (paidFor) {
     //   alert("Thank you for your purches.")
@@ -224,8 +236,23 @@ const BillingDetailPage = () => {
     // if (error) {
     //   alert(error)
     // }
-    forceUpdate()
+
+
+   
   }
+
+
+  const handleRemove = async (screenId: string) => {
+    const newArrayReserve = bookReserveData.filter((screen: any) => screen.screeningId !== screenId)
+    setBookReserveData(newArrayReserve)
+    console.log("newArrayReserver:", newArrayReserve);
+    setBookReserveData(newArrayReserve)
+    localStorage.setItem("reserve", JSON.stringify(newArrayReserve))
+    const event = new Event('reservationUpdated');
+    window.dispatchEvent(event);
+  }
+
+  console.log('ShowButton:', bookReserveData);
 
   return (
     <div className="mx-auto w-full h-full bg-gradient-to-r from-red-900 to-purple-900 min-h-screen font-sans">
@@ -280,9 +307,9 @@ const BillingDetailPage = () => {
                 Other
               </label>
               <Input
-               variant="outlined" 
-               label="Remark"
-                className="shadow appearance-none border-2 border-gray-200 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                variant="outlined"
+                label="Remark"
+                className="shadow appearance-none   rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 value={remark}
                 onChange={(e) => setRemark(e.target.value)}
               />
@@ -313,11 +340,17 @@ const BillingDetailPage = () => {
               <button
                 onClick={() => { setShowButton(true) }}
                 disabled={agree && phone && payId ? false : true}
-                className={agree && phone && payId
-                  ? `mt-2 text-white bg-[#db2777] font-semibold hover:text-white
-                py-2 px-10 border border-blue hover:border-transparent rounded uppercase`
-                  : `mt-2 text-white bg-slate-400  font-semibold hover:text-white
-                  py-2 px-10 border border-blue hover:border-transparent rounded uppercase`
+                // className={agree && phone && payId
+                //   ? `mt-2 text-white bg-[#db2777] font-semibold hover:text-white
+                // py-2 px-10 border border-blue hover:border-transparent rounded uppercase`
+                //   : `mt-2 text-white bg-slate-400  font-semibold hover:text-white
+                //   py-2 px-10 border border-blue hover:border-transparent rounded uppercase`
+                // }
+
+                className={
+                  `mt-2 text-white font-semibold hover:text-white
+                py-2 px-10 border border-blue hover:border-transparent rounded uppercase ${agree && phone && payId && !showButton ? "bg-[#db2777]" : showButton ? "bg-[#852852]" : "bg-slate-400"}`
+
                 }
               >
                 Save & Continue
@@ -328,7 +361,7 @@ const BillingDetailPage = () => {
 
 
           {/* Total Summary */}
-          <div className="px-20 md:w-1/2 max-h-screen items-start  md:mt-0 font-sans pb-10">
+          <div className="px-20 md:w-2/3 max-h-screen items-start  md:mt-0 font-sans pb-10 ">
             <div className=" w-full h-full mx-auto border border-gray-400  p-10 rounded-md bg-[#faf5ff] "> {/** bg-[#faf5ff] */}
               <div className=" flex flex-row justify-between">
                 <div className='flex flex-row items-center'>
@@ -346,7 +379,7 @@ const BillingDetailPage = () => {
                       <div className="flex items-center">
                         <img src={movie?.image} alt={movie.title} className="w-20 h-24 rounded-md mr-4" />
                         <div className="flex flex-col justify-between w- mx-2">
-                          <div>
+                          <div className='w-80'>
                             <h3 className="font-medium text-[#9333ea] text-lg font-sans uppercase">{movie?.movie}</h3>
                           </div>
                           <div className='flex flex-row items-center text-xs  font-mono'>
@@ -382,6 +415,12 @@ const BillingDetailPage = () => {
                         </h3>
                         <p className="text-[#9333ea] font-normal text-lg ml-5">${calculateTotalPriceOfEachMovie(movie.price, movie.seat.length)}</p>
                       </div>
+
+                      <div
+                        onClick={() => { handleRemove(movie.screeningId) }}
+                        className="flex flex-row items-center w-10 pr-2">
+                        <CloseIcon className="ml-3 text-gray-500 hover:text-red-500 hover:w-8 hover:h-8" />
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -401,27 +440,30 @@ const BillingDetailPage = () => {
                     Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purpose described in our privacy policy.
                   </p>
                 </div>
-                {
-                  showButton ? (
-                    <div className='flex flex-col justify-center items-center mt-10'>
-                      {
-                        payId === 1
-                          ? (<PayPalCheckout
-                            amount={totalPrice}
-                            onClickPay={() => handlePay()}
-                            paidFor={paidFor}
-                          />) : (
-                            <CheckoutBank
-                              amount={500}
-                              icon_pay={chooseMethod?.icon_pay || ""}
-                              onClickPay={() => { handlePay() }}
-                              paidFor={paidFor}
-                              bg_normal={chooseMethod?.bg_normal || ""}
-                              bg_hover={chooseMethod?.bg_hover || ""}
-                            />)
-                      }
-                    </div>) : (null)
-                }
+                {/* <ButtonLoading /> */}
+
+                <div className='flex flex-col justify-center items-center mt-10'>
+                  {
+                    payId === 1
+                      ? (<PayPalCheckout
+                        amount={totalPrice}
+                        onClickPay={() => handlePay()}
+                        paidFor={paidFor}
+                        isLoadingPay={isLoadingPay}
+                        isDisable={showButton ? false : true}
+                      />) : (
+                        <CheckoutBank
+                          amount={500}
+                          icon_pay={chooseMethod?.icon_pay || ""}
+                          onClickPay={() => { handlePay() }}
+                          paidFor={paidFor}
+                          bg_normal={chooseMethod?.bg_normal || ""}
+                          bg_hover={chooseMethod?.bg_hover || ""}
+                          isLoadingPay={isLoadingPay}
+                          isDisable={showButton ? false : true}
+                        />)
+                  }
+                </div>
 
               </div>
             </div>

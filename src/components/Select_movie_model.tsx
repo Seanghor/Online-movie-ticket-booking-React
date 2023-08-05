@@ -11,7 +11,8 @@ import { MovieTypeEnum } from "../types/enum.type";
 import { IconButton } from "./Icon_Button";
 // import { Link, NavLink, useLocation } from "react-router-dom";
 import croos_img from '../assets/croos.svg'
-import {  getDayNumber, getMonthName } from "../utils/utils";
+import { formatDateDayAndMonth, getDayNumber, getMonthName } from "../utils/utils";
+import CloseIcon from '@mui/icons-material/Close';
 
 function formatTimeTo12Hour(timeString: string) {
     const date = new Date(timeString);
@@ -88,7 +89,8 @@ export const SelectMovieModel: React.FunctionComponent<SelectMovieModel_props> =
                                             <div
                                                 onClick={() => onClickCancelSeat(item.id)}
                                                 className="flex flex-row items-center w-12 pr-2">
-                                                <img className="object-cover w-8 h-8 hover:w-10 hover:h-10" src={croos_img} alt="" />
+                                                {/* <img className="object-cover w-8 h-8 hover:w-10 hover:h-10" src={croos_img} alt="" /> */}
+                                                <CloseIcon className="ml-3 text-white hover:text-red-500 hover:w-8 hover:h-8"/>
                                             </div>
                                         </div>
                                     </div>
@@ -133,19 +135,19 @@ export const SelectMovieModel: React.FunctionComponent<SelectMovieModel_props> =
             <div className="w-28 ml-4">
 
                 <div className="">
-                    <h4 className="text-neutral-800 font-semibold text-left">Date:</h4>
-                    <div className="bg-transparent border-slate-800  shadow-md text-neutral-900 font-semibold py-2 px-4 border  rounded  ">
-                        <p className="text-4xl">{getDayNumber(showDate.toString())}</p>
-                        <p className="uppercase ">{getMonthName(showDate.toString())}</p>
+                    <h4 className="text-white font-semibold text-left mb-5">Date</h4>
+                    <div className="bg-transparent border-white-800  shadow-md text-neutral-900 font-semibold py-2 px-4 border rounded  ">
+                        <p className="text-4xl text-white">{getDayNumber(showDate.toString())}</p>
+                        <p className="uppercase text-white ">{getMonthName(showDate.toString())}</p>
                     </div>
                 </div>
-                <div className="text-left border-zinc-800  shadow-md mt-4">
-                    <h4 className="font-semibold text-neutral-800 ">Time</h4>
-                    <p className="text-neutral-900 font-semibold px-6">{formatTimeTo12Hour(timeShow.toString())}</p>
+                <div className="text-left shadow-md mt-4 boder-yellow-500">
+                    <h4 className="font-semibold text-white mb-3">Time</h4>
+                    <p className="text-white py-3 shadow-xl bg-transparent border-white-800 font-semibold px-6 border rounded">{formatTimeTo12Hour(timeShow.toString())}</p>
                 </div>
-                <div className="text-left border-zinc-800  shadow-md mt-4">
-                    <h4 className="font-semibold text-neutral-800 ">Theatre:</h4>
-                    <p className="text-neutral-900 font-semibold px-6">{auditoruim}</p>
+                <div className="text-left  mt-4 ">
+                    <h4 className="font-semibold text-white mb-3">Theatre</h4>
+                    <p className="text-white py-3 shadow-xl bg-transparent border-white-800 font-semibold px-6 border rounded">{auditoruim}</p>
                 </div>
             </div>
 
