@@ -118,11 +118,11 @@ export const ContactForm: React.FunctionComponent = () => {
       <div className="flex flex-wrap -mx-3 mb-6">
 
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <label className="block uppercase font-DancingScript tracking-wide text-white text-xs font-bold mb-2" htmlFor="grid-first-name">
+          <label className="block uppercase font-DancingScript  tracking-wide text-white text-xs font-bold mb-2" htmlFor="grid-first-name">
             First Name
           </label>
           <input
-            className="appearance-none font-DancingScript block w-full bg-white bg-opacity-75 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-first-name" type="text" placeholder="Your First Name"
+            className="appearance-none font-poppins block w-full bg-white bg-opacity-75 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-first-name" type="text" placeholder="Your First Name"
             value={createFeedbackDto?.firstname}
             onChange={handleInputChange("firstname")}
           // onChange={(e) => setCreateFeedbackDto({ ...createFeedbackDto, lastname: e.target.value })}
@@ -130,7 +130,7 @@ export const ContactForm: React.FunctionComponent = () => {
           </input>
           <div className="h-5">
             {
-              createFeedbackDto.firstname ? (null) : (<p className="text-red-500 text-xs italic font-DancingScript">Please fill out firstname field.</p>)
+              createFeedbackDto.firstname ? (null) : (<p className="text-red-500 text-xs italic font-poppins">Please fill out firstname field.</p>)
             }
           </div>
         </div>
@@ -139,7 +139,7 @@ export const ContactForm: React.FunctionComponent = () => {
             Last Name
           </label>
           <input
-            className="appearance-none font-DancingScript block w-full bg-white bg-opacity-75 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Your Last Name"
+            className="appearance-none font-poppinsblock w-full bg-white bg-opacity-75 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Your Last Name"
             value={createFeedbackDto?.lastname}
             onChange={handleInputChange("lastname")}
           // onChange={(e) => setCreateFeedbackDto({ ...createFeedbackDto, lastname: e.target.value })}
@@ -147,7 +147,7 @@ export const ContactForm: React.FunctionComponent = () => {
           </input>
           <div className="h-5">
             {
-              createFeedbackDto.lastname ? (null) : (<p className="text-red-500 text-xs italic font-DancingScript">Please fill out lastname field.</p>)
+              createFeedbackDto.lastname ? (null) : (<p className="text-red-500 text-xs italic font-poppins">Please fill out lastname field.</p>)
             }
           </div>
         </div>
@@ -158,7 +158,7 @@ export const ContactForm: React.FunctionComponent = () => {
             E-mail
           </label>
           <input
-            className="appearance-none font-DancingScript block w-full bg-white bg-opacity-75 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="email" type="email" placeholder="example@gmail.com"
+            className="appearance-none font-poppins block w-full bg-white bg-opacity-75 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="email" type="email" placeholder="example@gmail.com"
             value={createFeedbackDto.email}
             // onChange={(e) => setCreateFeedbackDto({ ...createFeedbackDto, email: e.target.value })}
             onChange={handleInputChange("email")}
@@ -166,7 +166,7 @@ export const ContactForm: React.FunctionComponent = () => {
           </input>
           <div className="h-5">
             {
-              createFeedbackDto.email ? (null) : (<p className="text-red-500 text-xs italic font-DancingScript">Please fill out your email.</p>)
+              createFeedbackDto.email ? (null) : (<p className="text-red-500 text-xs italic font-poppins">Please fill out your email.</p>)
             }
           </div>
         </div>
@@ -184,7 +184,7 @@ export const ContactForm: React.FunctionComponent = () => {
           </textarea>
           <div className="h-5">
             {
-              createFeedbackDto.feedback ? (null) : (<p className="text-red-500 text-xs italic font-DancingScript">Please fill out your feedback here.</p>)
+              createFeedbackDto.feedback ? (null) : (<p className="text-red-500 text-xs italic font-poppins">Please fill out your feedback here.</p>)
             }
           </div>
         </div>

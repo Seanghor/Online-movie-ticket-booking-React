@@ -33,7 +33,7 @@ import { getAccessToken, getRefreshToken, getUserInfor } from '../services/auth'
 
 const CinemaShowTimeDetail = () => {
   const navigate = useNavigate();
-  const currentDate = new Date().toISOString().substring(0, 10);
+  const currentDate: string = new Date().toISOString().substring(0, 10);
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get('id')
 
@@ -43,8 +43,8 @@ const CinemaShowTimeDetail = () => {
   const userInfo = getUserInfor()
 
   // const [data, setData] = useState<CinemaResponse_includeScreening | null>(null)
-  const [showDate, setShowDate] = useState(currentDate)
   const [dateArray, setDateArray] = useState<string[] | []>([])
+  const [showDate, setShowDate] = useState(currentDate)
   const [screeningDataPerDay, setScreeningDataPerDay] = useState<ScreeningDataPerDay[]>([])
   // const [movieId, setMovieId] = useState('')
 
@@ -141,7 +141,14 @@ const CinemaShowTimeDetail = () => {
 
       // we want to show only 3days after today:
       setDateArray(uniqueDatesArray.slice(0, 3));
+      // if (uniqueDatesArray.includes(currentDate)) {
+      //   setShowDate(currentDate)
+      // } else {
+      //   setShowDate(uniqueDatesArray[0])
+      // }
     }
+
+
 
     const fectScreeningOfCinemaFilterDate = async () => {
       const res = await getAllMovieByCampusIdFilterDate(id || "", showDate)
@@ -170,7 +177,6 @@ const CinemaShowTimeDetail = () => {
     // fectDateCinema()
     fetchOneCinema()
   }, [id, movieId, screenId, reducerValue, showDate, showSection])
-
 
 
   // handle click seat:
@@ -311,9 +317,8 @@ const CinemaShowTimeDetail = () => {
 
           {
             dateArray?.map((date: string, index: number) => (
-              <div className='flex flex-row items-center'>
+              <div className='flex flex-row items-center' key={index}>
                 <button
-                  key={index}
                   onClick={() => {
                     setShowDate(date)
                     setShowSeat(false)  // this when we select change date --> showUpSeat dissapear
@@ -332,7 +337,7 @@ const CinemaShowTimeDetail = () => {
             ))
           }
         </div>
-        <div className='h-screen'>
+        <div className='h-full'>
           <div className="md:max-w-4xl">
             <SearchBar search={search} onChange={setSearch} placeHolder='search' />
           </div>

@@ -1,11 +1,20 @@
 import { useEffect, useState } from "react";
-import {  getAllMovieOnScreening } from "../services/movie";
+import { getAllMovieOnScreening } from "../services/movie";
 import { Card } from "../components/Cards/Card";
-import { Link } from "react-router-dom";
 import { MovieResponse } from "../types/movie.dto";
 import { CursorButtonPrevious } from "../components/Buttons/CursorPreviousButton";
 import { CursorButtonNext } from "../components/Buttons/CursorButtonNext";
+import { Link, Element, scroller } from 'react-scroll';
 
+
+const scrollToSection = (showSection: string) => {
+  scroller.scrollTo(showSection, {
+    duration: 800,
+    delay: 0,
+    smooth: 'easeInOutQuart',
+    offset: -500 //
+  });
+};
 const Movie = () => {
   const [movies, setMovies] = useState<MovieResponse[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -18,6 +27,7 @@ const Movie = () => {
 
 
   useEffect(() => {
+    scrollToSection("main")
     // fectData
     const fetchAllMovieData = async () => {
       const res = await getAllMovieOnScreening();
@@ -73,8 +83,7 @@ const Movie = () => {
 
 
   return (
-    <div className="flex flex-col movie bg-gradient-to-r from-red-600 to-purple-900 min-h-screen sm:py-16">
-
+    <Element name='main' className="flex flex-col movie bg-gradient-to-r from-red-600 to-purple-900 min-h-screen sm:py-16">
       <div className=" justify-center w-full mx-auto relative">
         <h4
           id="runningColorText"
@@ -100,7 +109,7 @@ const Movie = () => {
         </div>
         <CursorButtonPrevious onClick={() => { goToPreviousPage() }} />
       </div>
-    </div >
+    </Element >
   );
 };
 

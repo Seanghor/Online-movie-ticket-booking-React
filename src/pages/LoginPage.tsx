@@ -44,7 +44,7 @@ export default function LoginPage() {
         <div className="bg-purple-300 py-10 bg-opacity-25 w-full p-6">
           <h1 className='text-5xl text-white w-1/2 m-auto font-bold text-center font-DancingScript'>Welcome</h1>
           <h3 className='text-4xl text-white w-1/2 m-auto font-bold text-center font-DancingScript'>to MovieTick</h3>
-          <p className='text-md text-white pt-5'>Join the MovieTick community today and elevate your movie-going experience to new heights. Whether you're a casual movie lover or a dedicated cinephile, MovieTick is your go-to platform for all things cinema. Sit back, relax, and let us take care of your movie ticket needs. Enjoy the show!</p>
+          <p className='text-md font-extralight text-rose-100 pt-5 px-2'>Welcome to MovieTick - Your ultimate movie ticket booking platform! Elevate your movie-going experience with quick and convenient bookings, personalized recommendations, and exclusive rewards. Join us now and enjoy the magic of cinema hassle-free!</p>
         </div>
         <div className="bg-white bg-opacity-50">
           <h1 className="text-3xl py-8 font-semibold text-center text-purple-700 uppercase font-poppins">
