@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Dialog,
@@ -22,7 +22,7 @@ interface NotificationDialogProps {
 export const NotificationDialog: React.FunctionComponent<NotificationDialogProps> = (props: NotificationDialogProps) => {
   const navigate = useNavigate();
   const { isOpen, main_title, discription, icon, onClick } = props
-  const [open, setOpen] = React.useState(isOpen);
+  const [open, setOpen] = useState(isOpen);
 
   const handleOpen = () => setOpen(!isOpen);
 

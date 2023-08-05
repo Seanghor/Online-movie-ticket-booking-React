@@ -1,7 +1,7 @@
-import  { useEffect, useReducer, useState } from 'react'
+import { useEffect, useReducer, useState } from 'react'
 import { ScheduleOfCinema } from './ScheduleOfCinema_model'
 import { useNavigate } from 'react-router-dom';
-import {  Element, scroller } from 'react-scroll';
+import { Element, scroller } from 'react-scroll';
 import { CinemaResponse } from '../types/campus.dto';
 import { getAllScreeningOfCampusId, getOneCinema } from '../services/campus';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -9,8 +9,8 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { MovieResponse, ScreeningDataPerDay } from '../types/movie.dto';
 import { getAllMovieByCampusIdFilterDate, getMovieById } from '../services/movie';
 import movieDefault from '../assets/default_movie_image.png'
-import {  formatDateToShortCurt, getRowLetter } from '../utils/utils';
-import {SingleRowOfSeat, SingleSeatRespone } from '../types/seat.dto';
+import { formatDateToShortCurt, getRowLetter } from '../utils/utils';
+import { SingleRowOfSeat, SingleSeatRespone } from '../types/seat.dto';
 import { getSeatOfScreening } from '../services/seat';
 import { getOneScreeningById } from '../services/screening';
 import { EachScreeningResponse } from '../types/screening.dto';
@@ -22,6 +22,7 @@ import bookIcon from '../assets/booked.svg'
 import image_notAvialable from '../assets/images/seat/not_avialable.svg'
 import { Seat } from './Seat';
 import SearchBar from './SearchBar';
+import logo from '../assets/cinema/logo_icon.png'
 
 
 
@@ -285,8 +286,9 @@ const CinemaShowTimeDetail = () => {
   return (
     <div className='mx-auto bg-gradient-to-r from-red-900 to-purple-900 min-h-screen '>
       <div className="container flex-grow w-full py-4 sm:py-16 mx-auto">
-        <div className="py-5 mt-10">
-          <h1 className="text-5xl ml-3 uppercase font-poppins my-10 text-4xl font-bold animate-text bg-gradient-to-r from-green-500  via-yellow-200  to-blue-200 text-transparent bg-clip-text animate-gradient">{cinema?.name}</h1>
+        <div className="py-5 mt-10 flex flex-row items-center">
+          <img src={logo} alt='logo' className='h-40 w-40  ' />
+          <h1 className="text-5xl ml-3 uppercase my-10 font-black animate-text bg-gradient-to-r from-orange-500  via-cyan-400 to-blue-500 text-transparent bg-clip-text animate-gradient">{cinema?.name}</h1>
         </div>
 
         <div className="flex flex-row jus py-4 mt-10">

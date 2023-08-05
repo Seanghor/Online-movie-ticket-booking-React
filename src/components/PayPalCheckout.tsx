@@ -32,7 +32,7 @@ const PayPalCheckout: React.FunctionComponent<PayPalCheckoutProps> = (props: Pay
             main_title={"You have successfully purchased ticket"}
             discription={"A small river named Duden flows by their place and supplies it with the necessary regelialia"}
             icon={dialog_icon_tick}
-            onClick={() => { setTimeout(() => navigate('/'), 2000) }}
+            onClick={() => { setTimeout(() => navigate('/'), 1500) }}
         />)
         // alert("Thank you for your purches.")
     }
@@ -42,7 +42,7 @@ const PayPalCheckout: React.FunctionComponent<PayPalCheckoutProps> = (props: Pay
             main_title={"Something went wrong"}
             discription={"Something went wrong, please contact to our support team."}
             icon={dialog_icon_cross}
-            onClick={() => { setTimeout(() => navigate(''), 2000) }}
+            onClick={() => { setTimeout(() => navigate('')) }}
 
         />)
         // alert(error)

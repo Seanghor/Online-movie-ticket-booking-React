@@ -13,8 +13,10 @@ import AvatarFemale from '../assets/images/developer_image/avatar_female.png';
 import AvatarMale from '../assets/images/developer_image/avatar_male.png';
 import { checkAccessTokenExpiration, getAccessToken, getRefreshToken, getUserInfor, logOut } from '../services/auth';
 import { UserLogo } from './UserLogo';
+import cinela_icon from '../assets/cinema/web_icon.png'
 
 const Navbar = () => {
+
   const location = useLocation();
   const currentPath = location.pathname;
   console.log("Current route:", currentPath);
@@ -54,6 +56,8 @@ const Navbar = () => {
     };
     handleReservationUpdate()
 
+
+
     // Listen for the custom event when reservation is updated
     window.addEventListener('reservationUpdated', handleReservationUpdate);
 
@@ -88,6 +92,7 @@ const Navbar = () => {
   }, [isAuth, accessToken, refreshToken, userInfo])
 
 
+
   if (isHiddenRoute) {
     // If the current route is a hidden route, return null to not render the navigation bar
     return null;
@@ -105,13 +110,23 @@ const Navbar = () => {
 
   }
 
+
+
+
+
   return (
-    <nav className="bg-nav dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b  dark:border-gray-600"  onMouseLeave={()=>{setIsProfileOpen(false)}}>
+    <nav className="bg-nav dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b  dark:border-gray-600" onMouseLeave={() => { setIsProfileOpen(false) }}>
       <div className="flex flex-wrap items-center justify-between mx-auto p-4 lg:px-4" >
         <a href="https://flowbite.com/" className="flex items-center">
           <Link to="/" className="text-white font-poppins flex items-center justify-self-start cursor-pointer no-underline text-3xl">
-            <BiMoviePlay className="mr-2" onClick={()=> {setClick(!click)}} />
-            MovieTick
+            {/* <BiMoviePlay className="mr-2 " onClick={() => { setClick(!click) }} /> */}
+            <img src={cinela_icon} alt="cinema" className="h-8 scale-125 mr-2"/>
+            <h4
+              id="runningColorText"
+              className="font-Angkor animate-text bg-gradient-to-r from-blue-600 via-lime-500 to-red-600  text-transparent bg-clip-text animate-gradient "
+            >
+              Avatar
+            </h4>
           </Link>
         </a>
         {/* Hamburger and Cross Sign */}
