@@ -215,7 +215,7 @@ const MovieDetail = () => {
         const cinemaJson = await cinema.json()
         setCinemaName(cinemaJson.name)
         setOncScreening(screeningNowData)
-        console.log("On Cinema:", cinemaJson.name);
+        // console.log("On Cinema:", cinemaJson.name);
       }
 
       // - test : screen props---------------------------------------------------------------:
@@ -230,8 +230,8 @@ const MovieDetail = () => {
 
       // ---log:
 
-      console.log("ScreeningId:", screenId);
-      console.log("Choose screen time:", formatTimeTo12Hour(screeningNowData.startTime));
+      // console.log("ScreeningId:", screenId);
+      // console.log("Choose screen time:", formatTimeTo12Hour(screeningNowData.startTime));
 
 
     }
@@ -329,7 +329,6 @@ const MovieDetail = () => {
 
   // -- *** handle reserve:
   const handleReserve = () => {
-
     // handleAddReserveDataToLocalStorage()
     // Dispatch a custom event to notify the Navbar component
     const filteredData = reserveData?.filter((item: { screeningId: number; }) => item.screeningId !== Number(screenId));

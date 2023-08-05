@@ -2,7 +2,7 @@ import React, { ChangeEvent, useEffect, useReducer, useState } from "react";
 import { NotificationDialog } from "./PopupDialog";
 import icon from '../assets/images/dialog/tick.svg'
 import { useNavigate } from "react-router-dom";
-import { getUserInfor } from "../services/auth";
+import { getAccessToken, getRefreshToken, getUserInfor } from "../services/auth";
 import { createFeedback } from "../services/feedback";
 import { CreateFeedbackDto } from "../types/feedback.dto";
 import dialog_icon_status from '../assets/images/dialog/thank.png'
@@ -13,7 +13,13 @@ import dialog_icon_status from '../assets/images/dialog/thank.png'
 
 const text = "Your feedback is invaluable to us to improve our service. We look forward to continuously exceeding your expectations and providing you with an exceptional movie booking experience."
 export const ContactForm: React.FunctionComponent = () => {
+  const navigate = useNavigate();
   const [reducerValue, forceUpdate] = useReducer(x => x + 1, 0)
+  // check token:
+  const accessToken = getAccessToken()
+  const refreshToken = getRefreshToken()
+  const userInfo = getUserInfor()
+  const [isAuth, setIsAuth] = useState(false)
   // const { userId, email, firstname, lastname, feedback, onClick, onChange } = props
 
 
@@ -29,11 +35,17 @@ export const ContactForm: React.FunctionComponent = () => {
   )
   const [disable, setDisable] = useState<boolean>(true)
   const [isPopUp, setIsPopup] = useState<boolean>(false)
+
+
+
   useEffect(() => {
     const getuser = () => {
-      const userInfo = getUserInfor()
-      let user = JSON.parse(userInfo || "")
-      setCreateFeedbackDto(prevState => ({ ...prevState, userId: user?.id }))
+      if (userInfo && accessToken && refreshToken) {
+        setIsAuth(true)
+        let user = JSON.parse(userInfo || "")
+        setCreateFeedbackDto(prevState => ({ ...prevState, userId: user?.id }))
+      }
+      return
     }
     getuser()
 
@@ -44,7 +56,7 @@ export const ContactForm: React.FunctionComponent = () => {
       return setDisable(true)
     }
 
-  }, [disable, reducerValue, isPopUp])
+  }, [disable, reducerValue, isPopUp, isAuth])
   const handleInputChange = (setItem: keyof CreateFeedbackDto) => {
 
     return (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
@@ -58,6 +70,13 @@ export const ContactForm: React.FunctionComponent = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if(!isAuth){
+      setTimeout(
+        () => navigate('/signup'), 
+        1500
+      );
+      
+    }
     const res = await createFeedback(createFeedbackDto)
     console.log("res:", res);
     if (res.ok) {
@@ -182,7 +201,7 @@ export const ContactForm: React.FunctionComponent = () => {
       /> */}
       <div className="">
         <p className="px-3 text-white text-sm italic font-mono">{text}</p>
-        <button onClick={() => { setIsPopup(true) }} disabled={disable} className={`mt-10 mx-3 font-DancingScrip text-white ${disable ? "bg-gray-400" : "bg-[#db2777]"} font-semibold hover:text-white py-2 px-10 border border-blue hover:border-transparent rounded uppercase `}>
+        <button disabled={disable} className={`mt-10 mx-3 font-DancingScrip text-white ${disable ? "bg-gray-400" : "bg-[#db2777]"} font-semibold hover:text-white py-2 px-10 border border-blue hover:border-transparent rounded uppercase `}>
           Send
         </button>
 
