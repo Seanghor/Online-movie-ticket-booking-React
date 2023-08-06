@@ -10,9 +10,9 @@ import { getAllScreeningByMovieIdAndDate, getAllScreeningByMovieIdAndGroupByDate
 import { DifferentCinemaScreeningResponse, DifferentDateScreeningResponse } from "../types/screening.dto";
 import { Seat } from "./Seat";
 import { getSeatOfScreening } from "../services/seat";
-import {SingleRowOfSeat, SingleSeatRespone } from "../types/seat.dto";
+import { SingleRowOfSeat, SingleSeatRespone } from "../types/seat.dto";
 import { SelectMovieModel } from "./Select_movie_model";
-import { convertMinutesToHHMM, formatDateToShortCurt, formatDateTo_dd_mm_yy, formatName,  getRowLetter } from "../utils/utils";
+import { convertMinutesToHHMM, formatDateToShortCurt, formatDateTo_dd_mm_yy, formatName, getRowLetter } from "../utils/utils";
 import SeatNote from "./SeatNote";
 import { Element, scroller } from 'react-scroll';
 import image_seat from '../assets/images/seat/seat_available.svg'
@@ -56,6 +56,7 @@ const MovieDetail = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const showParam = searchParams.get("show");
+  const [isNoScreen, setIsNoScreen] = useState<boolean>(true)
   // console.log("showParam:", showParam, typeof (searchParams));
 
   const booleanValue = showParam === "true" ? true : false;
@@ -105,10 +106,14 @@ const MovieDetail = () => {
     const fectAllScreeningGroupByDate = async () => {
       const res = await getAllScreeningByMovieIdAndGroupByDate(movieId || "")
       let fectDataResponse = await res.json()
-      // console.log("res:", fectDataResponse);
+      console.log("--------- > fectDataResponse:", fectDataResponse);
       if (fectDataResponse.statusCode == 400) {
+        // this is through error from backend when get no screen or data: []
+        setIsNoScreen(true)
         return
       }
+
+
 
       // get all dateShow of movie:
       const array: string[] | [] | "" = fectDataResponse
@@ -128,6 +133,7 @@ const MovieDetail = () => {
 
   // --------------------------------------- when date change:
   useEffect(() => {
+
     // fect all screening of the movie and filter by date:
     const fechScreeningDataByDate = async () => {
       console.log("selecting date:", showDate);
@@ -197,8 +203,6 @@ const MovieDetail = () => {
         // console.log("On Cinema:", cinemaJson.name);
       }
 
-      // ---log:
-
       // console.log("ScreeningId:", screenId);
       // console.log("Choose screen time:", formatTimeTo12Hour(screeningNowData.startTime));
 
@@ -235,7 +239,7 @@ const MovieDetail = () => {
 
   // handle add reserve data to localStorage
   const handleAddReserveDataToLocalStorage = (updatedSeatIdOfScreen: SingleSeatRespone[]) => {
-    const updatedBookingData = reserveData?.map((reserve: any, index: number) => {
+    const updatedBookingData = reserveData?.map((reserve: any) => {
       if (reserve.screeningId === screenId) {
         if (reserve.seat.length === 0) {
           return
@@ -395,7 +399,7 @@ const MovieDetail = () => {
                 <p className="my-3 font-normal text-slate-200 dark:text-gray-200 font-poppins">{movie?.description}</p>
                 {
                   // || (screening.length !== 0)
-                  (showSchedule) ? null : (
+                  (showSchedule || isNoScreen) ? null : (
                     <button
                       type="button"
                       className="w-50 text-white bg-[#130B2B] backdrop-blur-lg shadow-lg border hover:text-black hover:bg-white  font-medium rounded-lg text-base px-4 py-2 text-center mr-3 md:mr-0"

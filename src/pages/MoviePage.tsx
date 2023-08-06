@@ -98,7 +98,7 @@ const Movie = () => {
         <CursorButtonNext onClick={() => { goToNextPage() }} />
         <div className="container grid grid-cols-6 gap-5 flex-row justify- items- w-full">
           {currentMovies?.map((item: MovieResponse, index: number) => (
-            <Card key={index} onClick={() => { navigate(`/movie/${item.id}`) }} image={item?.image || ""} title={item?.title || ""} opening_date={item?.opening_date || ""} />
+            <Card key={index} onClick={() => { navigate(`/movie/${item.id}?show=false`) }} image={item?.image || ""} title={item?.title || ""} opening_date={item?.opening_date || ""} />
           ))}
         </div>
         <CursorButtonPrevious onClick={() => { goToPreviousPage() }} />
