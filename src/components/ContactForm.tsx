@@ -118,7 +118,7 @@ export const ContactForm: React.FunctionComponent = () => {
       <div className="flex flex-wrap -mx-3 mb-6">
 
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <label className="block uppercase font-DancingScript  tracking-wide text-white text-xs font-bold mb-2" htmlFor="grid-first-name">
+          <label className="block uppercase font-poppins  tracking-wide text-white text-xs font-bold mb-2" htmlFor="grid-first-name">
             First Name
           </label>
           <input
@@ -135,7 +135,7 @@ export const ContactForm: React.FunctionComponent = () => {
           </div>
         </div>
         <div className="w-full md:w-1/2 px-3">
-          <label className="block uppercase font-DancingScript tracking-wide text-white text-xs font-bold mb-2" htmlFor="grid-last-name">
+          <label className="block uppercase font-poppins tracking-wide text-white text-xs font-bold mb-2" htmlFor="grid-last-name">
             Last Name
           </label>
           <input
@@ -154,7 +154,7 @@ export const ContactForm: React.FunctionComponent = () => {
       </div>
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">
-          <label className="block uppercase font-DancingScript tracking-wide text-white text-xs font-bold mb-2" htmlFor="grid-password">
+          <label className="block uppercase font-poppins tracking-wide text-white text-xs font-bold mb-2" htmlFor="grid-password">
             E-mail
           </label>
           <input
@@ -173,7 +173,7 @@ export const ContactForm: React.FunctionComponent = () => {
       </div>
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">
-          <label className="block font-DancingScript uppercase tracking-wide text-white text-xs font-bold mb-2" htmlFor="grid-password">
+          <label className="block font-poppins uppercase tracking-wide text-white text-xs font-bold mb-2" htmlFor="grid-password">
             Message
           </label>
           <textarea
@@ -200,7 +200,7 @@ export const ContactForm: React.FunctionComponent = () => {
       /> */}
       <div className="">
         <p className="px-3 text-white text-sm italic font-mono">{text}</p>
-        <button disabled={disable} className={`mt-10 mx-3 font-DancingScrip text-white ${disable ? "bg-gray-400" : "bg-[#db2777]"} font-semibold hover:text-white py-2 px-10 border border-blue hover:border-transparent rounded uppercase `}>
+        <button disabled={disable} className={`mt-10 mx-3 font-poppins text-white ${disable ? "bg-gray-400" : "bg-[#db2777]"} font-semibold hover:text-white py-2 px-10 border border-blue hover:border-transparent rounded uppercase `}>
           Send
         </button>
 

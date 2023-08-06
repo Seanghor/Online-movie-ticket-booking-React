@@ -5,7 +5,8 @@ import { MovieResponse } from "../types/movie.dto";
 import { CursorButtonPrevious } from "../components/Buttons/CursorPreviousButton";
 import { CursorButtonNext } from "../components/Buttons/CursorButtonNext";
 import { Link, Element, scroller } from 'react-scroll';
-
+import { useNavigate } from "react-router-dom";
+import Skeleton from "../components/Skeleton";
 
 const scrollToSection = (showSection: string) => {
   scroller.scrollTo(showSection, {
@@ -15,7 +16,9 @@ const scrollToSection = (showSection: string) => {
     offset: -500 //
   });
 };
+
 const Movie = () => {
+  const navigate = useNavigate();
   const [movies, setMovies] = useState<MovieResponse[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const moviesPerPage = 12;
@@ -25,15 +28,11 @@ const Movie = () => {
   const [green, setGreen] = useState(0);
   const [blue, setBlue] = useState(100);
 
+  const [isLoading, setIsLoading] = useState(false); // Add isLoading state
 
   useEffect(() => {
-    scrollToSection("main")
-    // fectData
-    const fetchAllMovieData = async () => {
-      const res = await getAllMovieOnScreening();
-      const allMovies = await res.json();
-      setMovies(allMovies);
-    };
+    scrollToSection("main");
+    fetchAllMovieData(); // Fetch movie data immediately
 
     // RGB
     const interval = setInterval(() => {
@@ -42,16 +41,23 @@ const Movie = () => {
       setBlue((prevBlue) => (prevBlue + 2) % 256);
     }, 50);
 
-    // scroll bar
-    //document.body.style.overflow = "hidden";
     return () => {
-      fetchAllMovieData();
       clearInterval(interval);
-      // Restore the scroll bar when the component unmounts
-      document.body.style.overflow = "auto";
-    }
+    };
   }, []);
 
+  const fetchAllMovieData = async () => {
+    setIsLoading(true); // Set isLoading to true before fetching data
+    try {
+      const res = await getAllMovieOnScreening();
+      const allMovies = await res.json();
+      setMovies(allMovies);
+    } catch (error) {
+      console.log("Error fetching movie data:", error);
+    } finally {
+      setIsLoading(false); // Set isLoading to false after fetching data
+    }
+  };
 
   const color = `rgb(${red}, ${green}, ${blue})`;
   const totalPages = Math.ceil(movies.length / moviesPerPage);
@@ -59,28 +65,22 @@ const Movie = () => {
   const goToPreviousPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
-      return
+    } else {
+      setCurrentPage(totalPages);
     }
-
-    setCurrentPage(totalPages)
   };
 
   const goToNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
-      return
+    } else {
+      setCurrentPage(1);
     }
-    setCurrentPage(1)
   };
 
   const startIndex = (currentPage - 1) * moviesPerPage;
   const endIndex = startIndex + moviesPerPage;
   const currentMovies = movies.slice(startIndex, endIndex);
-
-  // const showPagination =
-  //   totalPages > 1 && currentMovies.length >= 1; // Show pagination if there are more than 1 page and at least 3 movies on the current page
-
-
 
   return (
     <Element name='main' className="flex flex-col movie bg-gradient-to-r from-red-600 to-purple-900 min-h-screen sm:py-16">
@@ -88,28 +88,42 @@ const Movie = () => {
         <h4
           id="runningColorText"
           className="font-black font-Dangrek bg-gradient-to-r from-crimson to-springgreen via-orange bg-clip-text bg-gradient-rainbow text-transparent text-5xl w-80vw mx-auto my-4 text-center transition-colors duration-200 uppercase  from-neutral-700 mt-4 "
-          style={{ color }}>
+          style={{ color }}
+        >
           Movies
         </h4>
       </div>
       <div className="flex flex-row justify-center items-center ">
-        <CursorButtonNext onClick={() => { goToNextPage() }} />
+        <CursorButtonNext onClick={goToNextPage} />
         <div className="container grid grid-cols-6 gap-5 flex-row justify- items- w-full">
-          {currentMovies?.map((item: MovieResponse, index: number) => (
-            <Link
-              key={index}
-              to={`/movie/${item.id}`}
-              onClick={() => {
-                console.log("selected now playing");
-              }}
-            >
-              <Card image={item?.image || ""} title={item?.title || ""} opening_date={item?.opening_date || ""} />
-            </Link>
-          ))}
+          {isLoading ? (
+            // Skeleton loader while loading
+            <> 
+              <Skeleton />
+              <Skeleton />
+              <Skeleton />
+              <Skeleton />
+              <Skeleton />
+              <Skeleton />
+            </>
+          ) : (
+            // Render movie data when loaded
+            currentMovies?.map((item: MovieResponse, index: number) => (
+              <div
+                key={index}
+                onClick={() => {
+                  navigate(`/movie/${item.id}`);
+                  console.log("selected now playing", item.id);
+                }}
+              >
+                <Card image={item?.image || ""} title={item?.title || ""} opening_date={item?.opening_date || ""} />
+              </div>
+            ))
+          )}
         </div>
-        <CursorButtonPrevious onClick={() => { goToPreviousPage() }} />
+        <CursorButtonPrevious onClick={goToPreviousPage} />
       </div>
-    </Element >
+    </Element>
   );
 };
 

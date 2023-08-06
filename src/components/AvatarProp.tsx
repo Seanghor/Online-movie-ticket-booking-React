@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import GreenTopLeftShape from '../assets/images/contactus/green_top_left.png';
 import YellowTopRightShape from '../assets/images/contactus/yellowTopRight.png';
 import YellowBottomRightShape from '../assets/images/contactus/yellowBottomRightShape.png';
@@ -14,6 +14,7 @@ interface AvatarProps {
 
 const Avatar: React.FunctionComponent<AvatarProps> = (props: AvatarProps) => {
   const { imageUrl, userName, role } = props;
+
   return (
     <div className="relative bg-white mt-20 rounded-3xl overflow-hidden">
       <div className="absolute left-0 top-0 w-1/4">
@@ -32,12 +33,27 @@ const Avatar: React.FunctionComponent<AvatarProps> = (props: AvatarProps) => {
           style={{ borderRadius: '50%', overflow: 'hidden', width: '300px', height: '300px', position: 'relative' }}
           className="w-48 h-48 md:w-72 md:h-72"
         >
-          <img src={CircleProfileShape} alt="" className="object-cover bg-cover" style={{ position: 'relative', zIndex: '1' }} />
+          <img
+            
+            src={CircleProfileShape}
+            alt=""
+            className="object-cover bg-cover"
+            style={{ position: 'relative', zIndex: '2' }}
+          />
           <img
             src={imageUrl}
-            alt="Kimsour"
+            id="avatar-image"
             className="rounded-full bg-transparent"
-            style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', maxWidth: '90%', maxHeight: '90%', zIndex: '2' }}
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              maxWidth: '90%',
+              maxHeight: '90%',
+              zIndex: '2',
+              animation: 'rotate 0.5s linear',
+            }}
           />
         </div>
         <div className="mt-8 md:mt-0 ml-32 ">

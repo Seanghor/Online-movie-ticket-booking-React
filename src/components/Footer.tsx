@@ -12,16 +12,29 @@ const Footer = () => {
 
     return (
         <footer className="bg-footer dark:bg-gray-900">
-            <div className="mx-auto w-full p-20 py-6 lg:py-8">
+            <div className="px-[50px] w-full p-20 py-6 lg:py-8">
                 <div className="md:flex md:justify-between">
                     {/* Movie Tick Left side */}
                     <div className="mb-6 md:mb-0">
-                        <a href="https://flowbite.com/" className="flex items-center">
-                            <div className="items-center">
-                                <img src={cinema_icon} alt="cinema" className="h-8  mr-3" />
+                        <Link to="/" className="text-white font-poppins flex items-center justify-self-start cursor-pointer no-underline ">
+                            <div className="h-8 w-8 mr-2" >
+                            <img src={cinema_icon} alt="cinema" className={`scale-110 w-full h-full object-cover bg-cover transition-transform duration-1000`} />
                             </div>
-                            <span className="self-center font-poppins text-2xl font-semibold whitespace-nowrap dark:text-white ">MovieTick</span>
-                        </a>
+                            <div className="flex flex-col h-8 items-center justify-center">
+                            <h4
+                                id="runningColorText"
+                                className="font-Angkor text-xl animate-text bg-gradient-to-r from-blue-600 via-lime-500 to-red-600  text-transparent bg-clip-text animate-gradient "
+                            >
+                                Avatar
+                            </h4>
+                            <h2
+                                id="runningColorText"
+                                className="font-Angkor text-xs text-center animate-text bg-gradient-to-r from-blue-600 via-lime-500 to-red-600  text-transparent bg-clip-text animate-gradient "
+                            >
+                                Cineplex
+                            </h2>
+                            </div>
+                        </Link>
                     </div>
                     {/* Movie Tick Left Side */}
 
