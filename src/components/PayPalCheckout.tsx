@@ -118,7 +118,7 @@ const PayPalCheckout: React.FunctionComponent<PayPalCheckoutProps> = (props: Pay
                                 shape: "pill"
                             }}
                             // onClick:
-                            onClick={(data: any, actions: any) => {
+                            onClick={(_data: any, actions: any) => {
                                 // const hasAlreadyBought = true
                                 if (paidFor) {
                                     setError("You already book this ticket, get your ticket now")
@@ -128,7 +128,7 @@ const PayPalCheckout: React.FunctionComponent<PayPalCheckoutProps> = (props: Pay
                                 }
                             }}
                             // createOrder
-                            createOrder={(data, actions) => {
+                            createOrder={(_data, actions) => {
                                 return actions.order.create({
                                     purchase_units: [
                                         {
@@ -140,12 +140,11 @@ const PayPalCheckout: React.FunctionComponent<PayPalCheckoutProps> = (props: Pay
                                 });
                             }}
                             // onApprove
-                            onApprove={async (data: any, actions: any) => {
+                            onApprove={async (_data: any, actions: any) => {
                                 const order = await actions.order.capture()
                                 console.log("Order:", order);
                                 onClickPay()
-                                return actions.order.capture().then((details: any) => {
-                                    const name = details.payer.name.given_name;
+                                return actions.order.capture().then((_details: any) => {
                                     // alert(`Transaction completed by ${name}`);
                                 });
 

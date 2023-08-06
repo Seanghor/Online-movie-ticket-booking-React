@@ -19,7 +19,6 @@ interface NotificationDialogProps {
   onClick: Function
 }
 export const NotificationDialog: React.FunctionComponent<NotificationDialogProps> = (props: NotificationDialogProps) => {
-  const navigate = useNavigate();
   const { isOpen, main_title, discription, icon, onClick } = props
   const [open, setOpen] = useState(isOpen);
 
