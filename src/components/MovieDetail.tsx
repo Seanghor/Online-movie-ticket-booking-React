@@ -399,7 +399,7 @@ const MovieDetail = () => {
                 <p className="my-3 font-normal text-slate-200 dark:text-gray-200 font-poppins">{movie?.description}</p>
                 {
                   // || (screening.length !== 0)
-                  (showSchedule || isNoScreen) ? null : (
+                  (showSchedule && isNoScreen) ? null : (
                     <button
                       type="button"
                       className="w-50 text-white bg-[#130B2B] backdrop-blur-lg shadow-lg border hover:text-black hover:bg-white  font-medium rounded-lg text-base px-4 py-2 text-center mr-3 md:mr-0"
