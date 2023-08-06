@@ -1,19 +1,13 @@
-import React from "react";
-import { useEffect, useReducer, useState } from 'react';
+
+import { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { BiMoviePlay } from "react-icons/bi";
-// import { FaTimes, FaBars } from "react-icons/fa";
-// import GradeIcon from '@mui/icons-material/Grade';
 import { IconButton } from './Icon_Button';
-// import { useNavigate } from 'react-router-dom';
 import { Badge } from "@material-tailwind/react";
 import MovieFilterRoundedIcon from '@mui/icons-material/MovieFilterRounded';
-// import { HomeIcon, BookmarkIcon, TicketIcon } from "@heroicons/react/24/solid";
 import AvatarFemale from '../assets/images/developer_image/avatar_female.png';
 import AvatarMale from '../assets/images/developer_image/avatar_male.png';
-import { checkAccessTokenExpiration, getAccessToken, getRefreshToken, getUserInfor, logOut } from '../services/auth';
+import {  getAccessToken, getRefreshToken, getUserInfor, logOut } from '../services/auth';
 import { UserLogo } from './UserLogo';
-import cinema_logo from '../assets/cinema/cinema_logo.png'
 import cinema_icon from '../assets/cinema/cinema_icon.png'
 import '../index.css'
 
@@ -23,9 +17,6 @@ const Navbar = () => {
   const currentPath = location.pathname;
   console.log("Current route:", currentPath);
 
-  const [click, setClick] = useState(false);
-  // const handleClick = () => setClick(!click);
-  // const closeMobileMenu = () => setClick(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [btnTitle, setBtnTitle] = useState('SignUp')
   const [isAuth, setIsAuth] = useState(false)
@@ -132,18 +123,18 @@ const Navbar = () => {
         <a href="https://flowbite.com/" className="flex items-center">
           <Link to="/" className="text-white font-poppins flex items-center justify-self-start cursor-pointer no-underline ">
             <div className="h-8 w-8 mr-2" >
-              <img src={cinema_icon} alt="cinema" className={`scale-110 w-full h-full object-cover bg-cover transition-transform duration-1000 rotate-[${rotate ? 360 : 0}deg]`} />
+              <img src={cinema_icon} alt="cinema" className={`drop-shadow-[2px_2px_var(--tw-shadow-color)] shadow-blue-500/50  scale-110 w-full h-full object-cover bg-cover transition-transform duration-1000 rotate-[${rotate ? 360 : 0}deg]`} />
             </div>
-            <div className="flex flex-col h-8 items-center justify-center">
+            <div className="flex flex-col h-8 items-center justify-center ">
               <h4
                 id="runningColorText"
-                className="font-Angkor text-xl animate-text bg-gradient-to-r from-blue-600 via-lime-500 to-red-600  text-transparent bg-clip-text animate-gradient "
+                className="drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-rose-500 font-Angkor text-xl  animate-text bg-gradient-to-r from-blue-500 via-pink-300 to-lime-400  text-transparent bg-clip-text animate-gradient "
               >
                 Avatar
               </h4>
               <h2
                 id="runningColorText"
-                className="font-Angkor text-xs text-center animate-text bg-gradient-to-r from-blue-600 via-lime-500 to-red-600  text-transparent bg-clip-text animate-gradient "
+                className="font-Angkor text-xs text-center animate-text bg-gradient-to-r from-blue-500 via-pink-300 to-lime-400   text-transparent bg-clip-text animate-gradient "
               >
                 Cineplex
               </h2>

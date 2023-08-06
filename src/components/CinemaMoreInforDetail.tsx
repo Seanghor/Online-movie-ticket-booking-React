@@ -12,10 +12,12 @@ import {
 } from "@material-tailwind/react";
 import { getOneCinema } from '../services/campus';
 import { CinemaResponse } from '../types/campus.dto';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
 const CinemaMoreInforDetail = () => {
+  const navigate = useNavigate()
+
 
   const [nowPlaying, setNowPlaying] = useState<MovieResponse[]>([])
   const [comingSoon, setComingSoon] = useState<MovieResponse[]>([])
@@ -62,7 +64,8 @@ const CinemaMoreInforDetail = () => {
   ]
   const handleShowTime = async () => {
     console.log("Show Time");
-    window.location.href = `/cinema/showtime?id=${id}`;
+    navigate(`/cinema/showtime?id=${id}`)
+    // window.location.href = `/cinema/showtime?id=${id}`;
   }
   return (
     <div className='mx-auto bg-gradient-to-r from-red-900 to-purple-900 min-h-screen'>
@@ -87,25 +90,25 @@ const CinemaMoreInforDetail = () => {
         {/* Display Top Movie & Comming Soon Movie */}
         <Tabs value={activeTab}>
           <div className="tabs-container">
-          <TabsHeader
-            className="rounded-none ml-8 border-b border-blue-gray-50 bg-transparent p-0 w-[500px]"
-            indicatorProps={{
-              className: "bg-transparent border-b-2 border-blue-500 shadow-none rounded-none",
-            }}
-          >
-            {data.map(({ label, value }) => (
-              <Tab
-                key={value}
-                value={value}
-                onClick={() => setActiveTab(value)}
-                className={`flex text-2xl font-semibold uppercase pb-8 ${activeTab === value ? "text-blue-500" : "text-white "} `}
-              >
-                <h2 className='font-poppins'>{label}</h2>
-              </Tab>
-            ))}
-          </TabsHeader>
+            <TabsHeader
+              className="rounded-none ml-8 border-b border-blue-gray-50 bg-transparent p-0 w-[500px]"
+              indicatorProps={{
+                className: "bg-transparent border-b-2 border-blue-500 shadow-none rounded-none",
+              }}
+            >
+              {data.map(({ label, value }) => (
+                <Tab
+                  key={value}
+                  value={value}
+                  onClick={() => setActiveTab(value)}
+                  className={`flex text-2xl font-semibold uppercase pb-8 ${activeTab === value ? "text-blue-500" : "text-white "} `}
+                >
+                  <h2 className='font-poppins'>{label}</h2>
+                </Tab>
+              ))}
+            </TabsHeader>
           </div>
-         
+
           <TabsBody>
             {data.map(({ value, list }) => (
               <TabPanel key={value} value={value}>
@@ -152,7 +155,7 @@ const CinemaMoreInforDetail = () => {
           </iframe>
         </div>
         {/* Address End */}
-       
+
       </div>
 
     </div>

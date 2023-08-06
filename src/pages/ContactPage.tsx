@@ -4,13 +4,10 @@ import ContactUsBgImage from "../assets/images/contactus/contactusBg.png";
 import Kimsour from '../assets/images/developer_image/kimsour3.png';
 import Seanghor from '../assets/images/developer_image/seanghor2.png';
 import Avatar from '../components/AvatarProp';
-import the_avatar_cineplex_logo from '../assets/cinema/logo_icon.png'
-import { useEffect, useState } from "react";
-import { Link, Element, scroller } from 'react-scroll';
+import { useEffect } from "react";
+import {  Element, scroller } from 'react-scroll';
 import cinema_logo from '../assets/cinema/cinema_logo.png'
-import cinema_icon from '../assets/cinema/cinema_icon.png'
-import { useNavigate } from "react-router-dom";
-import { getAccessToken, getRefreshToken, getUserInfor } from "../services/auth";
+
 
 
 const scrollToSection = (showSection: string) => {

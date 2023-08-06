@@ -3,7 +3,7 @@ import CV1 from '../assets/images/coverSlider/cv1.png';
 import CV2 from '../assets/images/coverSlider/cv2.png';
 import CV3 from '../assets/images/coverSlider/cv3.png';
 import CV4 from '../assets/images/coverSlider/cv4.png';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+
 const CoverSlider = () => {
   const images = [
     {

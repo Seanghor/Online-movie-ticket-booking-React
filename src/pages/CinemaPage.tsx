@@ -6,9 +6,11 @@ import { CinemaResponse } from '../types/campus.dto';
 // import { log } from 'console';
 import { getAllCinema } from '../services/campus';
 import SearchBar from '../components/SearchBar';
+import { useNavigate } from 'react-router-dom';
 // import { getTheaters } from '../services/campus';
 
 const Cinemas = () => {
+  const navigate = useNavigate()
   const [cinema, SetCinema] = useState<CinemaResponse[]>([]);
   // search:
   const [search, setSearch] = useState('')
@@ -31,12 +33,14 @@ const Cinemas = () => {
 
   const handleSeeMore = async (id: number) => {
     console.log("See more");
-    window.location.href = `/cinema/moreinfiormation?id=${id}`;
+    // window.location.href = `/cinema/moreinfiormation?id=${id}`;
+    navigate(`/cinema/moreinfiormation?id=${id}`)
   }
 
   const handleShowTime = async (id: number) => {
     console.log("Show Time");
-    window.location.href = `/cinema/showtime?id=${id}`;
+    // window.location.href = `/cinema/showtime?id=${id}`;
+    navigate(`/cinema/showtime?id=${id}`)
   }
   return (
     <div className="mx-auto bg-gradient-to-r from-red-900 to-purple-900 min-h-screen">

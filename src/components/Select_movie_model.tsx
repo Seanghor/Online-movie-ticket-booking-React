@@ -1,18 +1,8 @@
 import React from "react";
-// import GradeIcon from '@mui/icons-material/Grade';
-// import TimerIcon from '@mui/icons-material/Timer';
-// import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-// import CategoryIcon from '@mui/icons-material/Category';
-// import image_seat from '../assets/seat.svg'
-// import image_text from '../assets/text.svg'
-// import image_notAvialable from '../assets/not_avialable.svg'
-// import image_user from '../assets/user.svg'
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { MovieTypeEnum } from "../types/enum.type";
 import { IconButton } from "./Icon_Button";
-// import { Link, NavLink, useLocation } from "react-router-dom";
-import croos_img from '../assets/croos.svg'
-import { formatDateDayAndMonth, getDayNumber, getMonthName } from "../utils/utils";
+import { getDayNumber, getMonthName } from "../utils/utils";
 import CloseIcon from '@mui/icons-material/Close';
 
 function formatTimeTo12Hour(timeString: string) {
@@ -71,7 +61,7 @@ export const SelectMovieModel: React.FunctionComponent<SelectMovieModel_props> =
                         <div className="h-64">
                             {
                                 selected.length === 0 ? (
-                                    <div className="font-medium text-gray-400">Please Select</div>
+                                    <div className="font-medium text-center text-gray-400">Please Select</div>
                                 ) : (selected.map((item: any, index: number) => (
                                     <div key={index} className="border-2 border-collapse rounded-lg border-indigo-500 mb-3 hover:cursor-pointer">
                                         <div className="flex flex-row h-12 justify-between items-stretch">

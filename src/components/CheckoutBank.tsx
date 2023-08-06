@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import icon from '../assets/paymentMethod_icon/philip_icon.png'
 import ButtonLoading from './Buttons/ButtonLoading';
 import { NotificationDialog } from './PopupDialog';
 import dialog_icon_cross from '../assets/images/dialog/cross.svg'
@@ -21,20 +20,21 @@ interface CheckoutBankProps {
     isDisable: boolean
 }
 const CheckoutBank: React.FunctionComponent<CheckoutBankProps> = (props: CheckoutBankProps) => {
-    const { amount, onClickPay, paidFor, icon_pay, bg_normal, bg_hover, isLoadingPay, isDisable } = props
+    const { onClickPay, paidFor, icon_pay, bg_normal, bg_hover, isLoadingPay, isDisable } = props
     const [error, setError] = useState<string | null>(null)
     const navigate = useNavigate();
     if (paidFor) {
         return (<NotificationDialog
             isOpen={true}
             main_title={"You have successfully purchased ticket"}
-            discription={"A small river named Duden flows by their place and supplies it with the necessary regelialia"}
+            discription={"Thank you for choosing Avatar Cineplex! We appreciate your purchase of the movie ticket and hope you enjoy the cinematic experience."}
             icon={dialog_icon_tick}
             onClick={() => { setTimeout(() => navigate('/'), 1500) }}
         />)
         // alert("Thank you for your purches.")
     }
     if (error) {
+        setError(error)
         return (
             <NotificationDialog
                 isOpen={true}

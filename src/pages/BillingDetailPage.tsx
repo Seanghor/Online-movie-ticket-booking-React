@@ -25,9 +25,7 @@ import philip_logo from '../assets/images/bank/philip.jpg';
 import aba_payment_icon from '../assets/paymentMethod_icon/aba_icon.svg'
 import acleda_payment_icon from '../assets/paymentMethod_icon/acleda_icon.png'
 import philip_payment_icon from '../assets/paymentMethod_icon/philip_icon.png'
-import ButtonLoading from '../components/Buttons/ButtonLoading';
-import { NotificationDialog } from '../components/PopupDialog';
-import dialog_icon_tick from '../assets/images/dialog/tick.svg'
+
 
 let CLIENT_ID = import.meta.env.VITE_PAYPAL_CLIENT_ID
 console.log("CLIENT_ID:", CLIENT_ID);
@@ -119,7 +117,6 @@ const BillingDetailPage = () => {
   const [phone, setPhone] = useState("")
   const [agree, setAgree] = useState(false)
   const [showButton, setShowButton] = useState<boolean>(false)
-  const [error, setError] = useState<string | null>(null)
   const [isLoadingPay, setIsLoadingPay] = useState<boolean>(false)
 
   // refresh:

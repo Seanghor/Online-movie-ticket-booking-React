@@ -14,7 +14,6 @@ import EmailIcon from '@mui/icons-material/Email';
 
 export default function Signup() {
   const navigate = useNavigate();
-  const [status, setStatus] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [gender, setGender] = useState<GenderEnum | string>("MALE")

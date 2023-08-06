@@ -1,6 +1,7 @@
 import React from "react";
 import { CardShadow } from "./Card_Shadow";
 import { MovieTypeEnum } from "../../types/enum.type";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -16,16 +17,19 @@ interface HomeCardProps {
 
 
 export const HomeCard: React.FunctionComponent<HomeCardProps> = (props: HomeCardProps) => {
+    const navigate = useNavigate()
     const { id, image, title, trailer, movieType, movieStatus, duration_min } = props;
 
 
     const onClick_buy = (id: string) => {
         // setShow(true)
-        window.location.href = `/movie/${id}?show=${true}`;
+        // window.location.href = `/movie/${id}?show=${true}`;
+        navigate(`/movie/${id}?show=${true}`)
     }
     const onClick_seeMore = (id: string) => {
         // setShow(false)
-        window.location.href = `/movie/${id}?show=${false}`;
+        navigate(`/movie/${id}?show=${false}`)
+        // window.location.href = `/movie/${id}?show=${false}`;
     }
 
     return (

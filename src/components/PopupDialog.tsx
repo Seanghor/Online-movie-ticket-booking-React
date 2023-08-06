@@ -7,7 +7,6 @@ import {
   DialogFooter,
   Typography,
 } from "@material-tailwind/react";
-import { BiFontFamily } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
 
@@ -26,10 +25,7 @@ export const NotificationDialog: React.FunctionComponent<NotificationDialogProps
 
   const handleOpen = () => setOpen(!isOpen);
 
-  const handleCloseSession = () => {
-    handleOpen()
-    navigate('/')
-  }
+
   return (
     <>
       {/* <Button onClick={handleOpen} className="bg-[#db2777]">Notification</Button> */}

@@ -4,7 +4,8 @@ import { Card } from "../components/Cards/Card";
 import { MovieResponse } from "../types/movie.dto";
 import { CursorButtonPrevious } from "../components/Buttons/CursorPreviousButton";
 import { CursorButtonNext } from "../components/Buttons/CursorButtonNext";
-import { Link, Element, scroller } from 'react-scroll';
+import {  Element, scroller } from 'react-scroll';
+import { useNavigate } from "react-router-dom";
 
 
 const scrollToSection = (showSection: string) => {
@@ -16,6 +17,7 @@ const scrollToSection = (showSection: string) => {
   });
 };
 const Movie = () => {
+  const navigate = useNavigate();
   const [movies, setMovies] = useState<MovieResponse[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const moviesPerPage = 12;
@@ -96,15 +98,7 @@ const Movie = () => {
         <CursorButtonNext onClick={() => { goToNextPage() }} />
         <div className="container grid grid-cols-6 gap-5 flex-row justify- items- w-full">
           {currentMovies?.map((item: MovieResponse, index: number) => (
-            <Link
-              key={index}
-              to={`/movie/${item.id}`}
-              onClick={() => {
-                console.log("selected now playing");
-              }}
-            >
-              <Card image={item?.image || ""} title={item?.title || ""} opening_date={item?.opening_date || ""} />
-            </Link>
+            <Card key={index} onClick={() => { navigate(`/movie/${item.id}`) }} image={item?.image || ""} title={item?.title || ""} opening_date={item?.opening_date || ""} />
           ))}
         </div>
         <CursorButtonPrevious onClick={() => { goToPreviousPage() }} />

@@ -5,8 +5,6 @@ import TimerIcon from '@mui/icons-material/Timer';
 import CategoryIcon from '@mui/icons-material/Category';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ClosedCaptionOffIcon from '@mui/icons-material/ClosedCaptionOff';
-import cinema_icon from "../assets/cinema/cinema_icon.png"
-// import { getAllMovie, getMovieById } from "../services/movie";
 import { convertMinutesToHHMM, formatDateTo_dd_mm_yy, formatTimeTo12Hour } from "../utils/utils";
 // import { scroller } from "react-scroll";
 export interface ScreeningProps {

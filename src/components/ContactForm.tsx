@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useEffect, useReducer, useState } from "react";
 import { NotificationDialog } from "./PopupDialog";
-import icon from '../assets/images/dialog/tick.svg'
 import { useNavigate } from "react-router-dom";
 import { getAccessToken, getRefreshToken, getUserInfor } from "../services/auth";
 import { createFeedback } from "../services/feedback";

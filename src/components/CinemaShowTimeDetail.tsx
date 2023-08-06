@@ -22,8 +22,6 @@ import bookIcon from '../assets/booked.svg'
 import image_notAvialable from '../assets/images/seat/not_avialable.svg'
 import { Seat } from './Seat';
 import SearchBar from './SearchBar';
-import logo from '../assets/cinema/logo_icon.png'
-import cinema_icon from '../assets/cinema/cinema_icon.png'
 import cinema_logo from '../assets/cinema/cinema_logo.png'
 import { getAccessToken, getRefreshToken, getUserInfor } from '../services/auth';
 

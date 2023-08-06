@@ -1,21 +1,18 @@
-
-import React from 'react';
 import { useEffect, useReducer, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { getMovieById } from "../services/movie";
 import { MovieResponse } from "../types/movie.dto";
 import GradeIcon from '@mui/icons-material/Grade';
 import TimerIcon from '@mui/icons-material/Timer';
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import CategoryIcon from '@mui/icons-material/Category';
-import { ScreeningProps, ShowTimeSchedule } from "./Schedule_model";
+import { ShowTimeSchedule } from "./Schedule_model";
 import { getAllScreeningByMovieIdAndDate, getAllScreeningByMovieIdAndGroupByDate, getOneScreeningById } from "../services/screening";
 import { DifferentCinemaScreeningResponse, DifferentDateScreeningResponse } from "../types/screening.dto";
 import { Seat } from "./Seat";
 import { getSeatOfScreening } from "../services/seat";
-import { SeatList, SingleRowOfSeat, SingleSeatRespone } from "../types/seat.dto";
+import {SingleRowOfSeat, SingleSeatRespone } from "../types/seat.dto";
 import { SelectMovieModel } from "./Select_movie_model";
-import { convertMinutesToHHMM, formatDateToShortCurt, formatDateTo_dd_mm_yy, formatName, formatTimeTo12Hour, getRowLetter } from "../utils/utils";
+import { convertMinutesToHHMM, formatDateToShortCurt, formatDateTo_dd_mm_yy, formatName,  getRowLetter } from "../utils/utils";
 import SeatNote from "./SeatNote";
 import { Element, scroller } from 'react-scroll';
 import image_seat from '../assets/images/seat/seat_available.svg'
@@ -50,11 +47,11 @@ const MovieDetail = () => {
   const accessToken = getAccessToken()
   const refreshToken = getRefreshToken()
   const userInfo = getUserInfor()
-  const [isAuth, setIsAuth] = useState(false)
 
   // movie
   const { id } = useParams();
-  const [movieId, setMovieId] = useState(id)
+  // const [movieId, setMovieId] = useState(id)
+  const movieId = id
   const [movie, setMovie] = useState<MovieResponse | null>(null);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -67,28 +64,21 @@ const MovieDetail = () => {
   const [oneScreening, setOncScreening] = useState<any | null>(null)
   const [screening, setScreening] = useState<DifferentCinemaScreeningResponse[]>([])
   const [showSchedule, setShowSchedule] = useState<boolean>(booleanValue)
-  const [screeningDataGroupByDate, setScreeningDataGroupByDate] = useState<DifferentDateScreeningResponse[]>([])
+  // const [screeningDataGroupByDate, setScreeningDataGroupByDate] = useState<DifferentDateScreeningResponse[]>([])
   const [datesArray, setDatesArray] = useState<string[] | []>([])
   const [showDate, setShowDate] = useState(currentDate)
-  const [isAvailable, setIsAvailable] = useState(false)
   const [cinemaName, setCinemaName] = useState<string>('')
-  const [cinemaId, setCinemaId] = useState('')
+  // const [cinemaId, setCinemaId] = useState('')
 
 
   // seat:
-  const [seatData, setSeatData] = useState<SeatList | [][]>([])
+  // const [seatData, setSeatData] = useState<SeatList | [][]>([])
   const [showSeat, setShowSeat] = useState(false)
   const [selectSeat, setSelectSeat] = useState<any | []>([])
-  const [reserveDataToStorage, setReserveDataToStorage] = useState<any | []>([])
   const [seatIdOfScreen, setSeatIdOfScreen] = useState<any>([])
   const [reserveData, setReserveData] = useState<any | []>([])
-  const [listSeatId, setListSeatId] = useState<number[] | []>([])
-
-  // book or reserve:
-  // const [cinema, setCinema] = useState("")
 
   // section:
-  // const [showSection, setShowSection] = useState('')
   const [showSection, setShowSection] = useState(showSchedule === true ? "schedule_section" : "")
 
   // search:
@@ -98,14 +88,6 @@ const MovieDetail = () => {
   const [reducerValue, forceUpdate] = useReducer(x => x + 1, 0)
 
 
-  const [screeningProps, setScreeningProps] = useState<ScreeningProps>({
-    name: "",
-    Screening: [], // Update this array with your actual data
-    onClick: () => {
-      console.log("action");
-    },
-    showUpScreenId: "", // Assuming showUpScreenId is a string, change to the appropriate type if needed
-  });
   useEffect(() => {
     scrollToSection(showSection)
   }, [showSection])
@@ -125,10 +107,8 @@ const MovieDetail = () => {
       let fectDataResponse = await res.json()
       // console.log("res:", fectDataResponse);
       if (fectDataResponse.statusCode == 400) {
-        setScreeningDataGroupByDate([])
         return
       }
-      setScreeningDataGroupByDate(fectDataResponse)
 
       // get all dateShow of movie:
       const array: string[] | [] | "" = fectDataResponse
@@ -210,23 +190,12 @@ const MovieDetail = () => {
 
       if (screeningNowData) {
         // fect cinema:
-        setCinemaId(screeningNowData.campusId)
         const cinema = await getOneCinema(screeningNowData.campusId)
         const cinemaJson = await cinema.json()
         setCinemaName(cinemaJson.name)
         setOncScreening(screeningNowData)
         // console.log("On Cinema:", cinemaJson.name);
       }
-
-      // - test : screen props---------------------------------------------------------------:
-      setScreeningProps({
-        name: movie?.title || "",
-        Screening: [], // Update this array with your actual data
-        onClick: () => {
-          console.log("action");
-        },
-        showUpScreenId: "", // Assuming showUpScreenId is a string, change to the appropriate type if needed
-      });
 
       // ---log:
 

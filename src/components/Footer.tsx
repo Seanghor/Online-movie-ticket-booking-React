@@ -1,9 +1,3 @@
-import { BiMoviePlay } from "react-icons/bi";
-import { Link, NavLink, useLocation } from "react-router-dom";
-import { scroller } from "react-scroll";
-import Kimsour from "../assets/kimsour3.png";
-import Avatar from "./AvatarProp";
-import Seanghor from "../assets/seanghor1.png";
 import cinema_icon from '../assets/cinema/cinema_icon.png'
 
 
@@ -20,7 +14,7 @@ const Footer = () => {
                             <div className="items-center">
                                 <img src={cinema_icon} alt="cinema" className="h-8  mr-3" />
                             </div>
-                            <span className="self-center font-poppins text-2xl font-semibold whitespace-nowrap dark:text-white ">MovieTick</span>
+                            <span className="self-center font-poppins text-pink-200 text-2xl font-semibold whitespace-nowrap dark:text-pink-200 ">Avatar</span>
                         </a>
                     </div>
                     {/* Movie Tick Left Side */}
