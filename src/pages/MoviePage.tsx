@@ -23,7 +23,7 @@ const Movie = () => {
   // RGB color
   const [red, setRed] = useState(255);
   const [green, setGreen] = useState(0);
-  const [blue, setBlue] = useState(0);
+  const [blue, setBlue] = useState(100);
 
 
   useEffect(() => {

@@ -36,12 +36,12 @@ const ContactUs = () => {
       <div className="container w-full pt-48 sm:py-16 mx-auto mt-10 items-center">
         {/* Contact Us Section1 */}
         <div className="flex flex-row  items-center min-w-lg p-5 h-screen">
-          <div className="flex flex-col justify-start mb-10 w-full shrink-0 grow-0 basis-auto md:mb-20 md:w-6/12 md:px-3 lg:px-6">
-            <div className="flex items-center">
-              <img src={cinema_logo} alt="the avatar logo" className="h-32 w-32" />
+          <div className="flex flex-col justify-start item mb-10 w-full shrink-0 grow-0 basis-auto md:mb-60 md:w-6/12 md:px-3 lg:px-6">
+            <div className="flex flex-row items-center place mb-16">
+              <img src={cinema_logo} alt="the avatar logo" className="h-32 w-32 items-center justify-center " />
             </div>
             <div className="">
-              <h2 className="mb-6 text-3xl font-bold text-yellow-500 font-DancingScript">Business Development</h2>
+              <h2 className="mb-6 text-3xl font-bold text-yellow-500 font-poppins">Business Development</h2>
               <ContactDetail title={"Opening Hours"} info={"Working Hours"} />
               <ContactDetail title={"Email"} info={"theavatarcineplex@gmail.com"} />
               <ContactDetail title={"Telephone"} info={"099 999 999"} />

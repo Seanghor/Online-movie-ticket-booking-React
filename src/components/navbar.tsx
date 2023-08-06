@@ -15,6 +15,7 @@ import { checkAccessTokenExpiration, getAccessToken, getRefreshToken, getUserInf
 import { UserLogo } from './UserLogo';
 import cinema_logo from '../assets/cinema/cinema_logo.png'
 import cinema_icon from '../assets/cinema/cinema_icon.png'
+import '../index.css'
 
 const Navbar = () => {
 
@@ -43,7 +44,7 @@ const Navbar = () => {
   const [username, setUsername] = useState<string>("")
   const [email, setEmail] = useState<string>("")
   const [gender, setGender] = useState<string>("MALE")
-
+  const [rotate, setRotate] = useState(false);
   // Fetch data from localStorage
   useEffect(() => {
     // Function to handle the custom event and update the notification count
@@ -56,9 +57,6 @@ const Navbar = () => {
       setNoti(jsonData.length);
     };
     handleReservationUpdate()
-
-
-
     // Listen for the custom event when reservation is updated
     window.addEventListener('reservationUpdated', handleReservationUpdate);
 
@@ -66,8 +64,21 @@ const Navbar = () => {
     return () => {
       window.removeEventListener('reservationUpdated', handleReservationUpdate);
     };
+
+
   }, [noti]);
 
+
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRotate((prevRotate) => !prevRotate);
+    }, 4000);
+    // clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   useEffect(() => {
     const checkIsAuth = async () => {
@@ -119,19 +130,25 @@ const Navbar = () => {
     <nav className="bg-nav dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b  dark:border-gray-600" onMouseLeave={() => { setIsProfileOpen(false) }}>
       <div className="flex flex-wrap items-center justify-between mx-auto p-4 lg:px-4" >
         <a href="https://flowbite.com/" className="flex items-center">
-          <Link to="/" className="text-white font-poppins flex flex-row items-center justify-self-start cursor-pointer no-underline text-3xl">
-            {/* <BiMoviePlay className="mr-2 " onClick={() => { setClick(!click) }} /> */}
-            <div className="items-center">
-              <img src={cinema_icon} alt="cinema" className="h-8  mr-2" />
+          <Link to="/" className="text-white font-poppins flex items-center justify-self-start cursor-pointer no-underline ">
+            <div className="h-8 w-8 mr-2" >
+              <img src={cinema_icon} alt="cinema" className={`scale-110 w-full h-full object-cover bg-cover transition-transform duration-1000 rotate-[${rotate ? 360 : 0}deg]`} />
             </div>
-            <div className="items-center">
+            <div className="flex flex-col h-8 items-center justify-center">
               <h4
                 id="runningColorText"
-                className="font-Angkor animate-text bg-gradient-to-r from-blue-600 via-lime-500 to-red-600  text-transparent bg-clip-text animate-gradient "
+                className="font-Angkor text-xl animate-text bg-gradient-to-r from-blue-600 via-lime-500 to-red-600  text-transparent bg-clip-text animate-gradient "
               >
                 Avatar
               </h4>
+              <h2
+                id="runningColorText"
+                className="font-Angkor text-xs text-center animate-text bg-gradient-to-r from-blue-600 via-lime-500 to-red-600  text-transparent bg-clip-text animate-gradient "
+              >
+                Cineplex
+              </h2>
             </div>
+
           </Link>
         </a>
         {/* Hamburger and Cross Sign */}
@@ -289,7 +306,7 @@ const Navbar = () => {
           </NavLink>
         </div>
       </div>
-    </nav>
+    </nav >
 
   );
 }

@@ -1,5 +1,7 @@
 import React from "react";
 import CinemaIcon from '../assets/cinema_icon.svg';
+import cinema_icon from "../assets/cinema/cinema_icon.png"
+
 
 interface CinemaBranchProps {
   branchName: string,
@@ -20,7 +22,10 @@ export const CinemaBranch: React.FunctionComponent<CinemaBranchProps> = (props: 
       </div>
 
       <div className="flex flex-col">
-        <p className="text-orange-300 text-2xl font-bold m-2 font-poppins" >{branchName}</p>
+        <div className="flex flex-row items-center m-2">
+          <img src={cinema_icon} alt="cinema_icon" className="w-6 h-6 mr-2"/>
+          <p className="text-orange-300 text-2xl font-bold  font-poppins" >{branchName}</p>
+        </div>
         <p className="text-gray-100 text-1xl font-bold m-2 font-poppins">{address}</p>
         <p className="text-gray-100 text-1xl font-bold m-2 font-poppins">{phone}</p>
 
