@@ -239,7 +239,7 @@ const MovieDetail = () => {
 
   // handle add reserve data to localStorage
   const handleAddReserveDataToLocalStorage = (updatedSeatIdOfScreen: SingleSeatRespone[]) => {
-    const updatedBookingData = reserveData?.map((reserve: any, index: number) => {
+    const updatedBookingData = reserveData?.map((reserve: any) => {
       if (reserve.screeningId === screenId) {
         if (reserve.seat.length === 0) {
           return
