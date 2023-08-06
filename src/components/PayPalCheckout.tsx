@@ -36,7 +36,9 @@ const PayPalCheckout: React.FunctionComponent<PayPalCheckoutProps> = (props: Pay
         />)
         // alert("Thank you for your purches.")
     }
-    if (error) {
+    if (error !== null) {
+        console.log("---------- Error:", error);
+
         return (<NotificationDialog
             isOpen={true}
             main_title={"Something went wrong"}
@@ -50,8 +52,9 @@ const PayPalCheckout: React.FunctionComponent<PayPalCheckoutProps> = (props: Pay
     return (
         <div className='max-w-md mx-auto w-40' >
             {
-                !isLoadingPay ? (<PayPalScriptProvider options={{ "clientId": "AaIdMgqRpEw49AwLiGvNXZ9B3_dLlD4EQ5wSeLmmVQXIlYAmQTQoamiBrf6qI2d71yaMoqtLIW6Ao2hQ" }}>
-                    <PayPalButtons disabled={isDisable}
+                !isLoadingPay ? (
+                    <PayPalScriptProvider options={{ "clientId": "AaIdMgqRpEw49AwLiGvNXZ9B3_dLlD4EQ5wSeLmmVQXIlYAmQTQoamiBrf6qI2d71yaMoqtLIW6Ao2hQ" }}>
+                        {/* <PayPalButtons disabled={isDisable}
                         style={{
                             layout: "horizontal",
                             height: 48,
@@ -59,17 +62,26 @@ const PayPalCheckout: React.FunctionComponent<PayPalCheckoutProps> = (props: Pay
                             shape: "pill"
                         }}
                         // onClick:
-                        onClick={( actions: any) => {
-                            // const hasAlreadyBought = true
-                            if (paidFor) {
-                                setError("You already book this ticket, get your ticket now")
-                                return actions.reject()
-                            } else {
-                                return actions.resolve()
-                            }
-                        }}
+                        // onClick={(actions: any, data: any) => {
+                        //     // const hasAlreadyBought = true
+                        //     if (paidFor) {
+                        //         setError("You already book this ticket, get your ticket now")
+                        //         return actions.reject()
+                        //     }
+                        //     else {
+                        //         // return actions.resolve()
+                        //         return (<NotificationDialog
+                        //             isOpen={true}
+                        //             main_title={"Something went wrong"}
+                        //             discription={"Something went wrong, please contact to our support team."}
+                        //             icon={dialog_icon_cross}
+                        //             onClick={() => { setTimeout(() => navigate('')) }}
+
+                        //         />)
+                        //     }
+                        // }}
                         // createOrder
-                        createOrder={(actions:any) => {
+                        createOrder={(data: any, actions: any) => {
                             return actions.order.create({
                                 purchase_units: [
                                     {
@@ -81,16 +93,10 @@ const PayPalCheckout: React.FunctionComponent<PayPalCheckoutProps> = (props: Pay
                             });
                         }}
                         // onApprove
-                        onApprove={async ( actions: any) => {
+                        onApprove={async (actions: any, data: any) => {
+                            console.log("APPROVED")
                             const order = await actions.order.capture()
-                            console.log("Order:", order);
-                           onClickPay() 
-                            return   actions.order.capture().then((details: any) => {
-                                const name = details.payer.name.given_name;
-                                alert(`Transaction completed by ${name}`);
-                            });
-
-
+                            return onClickPay()
                         }}
 
                         // 
@@ -102,8 +108,61 @@ const PayPalCheckout: React.FunctionComponent<PayPalCheckoutProps> = (props: Pay
                             setError(err);
                             console.error("Paypal checkout error:", err)
                         }}
-                    />
-                </PayPalScriptProvider>) : (
+                    /> */}
+                        <PayPalButtons
+                            disabled={isDisable}
+                            style={{
+                                layout: "horizontal",
+                                height: 48,
+                                tagline: false,
+                                shape: "pill"
+                            }}
+                            // onClick:
+                            onClick={(data: any, actions: any) => {
+                                // const hasAlreadyBought = true
+                                if (paidFor) {
+                                    setError("You already book this ticket, get your ticket now")
+                                    return actions.reject()
+                                } else {
+                                    return actions.resolve()
+                                }
+                            }}
+                            // createOrder
+                            createOrder={(data, actions) => {
+                                return actions.order.create({
+                                    purchase_units: [
+                                        {
+                                            amount: {
+                                                value: amount.toLocaleString(),
+                                            },
+                                        },
+                                    ],
+                                });
+                            }}
+                            // onApprove
+                            onApprove={async (data: any, actions: any) => {
+                                const order = await actions.order.capture()
+                                console.log("Order:", order);
+                                onClickPay()
+                                return actions.order.capture().then((details: any) => {
+                                    const name = details.payer.name.given_name;
+                                    // alert(`Transaction completed by ${name}`);
+                                });
+
+
+                            }}
+
+                            // 
+                            onCancel={() => {
+
+                            }}
+                            // OnError
+                            onError={(err: any) => {
+                                setError(err);
+                                console.error("Paypal checkout error:", err)
+                            }}
+                        />
+                    </PayPalScriptProvider>) : (
                     <ButtonLoading />
                 )
             }
