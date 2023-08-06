@@ -24,11 +24,11 @@ export const HomeCard: React.FunctionComponent<HomeCardProps> = (props: HomeCard
     const onClick_buy = (id: string) => {
         // setShow(true)
         // window.location.href = `/movie/${id}?show=${true}`;
-        navigate(`/movie/${id}?show=${true}`)
+        navigate(`/movie/${id}?show=true`)
     }
     const onClick_seeMore = (id: string) => {
         // setShow(false)
-        navigate(`/movie/${id}?show=${false}`)
+        navigate(`/movie/${id}?show=false`)
         // window.location.href = `/movie/${id}?show=${false}`;
     }
 
