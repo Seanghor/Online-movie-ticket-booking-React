@@ -186,7 +186,7 @@ const MovieDetail = () => {
       } catch (error) {
         console.log(error);
       } finally {
-        setIsLoading(true);
+        setIsLoading(false);
       }
       
     }
@@ -408,19 +408,28 @@ const MovieDetail = () => {
 
   // functionality:
   const handleShowUpSeat = async (id: string) => {
-    if (!accessToken || !refreshToken || !userInfo) {
-      setTimeout(
-        () => navigate('/signup'),
-        1500
-      );
-      return
+    setIsLoading(true);
+    try {
+      if (!accessToken || !refreshToken || !userInfo) {
+        setTimeout(
+          () => navigate('/signup'),
+          1500
+        );
+        return
+      }
+  
+      setScreenId(id)
+      setShowSection('seat_section')
+      scrollToSection(showSection)
+      setShowSeat(true)
+      setSelectSeat([]) 
+    } catch (error) {
+      console.log(error);
+      
+    }finally{
+      setIsLoading(false);
     }
-
-    setScreenId(id)
-    setShowSection('seat_section')
-    scrollToSection(showSection)
-    setShowSeat(true)
-    setSelectSeat([])   // when click another schedule then previous selected will remove
+      // when click another schedule then previous selected will remove
   }
 
 
