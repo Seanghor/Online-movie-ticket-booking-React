@@ -28,6 +28,10 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { getOneCinema } from '../services/campus';
 import { getAccessToken, getRefreshToken, getUserInfor } from '../services/auth';
+import SkeletonMovieImage from './Skeleton/MovieDetailPage/SkeletonMovieImage';
+import SkeletonSeat from './Skeleton/MovieDetailPage/SkeletonSeat';
+import TicketBookingSkeleton from './Skeleton/MovieDetailPage/TicketBookingSkeleton';
+import VideoSkeleton from './Skeleton/MovieDetailPage/VideoSkeleton';
 
 // for scroll section(whenever value of showSecton change --> this function is called)
 const scrollToSection = (showSection: string) => {
@@ -82,7 +86,8 @@ const MovieDetail = () => {
   const [reserveDataToStorage, setReserveDataToStorage] = useState<any | []>([])
   const [seatIdOfScreen, setSeatIdOfScreen] = useState<any>([])
   const [reserveData, setReserveData] = useState<any | []>([])
-  const [listSeatId, setListSeatId] = useState<number[] | []>([])
+  const [listSeatId, setListSeatId] = useState<number[] | []>([]);
+  const [isLoading, setIsLoading] = useState(false); 
 
   // book or reserve:
   // const [cinema, setCinema] = useState("")
@@ -113,35 +118,51 @@ const MovieDetail = () => {
   useEffect(() => {
     // fect singleMovie data:
     const fechMovieData = async () => {
-      const res = await getMovieById(movieId || "")
-      let movieData = await res.json()
-      setMovie(movieData);
+      setIsLoading(true);
+      try {
+        const res = await getMovieById(movieId || "")
+        let movieData = await res.json()
+        setMovie(movieData);
+      } catch (error) {
+        console.log("Error to fetch Movie data",error);
+      }finally{
+        setIsLoading(false);
+      }
+      
     }
     fechMovieData()
 
     // fect all screening of the movie group by date(to display all screen of the movie)
     const fectAllScreeningGroupByDate = async () => {
-      const res = await getAllScreeningByMovieIdAndGroupByDate(movieId || "")
-      let fectDataResponse = await res.json()
-      // console.log("res:", fectDataResponse);
-      if (fectDataResponse.statusCode == 400) {
-        setScreeningDataGroupByDate([])
-        return
+      setIsLoading(true);
+      try {
+        const res = await getAllScreeningByMovieIdAndGroupByDate(movieId || "")
+        let fectDataResponse = await res.json()
+        // console.log("res:", fectDataResponse);
+        if (fectDataResponse.statusCode == 400) {
+          setScreeningDataGroupByDate([])
+          return
+        }
+        setScreeningDataGroupByDate(fectDataResponse)
+
+        // get all dateShow of movie:
+        const array: string[] | [] | "" = fectDataResponse
+          .filter((item: DifferentDateScreeningResponse) => item.date > currentDate)
+          .map((item: DifferentDateScreeningResponse) => item.date);
+
+        // Use Set to store unique values of dates(set not contain duplicate)
+        const uniqueDatesSet = new Set(array);
+        // console.log("uniqueDatesSet:", uniqueDatesSet);
+
+        // Convert Set back to an array
+        const uniqueDatesArray: string[] | Date[] = Array.from(uniqueDatesSet);
+        setDatesArray(uniqueDatesArray.slice(0, 3))
+      } catch (error) {
+        console.log(error);
+      }finally{
+        setIsLoading(false)
       }
-      setScreeningDataGroupByDate(fectDataResponse)
-
-      // get all dateShow of movie:
-      const array: string[] | [] | "" = fectDataResponse
-        .filter((item: DifferentDateScreeningResponse) => item.date > currentDate)
-        .map((item: DifferentDateScreeningResponse) => item.date);
-
-      // Use Set to store unique values of dates(set not contain duplicate)
-      const uniqueDatesSet = new Set(array);
-      // console.log("uniqueDatesSet:", uniqueDatesSet);
-
-      // Convert Set back to an array
-      const uniqueDatesArray: string[] | Date[] = Array.from(uniqueDatesSet);
-      setDatesArray(uniqueDatesArray.slice(0, 3))
+      
     }
     fectAllScreeningGroupByDate()
   }, [id, movieId, reducerValue])
@@ -150,16 +171,24 @@ const MovieDetail = () => {
   useEffect(() => {
     // fect all screening of the movie and filter by date:
     const fechScreeningDataByDate = async () => {
-      console.log("selecting date:", showDate);
-      const res = await getAllScreeningByMovieIdAndDate(movieId || '', showDate)
-      let dataResponse = await res.json()
-      // console.log("Screening by date:", dataResponse);
+      setIsLoading(true);
+      try {
+        console.log("selecting date:", showDate);
+        const res = await getAllScreeningByMovieIdAndDate(movieId || '', showDate)
+        let dataResponse = await res.json()
+        // console.log("Screening by date:", dataResponse);
 
-      if (dataResponse.statusCode === 400 || dataResponse.statusCode === 500) {
-        setScreening([]);
-        return
+        if (dataResponse.statusCode === 400 || dataResponse.statusCode === 500) {
+          setScreening([]);
+          return
+        }
+        setScreening(dataResponse)
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(true);
       }
-      setScreening(dataResponse)
+      
     }
     fechScreeningDataByDate()
     // scrollToSection(showSection)
@@ -169,65 +198,82 @@ const MovieDetail = () => {
   useEffect(() => {
     // -- fect seat of the screening:
     const fechSeatData = async () => {
-      const res = await getSeatOfScreening(screenId || "")
-      let seatData = await res.json()
+      setIsLoading(true)
+      try {
+        const res = await getSeatOfScreening(screenId || "")
+        let seatData = await res.json()
 
-      // get all reserve data in localStorage:
-      const reservedataLocalStorage: any = JSON.parse(localStorage.getItem('reserve') || "")
-      // console.log("All Data from LocalStorage:", reservedataLocalStorage[0]); // see first screening
+        // get all reserve data in localStorage:
+        const reservedataLocalStorage: any = JSON.parse(localStorage.getItem('reserve') || "")
+        // console.log("All Data from LocalStorage:", reservedataLocalStorage[0]); // see first screening
 
-      setReserveData(reservedataLocalStorage)
-      if (screenId !== null) {
-        // find screeningId we are in now:
-        let reserve = reservedataLocalStorage.find((reserve: any) => reserve?.screeningId === screenId)
-        if (reserve) {
-          // make it to array contain id's value only: example: [1, 2, 3, 4]
-          let arrayReserveSeat = (reserve?.seat || []).map((i: any) => Number(i.id)).filter((id: number) => !isNaN(id));
+        setReserveData(reservedataLocalStorage)
+        if (screenId !== null) {
+          // find screeningId we are in now:
+          let reserve = reservedataLocalStorage.find((reserve: any) => reserve?.screeningId === screenId)
+          if (reserve) {
+            // make it to array contain id's value only: example: [1, 2, 3, 4]
+            let arrayReserveSeat = (reserve?.seat || []).map((i: any) => Number(i.id)).filter((id: number) => !isNaN(id));
 
-          // set the data from localstorage to as selectedSeat:
-          setSelectSeat(reserve?.seat)
-          const defaultSeat = seatData.map((rowItem: any) => {
-            return rowItem.map((col: SingleRowOfSeat) => {
-              return col.map((iitem: SingleSeatRespone) => {
-                if (arrayReserveSeat.includes(iitem.id)) {
-                  iitem.status = "SELECTED"
-                }
-                return iitem
+            // set the data from localstorage to as selectedSeat:
+            setSelectSeat(reserve?.seat)
+            const defaultSeat = seatData.map((rowItem: any) => {
+              return rowItem.map((col: SingleRowOfSeat) => {
+                return col.map((iitem: SingleSeatRespone) => {
+                  if (arrayReserveSeat.includes(iitem.id)) {
+                    iitem.status = "SELECTED"
+                  }
+                  return iitem
+                })
               })
-            })
 
-          })
-          return setSeatIdOfScreen(defaultSeat)
+            })
+            return setSeatIdOfScreen(defaultSeat)
+          }
         }
-      }
-      return setSeatIdOfScreen(seatData)
+        return setSeatIdOfScreen(seatData)
+        } catch (error) {
+          console.log(error);
+        }finally{
+          setIsLoading(false);
+        }
+      
     }
     fechSeatData()
     // fect screening by id:
     const fechOneScreenData = async () => {
-      const res = await getOneScreeningById(screenId || "")
-      let screeningNowData = await res.json()
-
-      if (screeningNowData) {
-        // fect cinema:
-        setCinemaId(screeningNowData.campusId)
-        const cinema = await getOneCinema(screeningNowData.campusId)
-        const cinemaJson = await cinema.json()
-        setCinemaName(cinemaJson.name)
-        setOncScreening(screeningNowData)
-        // console.log("On Cinema:", cinemaJson.name);
+      setIsLoading(true)
+      try {
+        const res = await getOneScreeningById(screenId || "")
+        let screeningNowData = await res.json()
+  
+        if (screeningNowData) {
+          // fect cinema:
+          setCinemaId(screeningNowData.campusId)
+          const cinema = await getOneCinema(screeningNowData.campusId)
+          const cinemaJson = await cinema.json()
+          setCinemaName(cinemaJson.name)
+          setOncScreening(screeningNowData)
+          // console.log("On Cinema:", cinemaJson.name);
+        }
+  
+        // - test : screen props---------------------------------------------------------------:
+        setScreeningProps({
+          name: movie?.title || "",
+          Screening: [], // Update this array with your actual data
+          onClick: () => {
+            console.log("action");
+          },
+          showUpScreenId: "", // Assuming showUpScreenId is a string, change to the appropriate type if needed
+        });
+  
+      } catch (error) {
+        console.log(error);
+        
+      } finally{
+        setIsLoading(false);
       }
-
-      // - test : screen props---------------------------------------------------------------:
-      setScreeningProps({
-        name: movie?.title || "",
-        Screening: [], // Update this array with your actual data
-        onClick: () => {
-          console.log("action");
-        },
-        showUpScreenId: "", // Assuming showUpScreenId is a string, change to the appropriate type if needed
-      });
-
+  
       // ---log:
 
       // console.log("ScreeningId:", screenId);
@@ -344,11 +390,19 @@ const MovieDetail = () => {
 
 
   const handleShowTime = () => {
-    setShowSection('schedule_section')
-    setShowSchedule(true)
-    setShowDate(currentDate)
-    scrollToSection(showSection)
-    // setShowDate(datesArray[0])
+    setIsLoading(true);
+    try {
+      setShowSection('schedule_section')
+      setShowSchedule(true)
+      setShowDate(currentDate)
+      scrollToSection(showSection)
+      // setShowDate(datesArray[0])
+    } catch (error) {
+      console.log(error);
+    }finally{
+      setIsLoading(false);
+    }
+    
   }
 
 
@@ -389,65 +443,74 @@ const MovieDetail = () => {
 
 
   console.log("seatIdOfScreen:", seatIdOfScreen);
-
-
-
-
   return (
     <>
       <div className="movie bg-gradient-to-r from-red-900 to-purple-900">
         <div className="container mt-16 flex-col w-full py-4 sm:py-16 mx-auto text-center">
           {/* Movie Detaile */}
           <div className="flex flex-col items-center md:flex-row md:max-w-xl">
-            <img className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={movie?.image || ""} alt="" />
-            <div className="flex flex-col justify-between pl-10 leading-normal w-full">
-              <div className='w-80 '>
-                <h5 className="w-full flex flex-row mb-2  text-left text-2xl font-bold tracking-tight text-gray-900 dark:text-white ">{movie?.title ? formatName(movie?.title.toLocaleUpperCase(), 20) : formatName(movie?.title || "", 20)}
-                </h5>
-              </div>
-              <div className="flex flex-row">
-                <CalendarMonthIcon className="text-white text-5xl" />
-                <h4 className="font-[poppins] font-normal text-slate-200 text-lg ml-3">{formatDateTo_dd_mm_yy(movie?.opening_date.toString() || "")}</h4>
-              </div>
-              <div className="flex flex-row">
-                <TimerIcon className="text-white" />
-                <h4 className="font-[poppins] font-normal text-slate-200 text-lg ml-3">{convertMinutesToHHMM(movie?.duration_min || 0)}</h4>
-              </div>
+          {
+            isLoading
+            ? <SkeletonMovieImage/>
+            : 
+            <>
+              <img className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={movie?.image || ""} alt="" />
+              <div className="flex flex-col justify-between pl-10 leading-normal w-full">
+                <div className='w-80 '>
+                  <h5 className="w-full flex flex-row mb-2  text-left text-2xl font-bold tracking-tight text-gray-900 dark:text-white ">{movie?.title ? formatName(movie?.title.toLocaleUpperCase(), 20) : formatName(movie?.title || "", 20)}
+                  </h5>
+                </div>
+                <div className="flex flex-row">
+                  <CalendarMonthIcon className="text-white text-5xl" />
+                  <h4 className="font-[poppins] font-normal text-slate-200 text-lg ml-3">{formatDateTo_dd_mm_yy(movie?.opening_date.toString() || "")}</h4>
+                </div>
+                <div className="flex flex-row">
+                  <TimerIcon className="text-white" />
+                  <h4 className="font-[poppins] font-normal text-slate-200 text-lg ml-3">{convertMinutesToHHMM(movie?.duration_min || 0)}</h4>
+                </div>
 
-              <div className="flex flex-row">
-                <GradeIcon className="text-white text-5xl" />
-                <h4 className="font-[poppins] font-normal text-slate-200 text-lg ml-3">{movie?.rating}</h4>
+                <div className="flex flex-row">
+                  <GradeIcon className="text-white text-5xl" />
+                  <h4 className="font-[poppins] font-normal text-slate-200 text-lg ml-3">{movie?.rating}</h4>
+                </div>
+                <div className="flex flex-row">
+                  <CategoryIcon className="text-white text-5xl" />
+                  <h4 className="font-[poppins] font-normal text-slate-200 text-lg ml-3">{movie?.movieType}</h4>
+                </div>
+                <div className="text-left">
+                  <p className="my-3 font-normal text-slate-200 dark:text-gray-200 font-poppins">{movie?.description}</p>
+                  {
+                    // || (screening.length !== 0)
+                    (showSchedule) ? null : (
+                      <button
+                        type="button"
+                        className="w-50 text-white bg-[#130B2B] backdrop-blur-lg shadow-lg border hover:text-black hover:bg-white  font-medium rounded-lg text-base px-4 py-2 text-center mr-3 md:mr-0"
+                        onClick={() => { handleShowTime() }}
+                      >
+                        SHOW TIME
+                      </button>)
+                  }
+                </div>
               </div>
-              <div className="flex flex-row">
-                <CategoryIcon className="text-white text-5xl" />
-                <h4 className="font-[poppins] font-normal text-slate-200 text-lg ml-3">{movie?.movieType}</h4>
-              </div>
-              <div className="text-left">
-                <p className="my-3 font-normal text-slate-200 dark:text-gray-200 font-poppins">{movie?.description}</p>
-                {
-                  // || (screening.length !== 0)
-                  (showSchedule) ? null : (
-                    <button
-                      type="button"
-                      className="w-50 text-white bg-[#130B2B] backdrop-blur-lg shadow-lg border hover:text-black hover:bg-white  font-medium rounded-lg text-base px-4 py-2 text-center mr-3 md:mr-0"
-                      onClick={() => { handleShowTime() }}
-                    >
-                      SHOW TIME
-                    </button>)
-                }
-              </div>
-            </div>
+            </>
+           }
+           
           </div>
 
           <div >
             {/* Trailer Start */}
             <Element name='trailer_section' className="container mx-auto mt-28">
-              <div className="relative w-100 h-48 overflow-hidden " style={{ paddingBottom: '56.25%' }}>
-                <iframe className="absolute top-0 left-0 w-full h-full"
-                  src={`${movie?.trailer}`}
-                  title="YouTube video player"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" />
-              </div>
+              {
+                isLoading
+                ? <VideoSkeleton/>
+                : <div className="relative w-100 h-48 overflow-hidden " style={{ paddingBottom: '56.25%' }}>
+                  <iframe className="absolute top-0 left-0 w-full h-full"
+                    src={`${movie?.trailer}`}
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" />
+                </div>
+              }
+              
             </Element>
             {/* Trailer End */}
             {
@@ -473,7 +536,6 @@ const MovieDetail = () => {
                         datesArray?.map((date: any, index: number) => (
                           <button
                             key={index}
-
                             onClick={() => {
                               setShowDate(date)
                               setShowSeat(false)  // this when we select change date --> showUpSeat dissapear
@@ -523,8 +585,9 @@ const MovieDetail = () => {
               ) : (null)
             }
             {/* show Seat */}
-            {
-              showSeat ? (
+            { isLoading
+            ? <SkeletonSeat/>
+            : showSeat ? (
                 <Element name="seat_section" className='md:flex-row h-screen'>
                   <div className="flex flex-row ">
                     <div className="flex flex-row">
@@ -537,7 +600,7 @@ const MovieDetail = () => {
                         <div className="flex flex-col my-10 overflow-y-auto h-4/5">
                           {
                             seatIdOfScreen?.map((itemRow: any, indexRow: number) => (
-                              <div key={indexRow} className='flex flex-row justify-evenl place-items-center px-10'>
+                              <div key={indexRow} className='flex flex-row justify-evenly place-items-center px-10'>
                                 <div className='justify-center items-center text-2xl font-extrabold text-fuchsia-700 mb-5 w-10'>
                                   {getRowLetter(indexRow)}
                                 </div>
@@ -580,6 +643,7 @@ const MovieDetail = () => {
                     </div>
                     {/* Ticket Summary */}
                     <div className="ml-10 basis-1/3">
+                    
                       <SelectMovieModel
                         cinema={cinemaName}
                         title={movie?.title || "No Name"}

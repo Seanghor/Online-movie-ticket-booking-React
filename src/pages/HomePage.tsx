@@ -10,7 +10,7 @@ import CoverSlider from "../components/CoverSlider"
 import { Link, Element, scroller } from 'react-scroll';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-
+import SkeletonHomePage from "../components/Skeleton/SkeletonHomePage";
 const HomePage = () => {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
@@ -34,7 +34,8 @@ const HomePage = () => {
   const [comingSoon, setComingSoon] = useState<MovieResponse[]>([])
   const totalPagesSoon = Math.ceil(comingSoon.length / moviesPerPage);
   const [currentPageSoon, setCurrentPageSoon] = useState(1);
-  const [showCursorSoonMov, setShowCursorSoonMov] = useState(false)
+  const [showCursorSoonMov, setShowCursorSoonMov] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); 
 
   const scrollToSection = (showSection: string) => {
     scroller.scrollTo(showSection, {
@@ -46,19 +47,44 @@ const HomePage = () => {
   };
   useEffect(() => {
     const fetchTopMovieData = async () => {
-      const res = await getAllMovieFilterIsTop("true")
-      // console.log("Status:", res.status)
-      setTopMovie(await res.json())
+      setIsLoading(true);
+      try {
+        const res = await getAllMovieFilterIsTop("true")
+        // console.log("Status:", res.status)
+        setTopMovie(await res.json())
+      } catch (error) {
+        console.log("Error fetching Top movie data:", error);
+      } finally {
+        setIsLoading(false); // Set isLoading to false after fetching data
+      }
+      
     };
+
     const fetchCommingSoonMovieData = async () => {
-      const res = await getAllMovieFilterByStatus("COMING_SOON")
-      // console.log("Status:", res.status)
-      setComingSoon(await res.json())
+      setIsLoading(true);
+      try {
+        const res = await getAllMovieFilterByStatus("COMING_SOON")
+        // console.log("Status:", res.status)
+        setComingSoon(await res.json())
+      } catch (error) {
+        console.log("Error fetching Comming Soon movie data:", error);
+      } finally {
+        setIsLoading(false); // Set isLoading to false after fetching data
+      }
+      
     };
     const fetchNowPlayingMovieData = async () => {
-      const res = await getAllMovieFilterByStatus("NOW_SHOWING")
-      // console.log("Status:", res.status)
-      setNowPlaying(await res.json())
+      setIsLoading(true);
+      try {
+        const res = await getAllMovieFilterByStatus("NOW_SHOWING")
+        // console.log("Status:", res.status)
+        setNowPlaying(await res.json())
+      } catch (error) {
+        console.log("Error fetching Now Playing movie data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+      
     };
 
     if (soon) {
@@ -70,12 +96,6 @@ const HomePage = () => {
     fetchCommingSoonMovieData()
     fetchNowPlayingMovieData()
   }, []);
-
-
-
-
-
-
 
   // dynamic function
   function goToNextPage(currentPage: number, totalPages: number, setCurrentPage: React.Dispatch<React.SetStateAction<number>>) {
@@ -160,8 +180,11 @@ const HomePage = () => {
             </div>
             {/* <div className="px- justify-between grid grid-cols-8 w-full items-center justify-items-center"> */}
             <div id="default-carousel" className="relative w-full px- justify-between grid grid-cols-8 items-center justify-items-center" data-carousel="slide">
-              {
-                currentTopMovies?.map((item: MovieResponse, index: number) => (
+             
+            {isLoading ? (
+              Array.from({ length: 8 }, (_, index) => <SkeletonHomePage key={index} />)
+            ) :
+                (currentTopMovies?.map((item: MovieResponse, index: number) => (
                   <Link
                     key={index} className="" to={`/movie/${item.id}`} onClick={() => { console.log("selected now playing") }}>
                     <HomeCard
@@ -174,7 +197,7 @@ const HomePage = () => {
                       duration_min={item?.duration_min}
                     />
                   </Link>
-                ))
+                )))
               }
             </div>
 
@@ -201,7 +224,9 @@ const HomePage = () => {
               <ArrowBackIosIcon style={{ color: "" }} className={`cursor-pointer text-cyan-300 hover:text-cyan-800 ${showCursorNowPlayingMov ? "visible" : "invisible"}`} />
             </div>
             <div className="justify-between grid grid-cols-8 w-full items-start justify-items-start">
-              {
+              {isLoading ? (
+                Array.from({ length: 8 }, (_, index) => <SkeletonHomePage key={index} />)
+              ) :
                 currentNowPlayingMovies?.map((item: MovieResponse, index: number) => (
                   <Link
                     key={index} className="" to={`/movie/${item.id}`} onClick={() => { console.log("selected now playing") }}>
@@ -241,7 +266,9 @@ const HomePage = () => {
               <ArrowBackIosIcon style={{ color: "" }} className={`cursor-pointer text-cyan-300 hover:text-cyan-800 ${showCursorSoonMov ? "visible" : "invisible"}`} />
             </div>
             <div className="justify-between grid grid-cols-8 w-full items-start justify-items-start">
-              {
+              {isLoading ? (
+                Array.from({ length: 8 }, (_, index) => <SkeletonHomePage key={index} />)
+              ) :
                 currentSoonMovies?.map((item: MovieResponse, index: number) => (
                   <Link
                     key={index} className="" to={`/movie/${item.id}`} onClick={() => { console.log("selected now playing") }}>

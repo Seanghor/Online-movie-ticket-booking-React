@@ -6,7 +6,7 @@ import { CursorButtonPrevious } from "../components/Buttons/CursorPreviousButton
 import { CursorButtonNext } from "../components/Buttons/CursorButtonNext";
 import { Link, Element, scroller } from 'react-scroll';
 import { useNavigate } from "react-router-dom";
-import Skeleton from "../components/Skeleton";
+import SkeletonMoviePage from "../components/Skeleton/SkeletonMoviePage";
 
 const scrollToSection = (showSection: string) => {
   scroller.scrollTo(showSection, {
@@ -97,15 +97,7 @@ const Movie = () => {
         <CursorButtonNext onClick={goToNextPage} />
         <div className="container grid grid-cols-6 gap-5 flex-row justify- items- w-full">
           {isLoading ? (
-            // Skeleton loader while loading
-            <> 
-              <Skeleton />
-              <Skeleton />
-              <Skeleton />
-              <Skeleton />
-              <Skeleton />
-              <Skeleton />
-            </>
+            Array.from({ length: 12 }, (_, index) => <SkeletonMoviePage key={index} />)
           ) : (
             // Render movie data when loaded
             currentMovies?.map((item: MovieResponse, index: number) => (
