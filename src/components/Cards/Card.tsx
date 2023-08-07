@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { formatDateTo_dd_mm_yy } from "../../utils/utils";
 import SkeletonMoviePage from "../Skeleton/SkeletonMoviePage";

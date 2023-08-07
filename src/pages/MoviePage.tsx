@@ -6,7 +6,7 @@ import { CursorButtonPrevious } from "../components/Buttons/CursorPreviousButton
 import { CursorButtonNext } from "../components/Buttons/CursorButtonNext";
 import { Element, scroller } from 'react-scroll';
 import { useNavigate } from "react-router-dom";
-import SkeletonMoviePage from "../components/Skeleton/SkeletonMoviePage";
+
 
 
 

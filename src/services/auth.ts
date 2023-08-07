@@ -55,7 +55,7 @@ export const logIn = async (loginBody: LoginInput) => {
 
 
 export const logOut = async () => {
-    const userInfo = JSON.parse(getUserInfor() || "")
+    // const userInfo = JSON.parse(getUserInfor() || "")
     // console.log("userInfo:", userInfo);
     // remove access and refreshToken from local storage:
     removeAccessToken()

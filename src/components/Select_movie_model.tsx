@@ -4,8 +4,7 @@ import { MovieTypeEnum } from "../types/enum.type";
 import { IconButton } from "./Icon_Button";
 import { getDayNumber, getMonthName } from "../utils/utils";
 import CloseIcon from '@mui/icons-material/Close';
-import SkeletonMoviePage from "./Skeleton/SkeletonMoviePage";
-import TicketBookingSkeleton from "./Skeleton/MovieDetailPage/TicketBookingSkeleton";
+
 
 function formatTimeTo12Hour(timeString: string) {
     const date = new Date(timeString);
