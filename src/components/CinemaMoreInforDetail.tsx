@@ -58,7 +58,7 @@ const CinemaMoreInforDetail = () => {
       1000
     );
   }, [id]);
-  console.log(id)
+
 
   const data = [
     {
@@ -73,7 +73,7 @@ const CinemaMoreInforDetail = () => {
     }
   ]
   const handleShowTime = async () => {
-    console.log("Show Time");
+    // console.log("Show Time");
     navigate(`/cinema/showtime?id=${id}`)
     // window.location.href = `/cinema/showtime?id=${id}`;
   }

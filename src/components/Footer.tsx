@@ -27,7 +27,7 @@ const Footer = () => {
                             <ul className="text-gray-500 dark:text-gray-400 font-medium">
 
                                 <li className="mb-4" onClick={() => {
-                                    console.log("to Now Showing");
+                                    // console.log("to Now Showing");
                                 }}>
                                     <a href="/?showing" className="hover:underline font-poppins">Now Showing</a>
                                 </li>

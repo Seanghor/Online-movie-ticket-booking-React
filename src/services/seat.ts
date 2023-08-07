@@ -11,7 +11,7 @@ export const getSeatOfAuditorum = async (id: string) => {
             Authorization: `Bearer ${getAccessToken()}`
         },
     });
-    console.log("getSeatOfAuditorum --> Status:", res.status);
+    // console.log("getSeatOfAuditorum --> Status:", res.status);
     return res
 }
 

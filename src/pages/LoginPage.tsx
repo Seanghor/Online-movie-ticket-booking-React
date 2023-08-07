@@ -21,9 +21,9 @@ export default function LoginPage() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     const res = await logIn({ email, password })
-    console.log("Res:", res);
-    console.log("email:", email);
-    console.log("password:", password);
+    // console.log("Res:", res);
+    // console.log("email:", email);
+    // console.log("password:", password);
     setIsClick(true)
     if (!res.accessToken && !res.refreshToken) {
       navigate('/login');

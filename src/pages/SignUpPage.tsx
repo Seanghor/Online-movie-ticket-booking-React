@@ -31,13 +31,13 @@ export default function Signup() {
       password,
       gender
     } as RegisterInput
-    console.log("username:", username);
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Gender:", gender);
-    console.log("Register ...");
+    // console.log("username:", username);
+    // console.log("Email:", email);
+    // console.log("Password:", password);
+    // console.log("Gender:", gender);
+    // console.log("Register ...");
     const res = await registerUser(registerData)
-    console.log("Register:", res);
+    // console.log("Register:", res);
     setIsClick(true)
     if (res.accessToken && res.refreshToken) {
       setTimeout(

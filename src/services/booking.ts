@@ -3,7 +3,7 @@ import { checkAccessTokenExpiration, getAccessToken, refreshAccessToken } from "
 
 export const booking = async (createBookingDto: CreateBookingDto) => {
     let URL = import.meta.env.VITE_BASE_URL
-    console.log("URL:", URL);
+    // console.log("URL:", URL);
 
     // let URL = import.meta.env.VITE_BASE_URL_LOCAL
 

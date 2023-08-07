@@ -76,7 +76,7 @@ const Navbar = () => {
       if (accessToken && refreshToken && userInfo) {
         setIsAuth(true)
         setBtnTitle("Log Out")
-        console.log("userInfor:", userInfo);
+        // console.log("userInfor:", userInfo);
         setUsername(JSON.parse(userInfo).name)
         setEmail(JSON.parse(userInfo).email)
         setGender(JSON.parse(userInfo).gender)
@@ -104,8 +104,7 @@ const Navbar = () => {
   const handleClickBtn = async () => {
     console.log("isAuth:", isAuth);
     if (isAuth) {
-      const res = await logOut()
-      console.log("Res:", res);
+      await logOut()
       console.log("Log out ...");
     } else {
       console.log("Sign Up");

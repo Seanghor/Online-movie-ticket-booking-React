@@ -22,7 +22,7 @@ const ContactUs = () => {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const aboutDeveloper = urlParams.has('developer');
-  console.log("Developer:", aboutDeveloper);
+  // console.log("Developer:", aboutDeveloper);
   useEffect(() => {
     if (aboutDeveloper) {
       scrollToSection("developer_section")

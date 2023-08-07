@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 
 // let CLIENT_ID = "AaIdMgqRpEw49AwLiGvNXZ9B3_dLlD4EQ5wSeLmmVQXIlYAmQTQoamiBrf6qI2d71yaMoqtLIW6Ao2hQ"
 const CLIENT_ID = import.meta.env.VITE_PAYPAL_CLIENT_ID
-console.log("CLIENT_ID:", CLIENT_ID);
+// console.log("CLIENT_ID:", CLIENT_ID);
 
 
 
@@ -53,7 +53,7 @@ const PayPalCheckout: React.FunctionComponent<PayPalCheckoutProps> = (props: Pay
         <div className='max-w-md mx-auto w-40' >
             {
                 !isLoadingPay ? (
-                    <PayPalScriptProvider options={{ "clientId": "AaIdMgqRpEw49AwLiGvNXZ9B3_dLlD4EQ5wSeLmmVQXIlYAmQTQoamiBrf6qI2d71yaMoqtLIW6Ao2hQ" }}>
+                    <PayPalScriptProvider options={{ "clientId": CLIENT_ID }}>
                         {/* <PayPalButtons disabled={isDisable}
                         style={{
                             layout: "horizontal",
@@ -141,8 +141,7 @@ const PayPalCheckout: React.FunctionComponent<PayPalCheckoutProps> = (props: Pay
                             }}
                             // onApprove
                             onApprove={async (_data: any, actions: any) => {
-                                const order = await actions.order.capture()
-                                console.log("Order:", order);
+                                await actions.order.capture()
                                 onClickPay()
                                 return actions.order.capture().then((_details: any) => {
                                     // alert(`Transaction completed by ${name}`);

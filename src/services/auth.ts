@@ -24,7 +24,7 @@ export const logIn = async (loginBody: LoginInput) => {
     })
 
     const loginResponse = await res.json()
-    console.log(res.status);
+    // console.log(res.status);
     if (loginResponse.accessToken && loginResponse.refreshToken) {
         // Store access token in localStorage
         setAccessToken(loginResponse.accessToken)
@@ -36,7 +36,7 @@ export const logIn = async (loginBody: LoginInput) => {
 
         // get reserve:
         const getData = localStorage.getItem("reserve")
-        console.log("LocalStorage:", getData);
+        // console.log("LocalStorage:", getData);
         if (getData === null) {
             // set reserve data:
             const emptyArray: CreateBookingDto[] | [] = [];
@@ -56,7 +56,7 @@ export const logIn = async (loginBody: LoginInput) => {
 
 export const logOut = async () => {
     const userInfo = JSON.parse(getUserInfor() || "")
-    console.log("userInfo:", userInfo);
+    // console.log("userInfo:", userInfo);
     // remove access and refreshToken from local storage:
     removeAccessToken()
     removeRefreshToken()
@@ -79,7 +79,7 @@ export const refreshAccessToken = async () => {
         body: JSON.stringify({ refreshToken }),
     })
     const response = await res.json()
-    console.log("Refresh Token:", response);
+    // console.log("Refresh Token:", response);
     setAccessToken(response.accessToken)
     setRefreshToken(response.refreshToken)
 
@@ -107,7 +107,7 @@ export const checkAccessTokenExpiration = async () => {
     }
     console.log("Start checking token .....");
     const decode = JSON.parse(atob(tokenExpiration.split('.')[1]));
-    console.log("decode:", decode);
+    // console.log("decode:", decode);
     const expTime = decode.exp * 1000
     const currentTime = new Date().getTime()
 

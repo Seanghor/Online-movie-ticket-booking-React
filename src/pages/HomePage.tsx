@@ -67,7 +67,7 @@ const HomePage = () => {
     // skeleton
     setTimeout(
       () => { setIsLoading(false) },
-      1000
+      500
     );
 
     if (soon) {

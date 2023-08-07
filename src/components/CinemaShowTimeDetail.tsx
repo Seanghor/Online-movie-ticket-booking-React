@@ -134,7 +134,7 @@ const CinemaShowTimeDetail = () => {
       const arrayDates: string[] | [] | "" = responseData.map((screen: any) => screen.date_show.split('T')[0]);
       const toSet = new Set(arrayDates);
       const uniqueDatesArray: string[] = Array.from(toSet);
-      console.log("distinctDates:", uniqueDatesArray);
+      // console.log("distinctDates:", uniqueDatesArray);
 
 
       // we want to show only 3days after today:
@@ -264,8 +264,8 @@ const CinemaShowTimeDetail = () => {
     // Filter out objects with empty 'seat' arrays
     const filteredBookingData = updatedBookingData.filter((booking: any) => booking.seat.length > 0);
     // Save the updatedBookingData to localStorage
-    console.log("ReserveData LocalStorage:", reserveData);
-    console.log("updatedBookingData:", updatedBookingData[0]);
+    // console.log("ReserveData LocalStorage:", reserveData);
+    // console.log("updatedBookingData:", updatedBookingData[0]);
     localStorage.setItem("reserve", JSON.stringify(filteredBookingData));
   };
 
@@ -285,7 +285,7 @@ const CinemaShowTimeDetail = () => {
     // handleAddReserveDataToLocalStorage()
     // Dispatch a custom event to notify the Navbar component
     const filteredData = reserveData?.filter((item: { screeningId: number; }) => item.screeningId !== Number(screenId));
-    console.log(filteredData);
+    // console.log(filteredData);
     setReserveData(filteredData)
     setSelectSeat([])
     localStorage.setItem("reserve", JSON.stringify(filteredData))

@@ -27,8 +27,8 @@ import acleda_payment_icon from '../assets/paymentMethod_icon/acleda_icon.png'
 import philip_payment_icon from '../assets/paymentMethod_icon/philip_icon.png'
 
 
-let CLIENT_ID = import.meta.env.VITE_PAYPAL_CLIENT_ID
-console.log("CLIENT_ID:", CLIENT_ID);
+// let CLIENT_ID = import.meta.env.VITE_PAYPAL_CLIENT_ID
+// console.log("CLIENT_ID:", CLIENT_ID);
 
 
 
@@ -179,7 +179,7 @@ const BillingDetailPage = () => {
 
     let choosen = paymentMethods.find((method: payMethod) => method.id === id)
     setChooseMethod(choosen || null)
-    console.log("choosen:", choosen);
+    // console.log("choosen:", choosen);
 
 
   }
@@ -205,10 +205,10 @@ const BillingDetailPage = () => {
             connect: resCreateBookingData.map((singleBook: any) => { return { id: singleBook.id } })
           }
         } as CreatePurchaseDto
-        console.log("purchaseData:", purchaseData);
+        // console.log("purchaseData:", purchaseData);
 
         const resCreatePurchaseData = await handlePurchase(purchaseData)
-        console.log("resCreatePurchaseData:", resCreatePurchaseData);
+        // console.log("resCreatePurchaseData:", resCreatePurchaseData);
         if (resCreatePurchaseData.ok !== true) {
           return;
         }
@@ -242,14 +242,14 @@ const BillingDetailPage = () => {
   const handleRemove = async (screenId: string) => {
     const newArrayReserve = bookReserveData.filter((screen: any) => screen.screeningId !== screenId)
     setBookReserveData(newArrayReserve)
-    console.log("newArrayReserver:", newArrayReserve);
+    // console.log("newArrayReserver:", newArrayReserve);
     setBookReserveData(newArrayReserve)
     localStorage.setItem("reserve", JSON.stringify(newArrayReserve))
     const event = new Event('reservationUpdated');
     window.dispatchEvent(event);
   }
 
-  console.log('ShowButton:', bookReserveData);
+  // console.log('ShowButton:', bookReserveData);
 
   return (
     <div className="mx-auto w-full h-full bg-gradient-to-r from-red-900 to-purple-900 min-h-screen font-sans">

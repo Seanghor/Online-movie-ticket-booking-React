@@ -76,9 +76,9 @@ export const ContactForm: React.FunctionComponent = () => {
       );
     }
     const res = await createFeedback(createFeedbackDto)
-    console.log("res:", res);
+    // console.log("res:", res);
     if (res.ok) {
-      console.log('Feedback created ........................');
+      // console.log('Feedback created ........................');
       setIsPopup(true)
       setCreateFeedbackDto({
         ...createFeedbackDto,
@@ -109,7 +109,7 @@ export const ContactForm: React.FunctionComponent = () => {
   }
 
 
-  console.log("user:", createFeedbackDto);
+  // console.log("user:", createFeedbackDto);
 
   return (
     <form className="w-full min-w-lg bg-white bg-opacity-25 p-10 rounded-md" typeof="submit" onSubmit={handleSubmit}>

@@ -6,7 +6,7 @@ import dialog_icon_tick from '../assets/images/dialog/tick.svg'
 import { useNavigate } from 'react-router-dom';
 // let CLIENT_ID = "AaIdMgqRpEw49AwLiGvNXZ9B3_dLlD4EQ5wSeLmmVQXIlYAmQTQoamiBrf6qI2d71yaMoqtLIW6Ao2hQ"
 const CLIENT_ID = import.meta.env.VITE_PAYPAL_CLIENT_ID
-console.log("CLIENT_ID:", CLIENT_ID);
+// console.log("CLIENT_ID:", CLIENT_ID);
 
 
 interface CheckoutBankProps {

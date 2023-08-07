@@ -27,18 +27,18 @@ const Cinemas = () => {
     }
     fetchAllCinema();
   }, [])
-  console.log(cinema);
+  // console.log(cinema);
 
 
 
   const handleSeeMore = async (id: number) => {
-    console.log("See more");
+    // console.log("See more");
     // window.location.href = `/cinema/moreinfiormation?id=${id}`;
     navigate(`/cinema/moreinfiormation?id=${id}`)
   }
 
   const handleShowTime = async (id: number) => {
-    console.log("Show Time");
+    // console.log("Show Time");
     // window.location.href = `/cinema/showtime?id=${id}`;
     navigate(`/cinema/showtime?id=${id}`)
   }
