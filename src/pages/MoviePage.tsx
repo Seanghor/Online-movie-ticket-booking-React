@@ -4,19 +4,20 @@ import { Card } from "../components/Cards/Card";
 import { MovieResponse } from "../types/movie.dto";
 import { CursorButtonPrevious } from "../components/Buttons/CursorPreviousButton";
 import { CursorButtonNext } from "../components/Buttons/CursorButtonNext";
-import {  Element, scroller } from 'react-scroll';
+import { Element, scroller } from 'react-scroll';
 import { useNavigate } from "react-router-dom";
 
 
-const scrollToSection = (showSection: string) => {
-  scroller.scrollTo(showSection, {
-    duration: 800,
-    delay: 0,
-    smooth: 'easeInOutQuart',
-    offset: -500 //
-  });
-};
+
 const Movie = () => {
+  const scrollToSection = (showSection: string) => {
+    scroller.scrollTo(showSection, {
+      duration: 800,
+      delay: 0,
+      smooth: 'easeInOutQuart',
+      offset: -500 //
+    });
+  };
   const navigate = useNavigate();
   const [movies, setMovies] = useState<MovieResponse[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -34,8 +35,11 @@ const Movie = () => {
     const fetchAllMovieData = async () => {
       const res = await getAllMovieOnScreening();
       const allMovies = await res.json();
+      console.log("=======================getAllMovieOnScreening:", allMovies);
+
       setMovies(allMovies);
     };
+    fetchAllMovieData();
 
     // RGB
     const interval = setInterval(() => {
@@ -47,7 +51,6 @@ const Movie = () => {
     // scroll bar
     //document.body.style.overflow = "hidden";
     return () => {
-      fetchAllMovieData();
       clearInterval(interval);
       // Restore the scroll bar when the component unmounts
       document.body.style.overflow = "auto";

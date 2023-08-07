@@ -27,7 +27,6 @@ export const Card: React.FunctionComponent<MovieCardProps> = (props: MovieCardPr
                 </div>
             </div>
         </div>
-
     );
 }
 
