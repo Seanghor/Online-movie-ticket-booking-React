@@ -25,6 +25,9 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { getOneCinema } from '../services/campus';
 import { getAccessToken, getRefreshToken, getUserInfor } from '../services/auth';
+import VideoSkeleton from "./Skeleton/MovieDetailPage/VideoSkeleton";
+import SkeletonMovieImage from "./Skeleton/MovieDetailPage/SkeletonMovieImage";
+import SkeletonSeat from "./Skeleton/MovieDetailPage/SkeletonSeat";
 
 // for scroll section(whenever value of showSecton change --> this function is called)
 const scrollToSection = (showSection: string) => {
@@ -85,6 +88,11 @@ const MovieDetail = () => {
   // search:
   const [search, setSearch] = useState('')
 
+
+  // skeleton:
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [isLoadingSelectMovie, setIsLoadingSelectMovie] = useState<boolean>(false)
+
   // refresh:
   const [reducerValue, forceUpdate] = useReducer(x => x + 1, 0)
 
@@ -128,6 +136,12 @@ const MovieDetail = () => {
       const uniqueDatesArray: string[] | Date[] = Array.from(uniqueDatesSet);
       setDatesArray(uniqueDatesArray.slice(0, 3))
     }
+
+    // skeleton -- movvie detail
+    setTimeout(
+      () => { setIsLoading(false) },
+      500
+    );
     fectAllScreeningGroupByDate()
   }, [id, movieId, reducerValue])
 
@@ -155,6 +169,9 @@ const MovieDetail = () => {
   useEffect(() => {
     // -- fect seat of the screening:
     const fechSeatData = async () => {
+      if (screenId) {
+        setIsLoadingSelectMovie(true)
+      }
       const res = await getSeatOfScreening(screenId || "")
       let seatData = await res.json()
 
@@ -183,11 +200,21 @@ const MovieDetail = () => {
             })
 
           })
+          setTimeout(
+            () => setIsLoadingSelectMovie(false),
+            1000
+          );
           return setSeatIdOfScreen(defaultSeat)
         }
       }
+
+      setTimeout(
+        () => setIsLoadingSelectMovie(false),
+        1000
+      );
       return setSeatIdOfScreen(seatData)
     }
+
     fechSeatData()
     // fect screening by id:
     const fechOneScreenData = async () => {
@@ -205,10 +232,16 @@ const MovieDetail = () => {
 
       // console.log("ScreeningId:", screenId);
       // console.log("Choose screen time:", formatTimeTo12Hour(screeningNowData.startTime));
-
-
     }
+
     fechOneScreenData()
+    // setIsLoadingSelectMovie(false)
+    // setTimeout(
+    //   () => setIsLoadingSelectMovie(false),
+    //   3000
+    // )
+    // setIsLoadingSelectMovie(false)
+
   }, [screenId, reducerValue])
 
 
@@ -327,6 +360,7 @@ const MovieDetail = () => {
 
   // functionality:
   const handleShowUpSeat = async (id: string) => {
+
     if (!accessToken || !refreshToken || !userInfo) {
       setTimeout(
         () => navigate('/signup'),
@@ -334,11 +368,10 @@ const MovieDetail = () => {
       );
       return
     }
-
+    setShowSeat(true)
     setScreenId(id)
     setShowSection('seat_section')
     scrollToSection(showSection)
-    setShowSeat(true)
     setSelectSeat([])   // when click another schedule then previous selected will remove
   }
 
@@ -371,56 +404,65 @@ const MovieDetail = () => {
       <div className="movie bg-gradient-to-r from-red-900 to-purple-900">
         <div className="container mt-16 flex-col w-full py-4 sm:py-16 mx-auto text-center">
           {/* Movie Detaile */}
-          <div className="flex flex-col items-center md:flex-row md:max-w-xl">
-            <img className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={movie?.image || ""} alt="" />
-            <div className="flex flex-col justify-between pl-10 leading-normal w-full">
-              <div className='w-80 '>
-                <h5 className="w-full flex flex-row mb-2  text-left text-2xl font-bold tracking-tight text-gray-900 dark:text-white ">{movie?.title ? formatName(movie?.title.toLocaleUpperCase(), 20) : formatName(movie?.title || "", 20)}
-                </h5>
-              </div>
-              <div className="flex flex-row">
-                <CalendarMonthIcon className="text-white text-5xl" />
-                <h4 className="font-[poppins] font-normal text-slate-200 text-lg ml-3">{formatDateTo_dd_mm_yy(movie?.opening_date.toString() || "")}</h4>
-              </div>
-              <div className="flex flex-row">
-                <TimerIcon className="text-white" />
-                <h4 className="font-[poppins] font-normal text-slate-200 text-lg ml-3">{convertMinutesToHHMM(movie?.duration_min || 0)}</h4>
-              </div>
+          {
+            isLoading
+              ? (<SkeletonMovieImage />)
+              : (
+                <div className="flex flex-col items-center md:flex-row md:max-w-xl">
+                  <img className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={movie?.image || ""} alt="" />
+                  <div className="flex flex-col justify-between pl-10 leading-normal w-full">
+                    <div className='w-80 '>
+                      <h5 className="w-full flex flex-row mb-2  text-left text-2xl font-bold tracking-tight text-gray-900 dark:text-white ">{movie?.title ? formatName(movie?.title.toLocaleUpperCase(), 20) : formatName(movie?.title || "", 20)}
+                      </h5>
+                    </div>
+                    <div className="flex flex-row">
+                      <CalendarMonthIcon className="text-white text-5xl" />
+                      <h4 className="font-[poppins] font-normal text-slate-200 text-lg ml-3">{formatDateTo_dd_mm_yy(movie?.opening_date.toString() || "")}</h4>
+                    </div>
+                    <div className="flex flex-row">
+                      <TimerIcon className="text-white" />
+                      <h4 className="font-[poppins] font-normal text-slate-200 text-lg ml-3">{convertMinutesToHHMM(movie?.duration_min || 0)}</h4>
+                    </div>
 
-              <div className="flex flex-row">
-                <GradeIcon className="text-white text-5xl" />
-                <h4 className="font-[poppins] font-normal text-slate-200 text-lg ml-3">{movie?.rating}</h4>
-              </div>
-              <div className="flex flex-row">
-                <CategoryIcon className="text-white text-5xl" />
-                <h4 className="font-[poppins] font-normal text-slate-200 text-lg ml-3">{movie?.movieType}</h4>
-              </div>
-              <div className="text-left">
-                <p className="my-3 font-normal text-slate-200 dark:text-gray-200 font-poppins">{movie?.description}</p>
-                {
-                  // || (screening.length !== 0)
-                  (showSchedule && isNoScreen) ? null : (
-                    <button
-                      type="button"
-                      className="w-50 text-white bg-[#130B2B] backdrop-blur-lg shadow-lg border hover:text-black hover:bg-white  font-medium rounded-lg text-base px-4 py-2 text-center mr-3 md:mr-0"
-                      onClick={() => { handleShowTime() }}
-                    >
-                      SHOW TIME
-                    </button>)
-                }
-              </div>
-            </div>
-          </div>
+                    <div className="flex flex-row">
+                      <GradeIcon className="text-white text-5xl" />
+                      <h4 className="font-[poppins] font-normal text-slate-200 text-lg ml-3">{movie?.rating}</h4>
+                    </div>
+                    <div className="flex flex-row">
+                      <CategoryIcon className="text-white text-5xl" />
+                      <h4 className="font-[poppins] font-normal text-slate-200 text-lg ml-3">{movie?.movieType}</h4>
+                    </div>
+                    <div className="text-left">
+                      <p className="my-3 font-normal text-slate-200 dark:text-gray-200 font-poppins">{movie?.description}</p>
+                      {
+                        // || (screening.length !== 0)
+                        (showSchedule && isNoScreen) ? null : (
+                          <button
+                            type="button"
+                            className="w-50 text-white bg-[#130B2B] backdrop-blur-lg shadow-lg border hover:text-black hover:bg-white  font-medium rounded-lg text-base px-4 py-2 text-center mr-3 md:mr-0"
+                            onClick={() => { handleShowTime() }}
+                          >
+                            SHOW TIME
+                          </button>)
+                      }
+                    </div>
+                  </div>
+                </div>)
+          }
 
           <div >
             {/* Trailer Start */}
             <Element name='trailer_section' className="container mx-auto mt-28">
-              <div className="relative w-100 h-48 overflow-hidden " style={{ paddingBottom: '56.25%' }}>
-                <iframe className="absolute top-0 left-0 w-full h-full"
-                  src={`${movie?.trailer}`}
-                  title="YouTube video player"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" />
-              </div>
+              {
+                isLoading
+                  ? (<VideoSkeleton />)
+                  : (<div className="relative w-100 h-48 overflow-hidden " style={{ paddingBottom: '56.25%' }}>
+                    <iframe className="absolute top-0 left-0 w-full h-full"
+                      src={`${movie?.trailer}`}
+                      title="YouTube video player"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" />
+                  </div>)
+              }
             </Element>
             {/* Trailer End */}
             {
@@ -497,90 +539,93 @@ const MovieDetail = () => {
             }
             {/* show Seat */}
             {
-              showSeat ? (
-                <Element name="seat_section" className='md:flex-row h-screen'>
-                  <div className="flex flex-row ">
-                    <div className="flex flex-row">
-                      {/*  Select Seat */}
-                      <div style={{ perspective: '600px' }} className=" h-screen bg-slate-800 flex flex-col justify-center items-center rounded-xl py-5">
-                        {/* Screen */}
-                        <div className="screen rounded-t-[0%] rounded-b-[0%]" style={{ transform: 'rotateX(-40deg)' }}></div>
-                        {/* Sreen End */}
-                        {/* <div className="grid grid-cols-3 content-start mx-4 my-10"> */}
-                        <div className="flex flex-col my-10 overflow-y-auto h-4/5">
-                          {
-                            seatIdOfScreen?.map((itemRow: any, indexRow: number) => (
-                              <div key={indexRow} className='flex flex-row justify-evenl place-items-center px-10'>
-                                <div className='justify-center items-center text-2xl font-extrabold text-fuchsia-700 mb-5 w-10'>
-                                  {getRowLetter(indexRow)}
-                                </div>
-                                {/* <div key={indexRow} className='flex flex-row justify-star items-start py-7 '> */}
-
-                                {itemRow.map((row: any, indexBlock: number) => (
-                                  <div key={indexBlock} className='flex flex-row px-10 justify-items-start items-start py-7 w-2/3'>
-                                    {
-                                      row?.map((seat: any, index2: number) => (
-                                        <div key={index2} className="mx-1 w-9 ">
-                                          <Seat
-                                            image={!seat ? image_notAvialable : seat.status === "AVAILABLE" ? image_seat : seat.status === "SELECTED" ? image_sealectedSeat : bookIcon}
-                                            title={seat ? seat?.customId : ""}
-                                            isDisbled={!seat ? true : seat.status === "OWNED" ? true : false}
-                                            onClick={() => handleClickSeat(seat.id)}
-                                          />
-                                        </div>
-                                      ))
-                                    }
-
+              isLoadingSelectMovie
+                ? <SkeletonSeat />
+                :
+                showSeat ? (
+                  <Element name="seat_section" className='md:flex-row h-screen'>
+                    <div className="flex flex-row ">
+                      <div className="flex flex-row">
+                        {/*  Select Seat */}
+                        <div style={{ perspective: '600px' }} className=" h-screen bg-slate-800 flex flex-col justify-center items-center rounded-xl py-5">
+                          {/* Screen */}
+                          <div className="screen rounded-t-[0%] rounded-b-[0%]" style={{ transform: 'rotateX(-40deg)' }}></div>
+                          {/* Sreen End */}
+                          {/* <div className="grid grid-cols-3 content-start mx-4 my-10"> */}
+                          <div className="flex flex-col my-10 overflow-y-auto h-4/5">
+                            {
+                              seatIdOfScreen?.map((itemRow: any, indexRow: number) => (
+                                <div key={indexRow} className='flex flex-row justify-evenl place-items-center px-10'>
+                                  <div className='justify-center items-center text-2xl font-extrabold text-fuchsia-700 mb-5 w-10'>
+                                    {getRowLetter(indexRow)}
                                   </div>
-                                )
-                                )}
-                                {/* </div> */}
-                                <div className='justify-end items-center text-2xl font-extrabold text-fuchsia-700 mb-5 w-10'>
-                                  {getRowLetter(indexRow)}
+                                  {/* <div key={indexRow} className='flex flex-row justify-star items-start py-7 '> */}
+
+                                  {itemRow.map((row: any, indexBlock: number) => (
+                                    <div key={indexBlock} className='flex flex-row px-10 justify-items-start items-start py-7 w-2/3'>
+                                      {
+                                        row?.map((seat: any, index2: number) => (
+                                          <div key={index2} className="mx-1 w-9 ">
+                                            <Seat
+                                              image={!seat ? image_notAvialable : seat.status === "AVAILABLE" ? image_seat : seat.status === "SELECTED" ? image_sealectedSeat : bookIcon}
+                                              title={seat ? seat?.customId : ""}
+                                              isDisbled={!seat ? true : seat.status === "OWNED" ? true : false}
+                                              onClick={() => handleClickSeat(seat.id)}
+                                            />
+                                          </div>
+                                        ))
+                                      }
+
+                                    </div>
+                                  )
+                                  )}
+                                  {/* </div> */}
+                                  <div className='justify-end items-center text-2xl font-extrabold text-fuchsia-700 mb-5 w-10'>
+                                    {getRowLetter(indexRow)}
+                                  </div>
                                 </div>
-                              </div>
-                            )
-                            )
-                          }
+                              )
+                              )
+                            }
 
+                          </div>
+                          <div className=''>
+                            <SeatNote />
+                          </div>
                         </div>
-                        <div className=''>
-                          <SeatNote />
-                        </div>
+
+
                       </div>
-
-
+                      {/* Ticket Summary */}
+                      <div className="ml-10 basis-1/3">
+                        <SelectMovieModel
+                          cinema={cinemaName}
+                          title={movie?.title || "No Name"}
+                          image={movie?.image || ""}
+                          movieType={movie?.movieType || ""}
+                          movieDate={movie?.createdAt || ""}
+                          duration_min={movie?.duration_min || 60}
+                          auditoruim={oneScreening?.auditorium?.name || ""}
+                          timeShow={oneScreening?.startTime || ""}
+                          showDate={oneScreening?.date_show || ""}
+                          selected={selectSeat}
+                          onClickReserve={() => { handleReserve() }}
+                          onClickSubmit={() => { handleSubmitBooking() }}
+                          onClickCancelSeat={
+                            handleClickSeat
+                          }
+                        />
+                      </div>
+                      {/* Ticket Summary End */}
                     </div>
-                    {/* Ticket Summary */}
-                    <div className="ml-10 basis-1/3">
-                      <SelectMovieModel
-                        cinema={cinemaName}
-                        title={movie?.title || "No Name"}
-                        image={movie?.image || ""}
-                        movieType={movie?.movieType || ""}
-                        movieDate={movie?.createdAt || ""}
-                        duration_min={movie?.duration_min || 60}
-                        auditoruim={oneScreening?.auditorium?.name || ""}
-                        timeShow={oneScreening?.startTime || ""}
-                        showDate={oneScreening?.date_show || ""}
-                        selected={selectSeat}
-                        onClickReserve={() => { handleReserve() }}
-                        onClickSubmit={() => { handleSubmitBooking() }}
-                        onClickCancelSeat={
-                          handleClickSeat
-                        }
-                      />
-                    </div>
-                    {/* Ticket Summary End */}
-                  </div>
-                </Element>
-              ) : (null)
+                  </Element>
+                ) : (null)
 
             }
 
           </div>
 
-        </div>
+        </div >
       </div >
     </>
   )

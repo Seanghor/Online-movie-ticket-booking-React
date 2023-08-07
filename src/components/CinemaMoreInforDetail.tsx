@@ -27,6 +27,10 @@ const CinemaMoreInforDetail = () => {
   const searchParams = new URLSearchParams(location.search);
   const id = searchParams.get('id');
 
+  // skeleton:
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+
+
 
   useEffect(() => {
     const fetchNowPlayingMovieData = async () => {
@@ -44,9 +48,15 @@ const CinemaMoreInforDetail = () => {
       // console.log("Status:", res.status)
       setComingSoon(await res.json())
     };
+
     fetchNowPlayingMovieData();
     fetchCommingSoonMovieData();
     fetchOneCinema()
+    // skeleton
+    setTimeout(
+      () => { setIsLoading(false) },
+      1000
+    );
   }, [id]);
   console.log(id)
 
@@ -117,6 +127,7 @@ const CinemaMoreInforDetail = () => {
                     list?.map((item: MovieResponse, index: number) => (
                       <HomeCard
                         key={index}
+                        isLoading={isLoading}
                         id={item?.id?.toString() || ""}
                         image={item?.image || ""}
                         title={item?.title || ""}

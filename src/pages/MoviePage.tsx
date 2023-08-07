@@ -6,6 +6,7 @@ import { CursorButtonPrevious } from "../components/Buttons/CursorPreviousButton
 import { CursorButtonNext } from "../components/Buttons/CursorButtonNext";
 import { Element, scroller } from 'react-scroll';
 import { useNavigate } from "react-router-dom";
+import SkeletonMoviePage from "../components/Skeleton/SkeletonMoviePage";
 
 
 
@@ -28,8 +29,11 @@ const Movie = () => {
   const [green, setGreen] = useState(0);
   const [blue, setBlue] = useState(100);
 
+  // skeleton:
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
+    setIsLoading(true)
     scrollToSection("main")
     // fectData
     const fetchAllMovieData = async () => {
@@ -39,7 +43,13 @@ const Movie = () => {
 
       setMovies(allMovies);
     };
-    fetchAllMovieData();
+    fetchAllMovieData(),
+      // skeleton
+      setTimeout(
+        () => { setIsLoading(false) },
+        1000
+      );
+
 
     // RGB
     const interval = setInterval(() => {
@@ -101,8 +111,8 @@ const Movie = () => {
         <CursorButtonNext onClick={() => { goToNextPage() }} />
         <div className="container grid grid-cols-6 gap-5 flex-row justify- items- w-full">
           {currentMovies?.map((item: MovieResponse, index: number) => (
-            <Card key={index} onClick={() => { navigate(`/movie/${item.id}?show=false`) }} image={item?.image || ""} title={item?.title || ""} opening_date={item?.opening_date || ""} />
-          ))}
+            <Card key={index} isLoading={isLoading} onClick={() => { navigate(`/movie/${item.id}?show=false`) }} image={item?.image || ""} title={item?.title || ""} opening_date={item?.opening_date || ""} />)
+          )}
         </div>
         <CursorButtonPrevious onClick={() => { goToPreviousPage() }} />
       </div>

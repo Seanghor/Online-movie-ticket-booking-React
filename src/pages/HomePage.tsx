@@ -36,6 +36,9 @@ const HomePage = () => {
   const [currentPageSoon, setCurrentPageSoon] = useState(1);
   const [showCursorSoonMov, setShowCursorSoonMov] = useState(false)
 
+  // skeleton:
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+
   const scrollToSection = (showSection: string) => {
     scroller.scrollTo(showSection, {
       duration: 800,
@@ -60,6 +63,12 @@ const HomePage = () => {
       // console.log("Status:", res.status)
       setNowPlaying(await res.json())
     };
+
+    // skeleton
+    setTimeout(
+      () => { setIsLoading(false) },
+      1000
+    );
 
     if (soon) {
       scrollToSection("coming_section")
@@ -156,7 +165,7 @@ const HomePage = () => {
             <div
               onClick={() => goToPreviousPage(currentPageTop, totalPagesTop, setCurrentPageTop)}
               className="group ">
-              <ArrowBackIosIcon style={{ color: "" }} className={ `cursor-pointer text-cyan-300  hover:text-cyan-800 ${showCursorTopMov ? "visible" : "invisible"}`} />
+              <ArrowBackIosIcon style={{ color: "" }} className={`cursor-pointer text-cyan-300  hover:text-cyan-800 ${showCursorTopMov ? "visible" : "invisible"}`} />
             </div>
             {/* <div className="px- justify-between grid grid-cols-8 w-full items-center justify-items-center"> */}
             <div id="default-carousel" className="relative w-full px- justify-between grid grid-cols-8 items-center justify-items-center" data-carousel="slide">
@@ -166,6 +175,7 @@ const HomePage = () => {
                     key={index} className="" to={`/movie/${item.id}`} onClick={() => { console.log("selected now playing") }}>
                     <HomeCard
                       id={item?.id?.toString() || ""}
+                      isLoading={isLoading}
                       image={item?.image || ""}
                       title={item?.title || ""}
                       trailer={item?.trailer || ""}
@@ -207,6 +217,7 @@ const HomePage = () => {
                     key={index} className="" to={`/movie/${item.id}`} onClick={() => { console.log("selected now playing") }}>
                     <HomeCard
                       id={item?.id?.toString() || ""}
+                      isLoading={isLoading}
                       image={item?.image || ""}
                       title={item?.title || ""}
                       trailer={item?.trailer || ""}
@@ -247,6 +258,7 @@ const HomePage = () => {
                     key={index} className="" to={`/movie/${item.id}`} onClick={() => { console.log("selected now playing") }}>
                     <HomeCard
                       id={item?.id?.toString() || ""}
+                      isLoading={isLoading}
                       image={item?.image || ""}
                       title={item?.title || ""}
                       trailer={item?.trailer || ""}
