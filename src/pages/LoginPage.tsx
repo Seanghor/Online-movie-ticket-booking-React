@@ -20,21 +20,31 @@ export default function LoginPage() {
   };
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsClick(true)
     const res = await logIn({ email, password })
     // console.log("Res:", res);
     // console.log("email:", email);
     // console.log("password:", password);
-    setIsClick(true)
+
+
     if (!res.accessToken && !res.refreshToken) {
-      navigate('/login');
+      setTimeout(
+        () => {
+          setIsClick(false)
+          navigate('/login')
+        },
+        500
+      );
     } else {
       setTimeout(
-        () => navigate('/'),
+        () => {
+          setIsClick(false)
+          navigate('/')
+        },
         1500
       );
-      setIsClick(false)
-      return
 
+      return
     }
   }
   return (

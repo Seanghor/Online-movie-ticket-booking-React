@@ -37,7 +37,7 @@ const HomePage = () => {
   const [showCursorSoonMov, setShowCursorSoonMov] = useState(false)
 
   // skeleton:
-  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const scrollToSection = (showSection: string) => {
     scroller.scrollTo(showSection, {
@@ -48,6 +48,7 @@ const HomePage = () => {
     });
   };
   useEffect(() => {
+    setIsLoading(true)
     const fetchTopMovieData = async () => {
       const res = await getAllMovieFilterIsTop("true")
       // console.log("Status:", res.status)
@@ -67,7 +68,7 @@ const HomePage = () => {
     // skeleton
     setTimeout(
       () => { setIsLoading(false) },
-      500
+      700
     );
 
     if (soon) {
