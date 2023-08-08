@@ -52,7 +52,7 @@ export default function LoginPage() {
       <div className="w-full flex flex-col m-auto shadow-md lg:max-w-xl">
         <div className="bg-purple-300 py-10 bg-opacity-25 w-full p-6">
           <h1 className='text-5xl text-white w-1/2 m-auto font-bold text-center font-DancingScript'>Welcome</h1>
-          <h3 className='text-4xl text-white w-1/2 m-auto font-bold text-center font-DancingScript'>to MovieTick</h3>
+          <h3 className='text-4xl text-white w-1/2 m-auto font-bold text-center font-DancingScript'>to AVATAR Cineplex</h3>
           <p className='text-md font-extralight text-rose-100 pt-5 px-2'>Welcome to MovieTick - Your ultimate movie ticket booking platform! Elevate your movie-going experience with quick and convenient bookings, personalized recommendations, and exclusive rewards. Join us now and enjoy the magic of cinema hassle-free!</p>
         </div>
         <div className="bg-white bg-opacity-50">
