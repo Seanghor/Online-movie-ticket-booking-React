@@ -8,6 +8,7 @@ COPY package*.json ./
 RUN yarn install
 
 COPY . .
+RUN ls -al  
 
 RUN yarn run build
 

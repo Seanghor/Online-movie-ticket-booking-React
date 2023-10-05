@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState } from 'react';
+import { ChangeEvent, useEffect, useReducer, useState } from 'react';
 import CinemaImg from '../assets/cinema.jpg';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import WeekendIcon from '@mui/icons-material/Weekend';
@@ -308,14 +308,15 @@ const BillingDetailPage = () => {
                 label="Remark"
                 className="shadow appearance-none   rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 value={remark}
-                onChange={(e) => setRemark(e.target.value)}
+                onChange={(e:ChangeEvent<HTMLInputElement>) => setRemark(e.target.value)}
+                crossOrigin="anonymous"
               />
               {/* <div className="w-72 h-72 ">
                 <Input label="Username" className='border-2 border-red-500' />
               </div> */}
             </div>
             <div className='flex flex-col'>
-              <Checkbox onClick={() => { setAgree(!agree) }} className='border-2 border-gray-500'
+              <Checkbox onClick={() => { setAgree(!agree) }} className='border-2 border-gray-500 ' crossOrigin="anonymous"
                 label={
                   <Typography color="blue-gray" className="flex font-medium">
                     I agree with the
