@@ -30,7 +30,7 @@ RUN yarn global add serve
 # Copy the built application from the development stage
 COPY --from=development /usr/src/app/dist ./dist
 
-EXPOSE 3000
+EXPOSE 9001
 
 # Start the web server to serve the built application
 CMD ["serve", "-s", "dist"]
