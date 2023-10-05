@@ -1,5 +1,4 @@
 import { Route, Routes , useLocation} from 'react-router-dom';
-
 import ContactUs from './pages/ContactPage';
 import Movie from './pages/MoviePage';
 import Cinemas from './pages/CinemaPage';

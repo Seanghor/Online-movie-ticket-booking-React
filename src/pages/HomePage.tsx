@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react"
-// import { IconButton } from "../components/Icon_Button"
 import { MovieResponse } from "../types/movie.dto"
 import { getAllMovieFilterByStatus, getAllMovieFilterIsTop } from "../services/movie"
 import { HomeCard } from "../components/Cards/HomeCard"
 import '../index.css'
-// import { useLocation } from "react-router-dom";
-// import ImageSlider from "../components/CoverSlider"
 import CoverSlider from "../components/CoverSlider"
 import { Link, Element, scroller } from 'react-scroll';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
