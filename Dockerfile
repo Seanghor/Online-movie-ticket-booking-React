@@ -1,16 +1,16 @@
 # Stage 1: Build the React application
-FROM node:alpine AS development
+# FROM node:alpine AS development
 
-WORKDIR /usr/src/app
+# WORKDIR /usr/src/app
 
-COPY package*.json ./
+# COPY package*.json ./
 
-RUN yarn install
+# RUN yarn install
 
-COPY . .
-RUN ls -al  
+# COPY . .
+# RUN ls -al  
 
-RUN yarn run build
+# RUN yarn run build
 
 # Stage 2: Serve the built application with a lightweight web server
 FROM node:alpine AS production
@@ -18,7 +18,7 @@ FROM node:alpine AS production
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
 
-WORKDIR /app
+WORKDIR /user/src/app
 
 COPY package*.json ./
 
@@ -29,7 +29,7 @@ RUN yarn --production
 RUN yarn global add serve
 
 # Copy the built application from the development stage
-COPY --from=development /usr/src/app/dist ./dist
+COPY --from=development /user/src/app/dist ./dist
 
 EXPOSE 9001
 
