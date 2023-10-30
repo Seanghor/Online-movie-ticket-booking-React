@@ -1,37 +1,44 @@
-# Stage 1: Build the React application
-# FROM node:alpine AS development
 
-# WORKDIR /usr/src/app
+# ------------------------------------------------
+# Choose a proper node image for the build stage:
+FROM node:16-alpine AS BUILD_IMAGE
+WORKDIR /app/react-app
 
-# COPY package*.json ./
+# Copy package.json and pnpm-lock.yaml:
+COPY package.json pnpm-lock.yaml ./
 
-# RUN yarn install
+# Install our package using pnpm:
+RUN npm install -g pnpm
+RUN pnpm install
 
-# COPY . .
-# RUN ls -al  
+# Copy all remaining files:
+COPY . .
 
-# RUN yarn run build
+# Finally, build our project:
+RUN pnpm build
 
-# Stage 2: Serve the built application with a lightweight web server
-FROM node:alpine AS production
+# Beginning of the second stage:
+FROM node:16-alpine AS PRODUCTION_IMAGE
+WORKDIR /app/react-app  
 
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
+# Copy the /app/react-app/dist/ folder from BUILD_IMAGE to /app/react-app/dist/ in PRODUCTION_IMAGE
+COPY --from=BUILD_IMAGE /app/react-app/dist/ /app/react-app/dist/
+COPY --from=BUILD_IMAGE /app/react-app/node_modules /app/react-app/node_modules
 
-WORKDIR /user/src/app
 
-COPY package*.json ./
+# Expose the application port
+EXPOSE 3000
 
-# Install only production dependencies
-RUN yarn --production
+# To run: pnpm run preview
+# We need package.json and vite.config.ts
+COPY package.json vite.config.ts ./
 
-# Install serve package globally (required to serve the built application)
-RUN yarn global add serve
+# Install TypeScript globally (if needed)
+RUN npm install typescript -g
 
-# Copy the built application from the development stage
-COPY --from=development /user/src/app/dist ./dist
+# Install pnpm in the production image (if needed)
+RUN npm install -g pnpm
 
-EXPOSE 9001
+# Command to start the application
+CMD ["pnpm", "run", "preview"]
 
-# Start the web server to serve the built application
-CMD ["serve", "-s", "dist"]
