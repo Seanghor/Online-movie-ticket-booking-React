@@ -5,7 +5,7 @@ services:
     # iamge: online_movie_booking-react-web_iamge  // adding property image is not allow
     build: .
     ports:
-      - "3000:3000"
+      - "1001:1001"
     environment:
       NODE_ENV: production
     command: pnpm run preview

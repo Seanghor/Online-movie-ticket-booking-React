@@ -27,7 +27,7 @@ COPY --from=BUILD_IMAGE /app/react-app/node_modules /app/react-app/node_modules
 
 
 # Expose the application port
-EXPOSE 3000
+EXPOSE 1001
 
 # To run: pnpm run preview
 # We need package.json and vite.config.ts
