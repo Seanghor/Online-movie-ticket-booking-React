@@ -8,6 +8,6 @@ export default defineConfig({
   // define port for project run in production mode:
   preview:{
     host:true,  // expose project in public address
-    port: 1
+    port: 1000
   }
 })
