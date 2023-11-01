@@ -3,7 +3,7 @@ name: avatar-web
 services:
   web:
     container_name: avatar-react-web_container
-    # iamge: online_movie_booking-react-web_iamge  // adding property image is not allow
+    image: avatar-react-web
     build: .
     ports:
       - "1000:1000"
