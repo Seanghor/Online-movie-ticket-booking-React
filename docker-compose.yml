@@ -2,8 +2,8 @@ version: "3.3"
 name: avatar-web
 services:
   avatar-web:
-    container_name: avatar-react-web_container
-    image: avatar-react-web
+    container_name: avatar-react-web
+    image: avatar-react-web_image
     build: .
     ports:
       - "1000:1000"
