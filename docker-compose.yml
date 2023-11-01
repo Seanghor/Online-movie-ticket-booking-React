@@ -1,7 +1,7 @@
 version: "3.3"
 name: avatar-web
 services:
-  web:
+  avatar-web:
     container_name: avatar-react-web_container
     image: avatar-react-web
     build: .
