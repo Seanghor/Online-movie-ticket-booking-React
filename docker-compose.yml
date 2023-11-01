@@ -2,7 +2,7 @@ version: "3.3"
 name: avatar-web
 services:
   web:
-    container_name: online_movie_booking-react-web_container
+    container_name: avatar-react-web_container
     # iamge: online_movie_booking-react-web_iamge  // adding property image is not allow
     build: .
     ports:
