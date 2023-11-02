@@ -1,57 +1,14 @@
-# version: "3.3"
-# name: avatar-web
-# services:
-#   avatar-web:
-#     container_name: avatar-react-web
-#     image: avatar-react-web_image
-#     build: .
-#     ports:
-#       # - "1000:1000"
-#       - "80:80"
-#       - "443:443"
-#     environment:
-#       NODE_ENV: production
-#     command: pnpm run preview
-
-
 version: "3.3"
+name: avatar-web
 services:
   avatar-web:
     container_name: avatar-react-web
     image: avatar-react-web_image
     build: .
+    ports:
+      # - "1000:1000"
+      - "80:80"
     environment:
       NODE_ENV: production
-    networks:
-      - web
     command: pnpm run preview
-networks:
-  web:
-    driver: bridge
-
-  nginx-proxy:
-    image: jwilder/nginx-proxy
-    container_name: nginx-proxy
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-    environment:
-      - DEFAULT_HOST=default.local
-      - ENABLE_IPV6=true
-    networks:
-      - web
-
-  letsencrypt:
-    image: jrcs/letsencrypt-nginx-proxy-companion
-    container_name: letsencrypt
-    volumes_from:
-      - nginx-proxy
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    environment:
-      - DEFAULT_EMAIL=your.email@example.com  # Replace with your email
-    networks:
-      - web
 
