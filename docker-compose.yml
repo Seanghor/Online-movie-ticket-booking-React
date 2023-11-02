@@ -6,7 +6,9 @@ services:
     image: avatar-react-web_image
     build: .
     ports:
-      - "1000:1000"
+      # - "1000:1000"
+      - "80:80"
+      - "443:443"
     environment:
       NODE_ENV: production
     command: pnpm run preview
